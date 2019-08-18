@@ -284,9 +284,6 @@ pre .keyword,pre .javascript .function {color:#cc99cc;}
   #pager {margin:30px 0 0;}
   h1.title {font-size:24px;}
   .tab {display:none;}
-  .icon-scan {display:none!important;}
-  .icon-images {left:80px;}
-  .icon-pause,.icon-play {left:50px;}
   .comment.link {width:140px;padding:5px 0;}
   .article{width:100%;}
   .article .main{width:94%;}
