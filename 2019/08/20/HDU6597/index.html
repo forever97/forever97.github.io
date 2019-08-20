@@ -10,10 +10,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate">
     <meta name="keywords" content="forever97,"> 
-    <meta name="description" content="Problem给定一个多个3*3的棋盘格，包含’#’,’.’,’O’和’X’
+    <meta name="description" content="Problem给定一个多个3*3的棋盘格，包含#,.,O和X
 Alice和Bob轮流对这些棋盘格做操作，当一方不能操作了算输
-Alice每次可以选择一个’O’，将其变成’#’
-同时，,"> 
+Alice每次可以选择一个O，将其变成#
+同时，对以下三种事件挑选一种发,"> 
     <meta name="author" content="forever97"> 
     <link rel="alternative" href="atom.xml" title="forever97&#39;s blog" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -65,22 +65,22 @@ Alice每次可以选择一个’O’，将其变成’#’
 
         </div>
         <div class="content markdown">
-            <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>给定一个多个3*3的棋盘格，包含’#’,’.’,’O’和’X’</p>
+            <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>给定一个多个3*3的棋盘格，包含#,.,O和X</p>
 <p>Alice和Bob轮流对这些棋盘格做操作，当一方不能操作了算输</p>
-<p>Alice每次可以选择一个’O’，将其变成’#’</p>
+<p>Alice每次可以选择一个O，将其变成#</p>
 <p>同时，对以下三种事件挑选一种发生：[不能不选]</p>
 <ol>
-<li><p>选择的格子上下格子均变成’#’</p>
+<li><p>选择的格子上下格子均变成#</p>
 </li>
-<li><p>选择的格子左右格子均变成’#’</p>
+<li><p>选择的格子左右格子均变成#</p>
 </li>
 <li><p>上述两种事件同时发生</p>
 </li>
 </ol>
-<p>Bob每次可以选择一个’X’，将其变成’#’，没有任何伴随事件</p>
-<p>如果Alice或者Bob始终能赢则对应输出”Alice”和”Bob”</p>
-<p>否则如果先手或者后手始终能赢则对应输出”First”和”Second”</p>
-<p>否则直接输出”Others”</p>
+<p>Bob每次可以选择一个X，将其变成#，没有任何伴随事件</p>
+<p>如果Alice或者Bob始终能赢则对应输出Alice和Bob</p>
+<p>否则如果先手或者后手始终能赢则对应输出First和Second</p>
+<p>否则直接输出Others</p>
 <h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>$SN=\{Alice \ can \ get|Bob \ can \ get\}$</p>
 <p>非平等博弈只存在三种情况：</p>
 <ol>
