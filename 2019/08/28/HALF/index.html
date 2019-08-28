@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>出现次数大于集合大小一半的数字 - forever97&#39;s blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="forever97,"> 
+    <meta name="description" content="集合版本给定一个集合，问出现次数大于一半的数字
+权值数组统计权值数组计数，upd后超过一半即为答案
+区间版本给一个长度为$n$的序列$a$，$1 \le a_i \le n$
+给定$m$组询问，每次,"> 
+    <meta name="author" content="forever97"> 
+    <link rel="alternative" href="atom.xml" title="forever97&#39;s blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+</html>
+<body class="loading">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><span id="config-title" style="display:none">forever97&#39;s blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">出现次数大于集合大小一半的数字</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">出现次数大于集合大小一半的数字</h1>
+        <div class="stuff">
+            <span>八月 28, 2019</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/可持久化线段树/">可持久化线段树</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/树上倍增/">树上倍增</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/线段树/">线段树</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/莫队/">莫队</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="集合版本"><a href="#集合版本" class="headerlink" title="集合版本"></a>集合版本</h2><p>给定一个集合，问出现次数大于一半的数字</p>
+<h3 id="权值数组统计"><a href="#权值数组统计" class="headerlink" title="权值数组统计"></a>权值数组统计</h3><p>权值数组计数，upd后超过一半即为答案</p>
+<h2 id="区间版本"><a href="#区间版本" class="headerlink" title="区间版本"></a>区间版本</h2><p>给一个长度为$n$的序列$a$，$1 \le a_i \le n$</p>
+<p>给定$m$组询问，每次询问一个区间$[l,r]$</p>
+<p>查询是否存在一个数在$[l,r]$中出现的次数大于$\frac{r-l+1}{2}$</p>
+<p>如果存在，输出这个数，否则输出0</p>
+<h3 id="单增莫队"><a href="#单增莫队" class="headerlink" title="单增莫队"></a>单增莫队</h3><p>莫队处理询问</p>
+<p>权值数组计数，保存出现次数最多的点权和次数</p>
+<p>非可加数据，需单增处理</p>
+<p>复杂度$O((m+n)\sqrt{n})$</p>
+<h3 id="可持久化线段树"><a href="#可持久化线段树" class="headerlink" title="可持久化线段树"></a>可持久化线段树</h3><p>建立可持久化的权值线段树</p>
+<p>对于区间查询，在线段树上二分查询R和L-1版本间的数值差符合要求的位置</p>
+<p>复杂度$O(nlog_2n)$</p>
+<h2 id="树上版本"><a href="#树上版本" class="headerlink" title="树上版本"></a>树上版本</h2><p>给定一棵$n$个点的点权树，点权$c_i \le n$</p>
+<p>$m$组询问，查询一条树链上是否有出现次数大于长度一半的点权值</p>
+<p>有则输出点权，没有则输出$-1$</p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><p>构造一个偏序对$<a,b>$</a,b></p>
+<p>表示一个集合中可能出现次数最多的元素，以及其权值，初始权值为1</p>
+<p>当两个集合合并时，如果出现次数最多元素相同，则权值相加</p>
+<p>否则权值相减，权值大的减去权值小的，保留权值大的</p>
+<p>当一个元素在最终集合中出现次数大于一半时，必定能被保留到最后</p>
+<p>用这种方法在树上倍增可以得到数量上可能出现次数大于一半的数字</p>
+<p>用线段树验证该数字在这条树链上的出现次数即可</p>
+<p>因此，对于每个点权需要建立一棵线段树</p>
+<p>动态开点，一个点最多消耗一条链的内存</p>
+<p>空间复杂度$O(nlog_2n)$，时间复杂度$O(nlog_2n)$</p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><h3 id="区间版本-1"><a href="#区间版本-1" class="headerlink" title="区间版本"></a>区间版本</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查询[lx,rx]区间内超过cnt的数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> lx, <span class="keyword">int</span> rx, <span class="keyword">int</span> cnt)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> L = <span class="number">1</span>, R = n, mid, x, y;</span><br><span class="line">    x = root[lx - <span class="number">1</span>], y = root[rx];</span><br><span class="line">    <span class="keyword">while</span> (L != R) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v[y] - v[x] &lt;= cnt) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        mid = (L + R) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (v[l[y]] - v[l[x]] &gt; cnt)</span><br><span class="line">            R = mid, x = l[x], y = l[y];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (v[r[y]] - v[r[x]] &gt; cnt)</span><br><span class="line">            L = mid + <span class="number">1</span>, x = r[x], y = r[y];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> L;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="树上版本-1"><a href="#树上版本-1" class="headerlink" title="树上版本"></a>树上版本</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">250000</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> n, q;</span><br><span class="line"><span class="keyword">int</span> tot, rt[<span class="number">20</span> * N], v[<span class="number">20</span> * N], ls[<span class="number">20</span> * N], rs[<span class="number">20</span> * N];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">upd</span><span class="params">(<span class="keyword">int</span> &amp;x, <span class="keyword">int</span> p, <span class="keyword">int</span> c, <span class="keyword">int</span> l = <span class="number">0</span>, <span class="keyword">int</span> r = n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!x) x = ++tot;</span><br><span class="line">    v[x] += c;</span><br><span class="line">    <span class="keyword">if</span> (l == r) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    p &lt;= mid ? upd(ls[x], p, c, l, mid) : upd(rs[x], p, c, mid + <span class="number">1</span>, r);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">qry</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> L, <span class="keyword">int</span> R, <span class="keyword">int</span> l = <span class="number">0</span>, <span class="keyword">int</span> r = n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R) <span class="keyword">return</span> v[x];</span><br><span class="line">    <span class="keyword">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> (L &lt;= mid ? qry(ls[x], L, R, l, mid) : <span class="number">0</span>) +</span><br><span class="line">           (mid &lt; R ? qry(rs[x], L, R, mid + <span class="number">1</span>, r) : <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; G[N];</span><br><span class="line"><span class="built_in">array</span>&lt;<span class="keyword">int</span>, 2&gt; mx[N][<span class="number">18</span>];</span><br><span class="line"><span class="built_in">array</span>&lt;<span class="keyword">int</span>, 2&gt; <span class="keyword">operator</span>+(<span class="built_in">array</span>&lt;<span class="keyword">int</span>, <span class="number">2</span>&gt; a, <span class="built_in">array</span>&lt;<span class="keyword">int</span>, <span class="number">2</span>&gt; b) &#123;</span><br><span class="line">    <span class="keyword">if</span> (a[<span class="number">0</span>] ^ b[<span class="number">0</span>]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[<span class="number">1</span>] &gt; b[<span class="number">1</span>]) <span class="keyword">return</span> <span class="built_in">array</span>&lt;<span class="keyword">int</span>, <span class="number">2</span>&gt;&#123;a[<span class="number">0</span>], a[<span class="number">1</span>] - b[<span class="number">1</span>]&#125;;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">array</span>&lt;<span class="keyword">int</span>, <span class="number">2</span>&gt;&#123;b[<span class="number">0</span>], b[<span class="number">1</span>] - a[<span class="number">1</span>]&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">array</span>&lt;<span class="keyword">int</span>, <span class="number">2</span>&gt;&#123;a[<span class="number">0</span>], a[<span class="number">1</span>] + b[<span class="number">1</span>]&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> f[N][<span class="number">18</span>], d[N], st[N], en[N], a[N], dfn;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x = <span class="number">1</span>, <span class="keyword">int</span> fx = <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    f[x][<span class="number">0</span>] = fx;</span><br><span class="line">    d[x] = d[fx] + <span class="number">1</span>;</span><br><span class="line">    mx[x][<span class="number">0</span>] = &#123;a[x], <span class="number">1</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">18</span>; i++) &#123;</span><br><span class="line">        f[x][i] = f[f[x][i - <span class="number">1</span>]][i - <span class="number">1</span>];</span><br><span class="line">        mx[x][i] = mx[x][i - <span class="number">1</span>] + mx[f[x][i - <span class="number">1</span>]][i - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    st[x] = dfn++;</span><br><span class="line">    upd(rt[a[x]], st[x], <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> y : G[x])</span><br><span class="line">        <span class="keyword">if</span> (y ^ fx) dfs(y, x);</span><br><span class="line">    en[x] = dfn;</span><br><span class="line">    upd(rt[a[x]], en[x], <span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">array</span>&lt;<span class="keyword">int</span>, 2&gt; getmx(<span class="keyword">int</span> x, <span class="keyword">int</span> y) &#123;</span><br><span class="line">    <span class="keyword">if</span> (d[x] &lt; d[y]) swap(x, y);</span><br><span class="line">    <span class="built_in">array</span>&lt;<span class="keyword">int</span>, 2&gt; res&#123;<span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">auto</span> up = [&amp;](<span class="keyword">int</span> &amp;x, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        res = res + mx[x][k];</span><br><span class="line">        x = f[x][k];</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">17</span>; ~i; --i)</span><br><span class="line">        <span class="keyword">if</span> (d[f[x][i]] &gt;= d[y]) up(x, i);</span><br><span class="line">    <span class="keyword">if</span> (x ^ y) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">17</span>; ~i; --i)</span><br><span class="line">            <span class="keyword">if</span> (f[x][i] ^ f[y][i]) up(x, i), up(y, i);</span><br><span class="line">        up(x, <span class="number">0</span>), up(y, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">array</span>&lt;<span class="keyword">int</span>, <span class="number">2</span>&gt;&#123;(res + mx[x][<span class="number">0</span>])[<span class="number">0</span>], x&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;q);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a[i]);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>, x, y; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;x, &amp;y);</span><br><span class="line">        G[x].push_back(y);</span><br><span class="line">        G[y].push_back(x);</span><br><span class="line">    &#125;</span><br><span class="line">    dfs();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x, y; q--;) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;x, &amp;y);</span><br><span class="line">        <span class="keyword">auto</span> res = getmx(x, y);</span><br><span class="line">        <span class="keyword">int</span> c = res[<span class="number">0</span>], lca = res[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> cnt = qry(rt[c], <span class="number">0</span>, st[x]) + qry(rt[c], <span class="number">0</span>, st[y]) - qry(rt[c], <span class="number">0</span>, st[lca]);</span><br><span class="line">        <span class="keyword">if</span> (f[lca][<span class="number">0</span>]) cnt -= qry(rt[c], <span class="number">0</span>, st[f[lca][<span class="number">0</span>]]);</span><br><span class="line">        <span class="keyword">int</span> cnt0 = d[x] + d[y] - <span class="number">2</span> * d[lca] + <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, cnt &gt; cnt0 / <span class="number">2</span> ? c : <span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/qq/001faIUs4M2zna.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#集合版本"><span class="toc-number">1.</span> <span class="toc-text">集合版本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#权值数组统计"><span class="toc-number">1.1.</span> <span class="toc-text">权值数组统计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区间版本"><span class="toc-number">2.</span> <span class="toc-text">区间版本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单增莫队"><span class="toc-number">2.1.</span> <span class="toc-text">单增莫队</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可持久化线段树"><span class="toc-number">2.2.</span> <span class="toc-text">可持久化线段树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#树上版本"><span class="toc-number">3.</span> <span class="toc-text">树上版本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-number">3.1.</span> <span class="toc-text">Solution</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Code"><span class="toc-number">4.</span> <span class="toc-text">Code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#区间版本-1"><span class="toc-number">4.1.</span> <span class="toc-text">区间版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#树上版本-1"><span class="toc-number">4.2.</span> <span class="toc-text">树上版本</span></a></li></ol></li></ol>
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
