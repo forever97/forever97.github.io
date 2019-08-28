@@ -81,7 +81,7 @@
 <h2 id="树上版本"><a href="#树上版本" class="headerlink" title="树上版本"></a>树上版本</h2><p>给定一棵$n$个点的点权树，点权$c_i \le n$</p>
 <p>$m$组询问，查询一条树链上是否有出现次数大于长度一半的点权值</p>
 <p>有则输出点权，没有则输出$-1$</p>
-<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><p>构造一个偏序对$\<a,b\>$</a,b\></p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><p>构造一个偏序对$(a,w)$</p>
 <p>表示一个集合中可能出现次数最多的元素，以及其权值，初始权值为1</p>
 <p>当两个集合合并时，如果出现次数最多元素相同，则权值相加</p>
 <p>否则权值相减，权值大的减去权值小的，保留权值大的</p>
