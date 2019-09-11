@@ -12,8 +12,8 @@
     <meta name="keywords" content="forever97,"> 
     <meta name="description" content="Problem给定$F_1=1$，$F_n=a*F_{n-1}+1$
 有一个有$n$个元素的多重集合$S$
-$value(s)=F_{\sum_{s_i}}$
-定义$ans(k)=\sum_{s \,"> 
+$value(s)=F_{\sum{s_i}}$
+定义$ans(k)=\sum_{s \s,"> 
     <meta name="author" content="forever97"> 
     <link rel="alternative" href="atom.xml" title="forever97&#39;s blog" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -67,9 +67,9 @@ $value(s)=F_{\sum_{s_i}}$
         <div class="content markdown">
             <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>给定$F_1=1$，$F_n=a*F_{n-1}+1$</p>
 <p>有一个有$n$个元素的多重集合$S$</p>
-<p>$value(s)=F_{\sum_{s_i}}$</p>
+<p>$value(s)=F_{\sum{s_i}}$</p>
 <p>定义$ans(k)=\sum_{s \subset S \ and \ |s|=k}value(s)$</p>
-<p>求$ans(1),ans(2),……,ans(n) mod 100003$</p>
+<p>求$ans(1),ans(2),……,ans(n) \ mod \ 100003$</p>
 <p>$n \le 10^5，2 \le a \le 1000，1 \le s_i \le 1e9$</p>
 <h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>$F_n=\frac{a^n-1}{a-1}$</p>
 <p>对于给定的$k$，我们计算出不同方案下的$a^{sum}$之和，$sum$由$k$个$s$相加得到，减去方案数$C_n^k$，然后除以$(a-1)$即可</p>
