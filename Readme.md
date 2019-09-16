@@ -11,9 +11,9 @@ hexo d
 ```
 hexo clean
 ```
-文件备份
+文件备份，引号中内容为上传注释
 ```
 git add .
-git commit –m "xxxx"
+git commit –m "update"
 git push 
 ```
