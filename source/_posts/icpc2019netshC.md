@@ -7,7 +7,7 @@ cover: http://imglf6.nosdn0.126.net/img/MXRvbEU3WmxrOUpGS3lrcXgrSExhYU9SeFlHS3Fy
 ---
 ## Problem
 
-给定三个长度为$n(n \le 10^5)$的数组$A,B,C$，数字范围$m \le 10^5$
+给定三个长度为$n(n \le 10^5)$的数组$A,B,C$，数字范围$1 \le m \le 10^5$
 
 求三个数组各选出一个数字使得最大的数字小于等于剩余两个数字相加的方案数
 
