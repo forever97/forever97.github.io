@@ -43,7 +43,7 @@ KL散度并不像范数一样是对称的，也就是其不是真正的度量值
 
 除去不对称性，KL散度还有一个重要的性质是非负性
 
-$D_{KL}(p||q) = E_{p}[log(\frac{p}{q})] = -E_{p}[log(\frac{q}{p})] \ge -log(E_{p}[\frac{q}{p}]) = -log(\int p\frac{q}{p}) = 0$
+$D_{KL}(P||Q) = E_{P}[log(\frac{P}{Q})] = -E_{P}[log(\frac{Q}{P})] \ge -log(E_{P}[\frac{Q}{P}]) = -log(\int P\frac{Q}{P}) = 0$
 
 ## 最大似然估计(MLE)
 

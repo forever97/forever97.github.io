@@ -28,17 +28,17 @@ scrollbar: true
 # Gitalk 评论插件（https://github.com/gitalk/gitalk）
 gitalk:
     # 是否自动展开评论框
-    autoExpand: false
+    autoExpand: true
     # 应用编号
-    clientID: ''
+    clientID: '49714482bda0b6273fc4'
     # 应用秘钥
-    clientSecret: ''
+    clientSecret: '3002f28762b656bd195de029eabbbf0e1015654c'
     # issue仓库名
-    repo: ''
+    repo: 'blogtalk'
     # Github名
-    owner: ''
+    owner: 'forever97'
     # Github名
-    admin: ['']
+    admin: ['forever97']
     # Ensure uniqueness and length less than 50
     id: location.pathname
     # Facebook-like distraction free mode
