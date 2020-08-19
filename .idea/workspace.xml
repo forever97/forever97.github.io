@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6324963c-0af3-4b63-a46b-58d3b4343cf5" name="Default Changelist" comment="" />
+    <list default="true" id="6324963c-0af3-4b63-a46b-58d3b4343cf5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/source/_posts/1610-01465v4.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/1610-01465v4.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/_posts/2003-06576.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/_posts/2003-06576.md" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-15" />
     <option name="y" value="-24" />
-    <option name="width" value="1947" />
+    <option name="width" value="1946" />
     <option name="height" value="1044" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -51,16 +57,17 @@
       <updated>1584018090395</updated>
       <workItem from="1584018099248" duration="3000" />
       <workItem from="1591015459406" duration="2000" />
+      <workItem from="1597139108770" duration="7000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5000" />
+    <option name="totallyTimeSpent" value="12000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25383994" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2586904" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
