@@ -3,7 +3,8 @@ title: HackerRank Circular Palindromes [Manacher+二分答案]
 date: 2019-09-14 21:59:00
 tags: [Manacher, 二分答案, ST表]
 mathjax: true
-cover: http://imglf6.nosdn0.126.net/img/MXRvbEU3WmxrOUpLalR5V0JvQTY3MzBWVTYxQnJCZ25vNTdhdTBBM0FGVGJiQzh3Mm04UzVBPT0.jpg?imageView&thumbnail=3000y1687&type=jpg&quality=96&stripmeta=0&type=jpg
+categories: 题解杂货铺
+cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
 ---
 ## Problem
 

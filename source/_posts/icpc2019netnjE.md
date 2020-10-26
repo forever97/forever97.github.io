@@ -3,7 +3,8 @@ title: ICPC2019网络赛 南京站 E K Sum [杜教筛+欧拉降幂]
 date: 2019-09-01 22:24:35
 tags: [莫比乌斯反演, 杜教筛, 欧拉降幂, 数值分块]
 mathjax: true
-cover: http://imglf3.nosdn0.126.net/img/MXRvbEU3WmxrOUxQdUVwZ1JCRzJmcG1lMUM0aWJScVMrdkhlS2RRSkw1cm1vcytwbW1HeHBRPT0.jpg?imageView&thumbnail=1778y1000&type=jpg&quality=96&stripmeta=0&type=jpg
+categories: 题解杂货铺
+cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
 ---
 ## Problem
 定义函数$f_n(k)=\sum_{l_1=1}^n\sum_{l_2=1}^n\dots\sum_{l_k=1}^n(gcd(l_1,l_2,\dots,l_k))^2$

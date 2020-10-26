@@ -1,0 +1,11 @@
+- class_name: 友情链接
+  class_desc: My Friends
+  link_list:
+    - name: Mr.Lee
+      link: https://limj0825.github.io/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/1.png
+      descr: 在线征集女朋友
+    - name: 欣君
+      link: https://blog.csdn.net/xin_jun
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/2.png
+      descr: 人活着就是为了点手游

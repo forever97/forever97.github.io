@@ -2,8 +2,8 @@
 title: ICPC2019网络赛 上海站 G Substring [Hash]
 date: 2019-09-16 14:10:31
 tags: [Hash]
-mathjax: true
-cover: http://imglf3.nosdn0.126.net/img/MXRvbEU3WmxrOUlwVWpFaUkwcjgveWh1amZxd3NuRHJBcHlENXZQQ25oWHNkaXNuZ2hsOHp3PT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg
+categories: 题解杂货铺
+cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
 ---
 ## Problem
 

@@ -3,7 +3,8 @@ title: ICPC2019网络赛 南京站 D Robots [期望DP]
 date: 2019-09-02 10:38:31
 tags: [期望DP, 拓扑排序]
 mathjax: true
-cover: http://imglf5.nosdn0.126.net/img/MXRvbEU3WmxrOUlkRmF6QndPTnA5YXA0SUR0aDJ1Wnp2RnpOL0E3Z2ZqSzV2aDArdGIrSkJ3PT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg
+categories: 题解杂货铺
+cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
 ---
 ## Problem
 一个机器人在一张n个点m条边的有向无环图上行走，每天等概率地在原地不动或者移动到相邻的位置

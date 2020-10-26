@@ -1,5 +1,6 @@
 ---
-title: categories
-date: 2019-08-18 11:15:57
+title: 分类
+date: 2020-10-19 10:00:20
 type: "categories"
+top_img: https://forever97.github.io/2020/10/19/Re0-1/7.jpg
 ---

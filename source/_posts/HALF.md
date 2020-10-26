@@ -3,7 +3,8 @@ title: 出现次数大于集合大小一半的数字
 date: 2019-08-28 11:04:29
 tags: [莫队, 可持久化线段树, 线段树, 树上倍增]
 mathjax: true
-cover: http://imglf6.nosdn0.126.net/img/MXRvbEU3WmxrOUphYi9EaitPZ1B4blVFZEo5b2FRbGdsUHRMZjJoaDdQQjV2R3FkWEk0bnVnPT0.jpg?imageView&thumbnail=3000y1687&type=jpg&quality=96&stripmeta=0&type=jpg
+categories: 题解杂货铺
+cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
 ---
 ## 集合版本
 

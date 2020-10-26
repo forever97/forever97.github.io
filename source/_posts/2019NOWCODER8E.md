@@ -3,7 +3,8 @@ title: 2019NowCoder 8E Explorer [线段树分治+并查集]
 date: 2019-08-20 00:04:09
 tags: [线段树分治, 并查集, 离散化]
 mathjax: true
-cover: http://imglf4.nosdn0.126.net/img/MXRvbEU3WmxrOUlNTjFScHdyR0R3c2RNbzN4NTZyYWgyYWFTNm53eUZ2WmtBa1dNWCtTYi9nPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0
+categories: 题解杂货铺
+cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
 ---
 ## Problem
 有$10^9$只小怪兽，第$i$只编号为$i$

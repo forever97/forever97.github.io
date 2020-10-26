@@ -3,7 +3,8 @@ title: 2019NowCoder 10F Popping Balloons [枚举+线段树]
 date: 2019-08-18 19:06:05
 tags: [枚举, 线段树]
 mathjax: true
-cover: http://imglf4.nosdn0.126.net/img/MXRvbEU3WmxrOUxWeHVrM3M0VnN0Rm1MQmNWcWpid2M2L1dGVHZ1czdGYkhQN0lhYllMZG9nPT0.jpg?imageView&thumbnail=2500y1403&type=jpg&quality=96&stripmeta=0&type=jpg
+categories: 题解杂货铺
+cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
 ---
 ## Problem
 

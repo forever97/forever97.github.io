@@ -3,7 +3,8 @@ title: ICPC2019网络赛 南昌站 D Interesting Series [生成函数+FFT]
 date: 2019-09-11 23:04:08
 tags: [生成函数, FFT]
 mathjax: true
-cover: http://imglf6.nosdn0.126.net/img/MXRvbEU3WmxrOUk1T3BicVZNVEhuSmRWZmJEUjJOM0IyS1EwNUZPSEFlbzF0MkFvQ2RHUzR3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0
+categories: 题解杂货铺
+cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
 ---
 ## Problem
 

@@ -3,7 +3,8 @@ title: ICPC2019网络赛 上海站 C Triple [FFT+BigSmall]
 date: 2019-09-15 20:25:30
 tags: [FFT, BigSmall]
 mathjax: true
-cover: http://imglf6.nosdn0.126.net/img/MXRvbEU3WmxrOUpGS3lrcXgrSExhYU9SeFlHS3FyN1dVL0FOQ2htV0M5RlJtOGhwL3ltb1BRPT0.jpg?imageView&thumbnail=3000y1687&type=jpg&quality=96&stripmeta=0&type=jpg
+categories: 题解杂货铺
+cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
 ---
 ## Problem
 
