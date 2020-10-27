@@ -2,7 +2,7 @@
 title: 信息可视化中的认知偏见
 date: 2020-09-22 10:06:04
 tags: [bias, VIS, 2019]
-categories: 可视化论文阅读
+categories: 可视化胭脂铺
 mathjax: true
 cover: https://forever97.github.io/2020/09/22/cognitive-biases/2.png
 ---

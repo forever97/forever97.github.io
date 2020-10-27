@@ -2,7 +2,7 @@
 title: Data Changes Everything
 date: 2020-09-18 08:40:12
 tags: [VIS, 2019]
-categories: 可视化论文阅读
+categories: 可视化胭脂铺
 mathjax: true
 cover: https://forever97.github.io/2020/09/18/dataChanges/9.png
 ---
