@@ -1,5 +1,5 @@
 - class_name: 友情链接
-  class_desc: My Friends
+  class_desc: 
   link_list:
     - name: Mr.Lee
       link: https://limj0825.github.io/
@@ -9,3 +9,18 @@
       link: https://blog.csdn.net/xin_jun
       avatar: https://forever97.github.io/2020/10/19/Re0-1/2.png
       descr: 人活着就是为了点手游
+    - name: 顾增
+      link: https://guzeng41.github.io/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/12.png
+      descr: 只想ac的小咸鱼
+- class_name: 可视化相关
+  class_desc: 
+  link_list:
+    - name: ZJUVAG
+      link: https://zjuvag.org/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/10.png
+      descr: 浙大可视化小组
+    - name: PKUVIS
+      link: http://vis.pku.edu.cn/blog/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/11.png
+      descr: 北大可视化小组

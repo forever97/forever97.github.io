@@ -32,7 +32,7 @@ skip_render:
 new_post_name: :title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
-external_link: true # Open external links in new tab
+# external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
 post_asset_folder: true
@@ -91,7 +91,7 @@ live2d:
   tagMode: false
   log: false
   model:
-    use: live2d-widget-model-hijiki
+    use: live2d-widget-model-unitychan
   display:
     position: right
     width: 150
@@ -100,3 +100,15 @@ live2d:
     show: true
   react:
     opacity: 0.7
+    
+algolia:
+  appId: 'W2LR7RZUF1'
+  apiKey: '104bcba11e6c814cf38662ec89beb739'
+  indexName: 'forever97'
+  adminApiKey: 'e321b65fc8cff556f940e9918d89a438'
+  
+search:
+  path: search.xml
+  field: post
+  content: true
+
