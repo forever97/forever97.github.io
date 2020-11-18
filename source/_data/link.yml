@@ -13,6 +13,7 @@
       link: https://guzeng41.github.io/
       avatar: https://forever97.github.io/2020/10/19/Re0-1/12.png
       descr: 只想ac的小咸鱼
+      
 - class_name: 可视化相关
   class_desc: 
   link_list:
@@ -24,3 +25,76 @@
       link: http://vis.pku.edu.cn/blog/
       avatar: https://forever97.github.io/2020/10/19/Re0-1/11.png
       descr: 北大可视化小组
+    - name: Vispubdata
+      link: https://sites.google.com/site/vispubdata/home
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/24.png
+      descr: VIS数据
+    - name: HKUST VisLab
+      link: http://blog.sciencenet.cn/u/quhuamin
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/25.png
+      descr: 港科大可视化小组
+    - name: VisLab.wang
+      link: https://vislab.wang/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/26.png
+      descr: 山东大学可视化小组
+      
+- class_name: 百宝箱
+  class_desc: 
+  link_list:
+    - name: AlteredQualia
+      link: https://alteredqualia.com/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/14.png
+      descr: 前端的奇技淫巧
+    - name: Mikutap
+      link: https://aidn.jp/mikutap/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/17.png
+      descr: 来敲首歌吧
+    - name: Similarsites
+      link: https://www.similarsites.com/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/18.png
+      descr: 寻找相似的网站
+    - name: Silk
+      link: http://weavesilk.com/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/19.png
+      descr: 光影背景生成器
+    - name: Useless
+      link: https://theuselessweb.com/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/20.png
+      descr: 去往无用的随机网页
+    - name: Colorhunt
+      link: https://colorhunt.co/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/21.png
+      descr: 色彩狩猎
+    - name: On This Day
+      link: https://www.onthisday.com/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/22.png
+      descr: 历史上的今天
+    - name: Remove
+      link: https://www.remove.bg/zh
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/23.png
+      descr: 图片背景消除
+    - name: 全历史
+      link: https://www.allhistory.com/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/15.png
+      descr: 历史浏览查询
+    - name: Graph Editor
+      link: https://csacademy.com/app/graph_editor/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/29.png
+      descr: 竞赛出题或课程画图工具
+      
+- class_name: 技术指南
+  class_desc: 
+  link_list:
+    - name: React小书
+      link: http://huziketang.mangojuice.top/books/react/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/27.png
+      descr: 关于 React.js 的小书
+    - name: 被删的前端游乐场
+      link: https://godbasin.github.io/front-end-playground/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/28.png
+      descr: Just playing around
+    - name: MDN web docs
+      link: https://developer.mozilla.org/zh-CN/
+      avatar: https://forever97.github.io/2020/10/19/Re0-1/30.png
+      descr: web开发技术指南
+

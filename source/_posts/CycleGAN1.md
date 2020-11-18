@@ -3,7 +3,7 @@ title: CycleGAN的隐写术
 date: 2020-03-27 18:02:36
 tags: [GAN, CycleGAN]
 mathjax: true
-categories: 对抗生成马戏团
+categories: GAN马戏团
 cover: https://forever97.github.io/2020/10/19/Re0-1/9.png
 ---
 [(CycleGAN的介绍戳此处)](https://forever97.github.io/2020/03/27/CycleGAN/)

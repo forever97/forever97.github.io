@@ -24,6 +24,7 @@
     "hexo-server": "^0.3.3",
     "live2d-widget-model-hijiki": "^1.0.5",
     "live2d-widget-model-unitychan": "^1.0.5",
-    "live2d-widget-model-wanko": "^1.0.5"
+    "live2d-widget-model-wanko": "^1.0.5",
+    "valine": "^1.4.14"
   }
 }
