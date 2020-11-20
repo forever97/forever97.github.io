@@ -3,7 +3,7 @@ title: 基于样例的相机行为控制器
 date: 2020-06-01 20:32:56
 tags: [SIGGRAPH, 姿态估计, LSTM]
 mathjax: true
-cover: https://forever97.github.io/2020/06/01/cinematography/2.png
+cover: /2020/06/01/cinematography/2.png
 ---
 ## 背景
 相机规划一直是虚拟现实领域一个活跃的讨论话题

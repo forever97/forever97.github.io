@@ -4,7 +4,7 @@ date: 2020-11-16 08:58:27
 tags: [React]
 categories: React染坊
 mathjax: true
-cover: https://forever97.github.io/2020/11/16/react1/1.png
+cover: /2020/11/16/react1/1.png
 ---
 
 React.js并不能像D3.js一样直接在js里面包含一个文件即可，而是需要一堆工具和库来辅助，这里呢，有一个非常方便的工具[create-react-app](https://github.com/facebookincubator/create-react-app)，可以直接一键生成需要的工具目录，免去全家桶的安装和配置

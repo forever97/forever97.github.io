@@ -4,7 +4,7 @@ date: 2019-09-01 22:24:35
 tags: [莫比乌斯反演, 杜教筛, 欧拉降幂, 数值分块]
 mathjax: true
 categories: 题解杂货铺
-cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
+cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem
 定义函数$f_n(k)=\sum_{l_1=1}^n\sum_{l_2=1}^n\dots\sum_{l_k=1}^n(gcd(l_1,l_2,\dots,l_k))^2$

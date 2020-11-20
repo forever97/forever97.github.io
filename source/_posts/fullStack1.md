@@ -4,7 +4,7 @@ date: 2020-10-28 14:26:30
 tags: [D3]
 categories: D3茶楼
 mathjax: true
-cover: https://forever97.github.io/2020/10/28/fullStack1/8.png
+cover: /2020/10/28/fullStack1/8.png
 ---
 最近准备刷一遍 Fullstack D3 and Data Visualization，系统地学一下d3，顺便记录一下学习过程
 

@@ -4,7 +4,7 @@ date: 2020-07-02 10:40:08
 tags: [VQA, 文献综述, 2017]
 mathjax: true
 categories: 视觉问答藏书阁
-cover: https://forever97.github.io/2020/07/02/VQA/1.png
+cover: /2020/07/02/VQA/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1610.01465v4)
 

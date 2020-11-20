@@ -3,7 +3,7 @@ title: Squeeze-and-Excitation Networks
 date: 2020-07-17 07:11:11
 tags: [attention, CVPR, 2018]
 mathjax: true
-cover: https://forever97.github.io/2020/07/17/SE/1.png
+cover: /2020/07/17/SE/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1709.01507)
    

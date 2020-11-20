@@ -3,11 +3,11 @@ title: Conditional Generative Adversarial Nets
 date: 2020-03-25 20:23:36
 tags: [GAN, CGAN]
 categories: GAN马戏团
-cover: https://forever97.github.io/2020/10/19/Re0-1/9.png
+cover: /2020/10/19/Re0-1/9.png
 ---
 CGAN(Conditional Generative Adversarial Nets)指的是带有附加条件的GAN网络
 
-[(GAN的介绍戳此处)](https://forever97.github.io/2020/03/13/GAN/)
+[(GAN的介绍戳此处)](/2020/03/13/GAN/)
 
 用传统的方法去训练一个输入为text输出的image的generator最后的学习结果会是同一类图片的平均，图片通常非常的模糊
 

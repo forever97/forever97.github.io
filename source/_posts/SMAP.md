@@ -4,7 +4,7 @@ date: 2020-10-20 14:54:32
 tags: [VIS, 2020, 数据降维]
 categories: 可视化胭脂铺
 mathjax: true
-cover: https://forever97.github.io/2020/10/20/SMAP/8.png
+cover: /2020/10/20/SMAP/8.png
 ---
 > IEEE引用格式：J. Xia et al., “SMAP: A Joint Dimensionality Reduction Scheme for Secure Multi-Party Visualization,” 2020, [Online]. Available: http://arxiv.org/abs/2007.15591.
 

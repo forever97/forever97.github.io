@@ -3,7 +3,7 @@ title: ICPC2016网络赛 青岛站 H XM Reserves [FFT建模]
 date: 2020-11-10 21:12:02
 tags: [FFT]
 categories: 题解杂货铺
-cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
+cover: /2020/10/19/Re0-1/8.png
 ---
 
 ## 题意

@@ -4,7 +4,7 @@ date: 2020-08-06 11:56:02
 tags: [VQA, NIPS, 2018, attention]
 mathjax: true
 categories: 视觉问答藏书阁
-cover: https://forever97.github.io/2020/08/06/BAN/1.png
+cover: /2020/08/06/BAN/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1805.07932)
 

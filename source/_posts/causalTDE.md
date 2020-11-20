@@ -3,7 +3,7 @@ title: Causal TDE Inference [因果效应]
 date: 2020-09-14 13:27:00
 tags: [SGG, debias, CVPR, 2020]
 mathjax: true
-cover: https://forever97.github.io/2020/09/14/causalTDE/1.png
+cover: /2020/09/14/causalTDE/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/2002.11949)
 

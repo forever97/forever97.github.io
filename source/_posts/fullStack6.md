@@ -4,7 +4,7 @@ date: 2020-11-03 15:08:53
 tags: [D3]
 categories: D3茶楼
 mathjax: true
-cover: https://forever97.github.io/2020/11/03/fullStack6/5.png
+cover: /2020/11/03/fullStack6/5.png
 ---
 
 在d3中地图的创建通常用d3-geo来实现的，GeoJSON是一种用于表示地理结构(几何图形、特性或特性集合)的格式，我们选择Natural Earth来作为练手数据

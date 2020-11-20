@@ -4,7 +4,7 @@ date: 2020-08-18 07:51:20
 tags: [VQA, CVPR, 2020]
 mathjax: true
 categories: 视觉问答藏书阁
-cover: https://forever97.github.io/2020/08/18/Grid/1.png
+cover: /2020/08/18/Grid/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/2001.03615)
 

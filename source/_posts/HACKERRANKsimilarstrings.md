@@ -3,7 +3,7 @@ title: HackerRank Similar Strings [Hash+后缀排序+二分]
 date: 2019-09-25 22:13:43
 tags: [Hash, 后缀排序, 二分]
 categories: 题解杂货铺
-cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
+cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem
 

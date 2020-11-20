@@ -4,7 +4,7 @@ date: 2019-09-02 11:18:05
 tags: [差分数组, 计数]
 mathjax: true
 categories: 题解杂货铺
-cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
+cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem
 给定a,b,c,d四条边的取值范围，求能构成的合法四边形数量

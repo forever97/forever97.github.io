@@ -4,7 +4,7 @@ date: 2020-10-28 20:03:20
 tags: [D3]
 categories: D3茶楼
 mathjax: true
-cover: https://forever97.github.io/2020/10/28/fullStack2/5.png
+cover: /2020/10/28/fullStack2/5.png
 ---
 
 这次来画一个散点图，用的还是上次画折线图的数据

@@ -4,7 +4,7 @@ date: 2019-08-18 19:06:05
 tags: [枚举, 线段树]
 mathjax: true
 categories: 题解杂货铺
-cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
+cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem
 

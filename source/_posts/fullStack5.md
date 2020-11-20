@@ -4,7 +4,7 @@ date: 2020-11-03 14:07:04
 tags: [D3]
 categories: D3茶楼
 mathjax: true
-cover: https://forever97.github.io/2020/11/03/fullStack5/2.png
+cover: /2020/11/03/fullStack5/2.png
 ---
 
 交互即对于键盘和鼠标对元素的操作做出反应

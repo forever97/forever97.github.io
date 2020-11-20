@@ -3,7 +3,7 @@ title: 小样本学习
 date: 2020-08-12 17:55:33
 tags: [小样本学习, 元学习, 目标检测]
 mathjax: true
-cover: https://forever97.github.io/2020/10/19/Re0-1/4.png
+cover: /2020/10/19/Re0-1/4.png
 ---
 记录一些小样本学习相关知识 (from 物体分类与检测中的小样本学习)
 

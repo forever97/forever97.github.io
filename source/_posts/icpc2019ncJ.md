@@ -3,7 +3,7 @@ title: ICPC2019 南昌站 J Summon [Poyla+BSGS+矩阵乘法]
 date: 2019-12-09 13:47:30
 tags: [Poyla, BSGS, 矩阵乘法]
 categories: 题解杂货铺
-cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
+cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem
 

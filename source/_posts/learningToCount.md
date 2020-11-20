@@ -4,7 +4,7 @@ date: 2020-07-28 07:50:34
 tags: [VQA, ICLR, 2018, count]
 mathjax: true
 categories: 视觉问答藏书阁
-cover: https://forever97.github.io/2020/07/28/learningToCount/0.png
+cover: /2020/07/28/learningToCount/0.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1802.05766)
 

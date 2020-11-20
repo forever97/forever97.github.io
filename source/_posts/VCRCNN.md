@@ -3,7 +3,7 @@ title: VC R-CNN [将常识引入特征]
 date: 2020-07-14 07:06:28
 tags: [feature extraction, 2020, CVPR, debias]
 mathjax: true
-cover: https://forever97.github.io/2020/07/14/VCRCNN/2.png
+cover: /2020/07/14/VCRCNN/2.png
 ---
 [Paper Download Address](https://arxiv.org/abs/2002.12204)
 

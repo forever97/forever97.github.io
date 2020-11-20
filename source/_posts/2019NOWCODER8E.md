@@ -4,7 +4,7 @@ date: 2019-08-20 00:04:09
 tags: [线段树分治, 并查集, 离散化]
 mathjax: true
 categories: 题解杂货铺
-cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
+cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem
 有$10^9$只小怪兽，第$i$只编号为$i$

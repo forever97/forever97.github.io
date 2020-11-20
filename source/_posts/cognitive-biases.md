@@ -4,7 +4,7 @@ date: 2020-09-22 10:06:04
 tags: [bias, VIS, 2019]
 categories: 可视化胭脂铺
 mathjax: true
-cover: https://forever97.github.io/2020/09/22/cognitive-biases/2.png
+cover: /2020/09/22/cognitive-biases/2.png
 ---
 > IEEE引用格式：E. Dimara, S. Franconeri, C. Plaisant, A. Bezerianos, and P. Dragicevic, “A Task-Based Taxonomy of Cognitive Biases for Information Visualization,” IEEE Trans. Vis. Comput. Graph., vol. 26, no. 2, pp. 1413–1432, 2020, doi: 10.1109/TVCG.2018.2872577.
 

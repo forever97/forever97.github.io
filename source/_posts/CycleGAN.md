@@ -4,7 +4,7 @@ date: 2020-03-27 16:39:22
 tags: [GAN, CycleGAN]
 mathjax: true
 categories: GAN马戏团
-cover: https://forever97.github.io/2020/10/19/Re0-1/9.png
+cover: /2020/10/19/Re0-1/9.png
 ---
 风格迁移问题中，我们需要实现从输入图片到输出图片的映射，那么在训练一个Generator的时候我们需要成对的训练集，然而成对的训练集并不容易获得
 

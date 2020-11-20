@@ -4,7 +4,7 @@ date: 2020-08-05 10:35:17
 tags: [VQA, NIPS, 2018, Graph Structure]
 mathjax: true
 categories: 视觉问答藏书阁
-cover: https://forever97.github.io/2020/08/05/graphStructure/1.png
+cover: /2020/08/05/graphStructure/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1806.07243)
 

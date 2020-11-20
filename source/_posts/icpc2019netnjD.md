@@ -4,7 +4,7 @@ date: 2019-09-02 10:38:31
 tags: [期望DP, 拓扑排序]
 mathjax: true
 categories: 题解杂货铺
-cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
+cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem
 一个机器人在一张n个点m条边的有向无环图上行走，每天等概率地在原地不动或者移动到相邻的位置

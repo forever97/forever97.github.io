@@ -4,7 +4,7 @@ date: 2020-08-11 16:41:43
 tags: [VQA, 元学习, ECCV, 2018]
 mathjax: true
 categories: 视觉问答藏书阁
-cover: https://forever97.github.io/2020/08/11/metaLearningVQA/1.png
+cover: /2020/08/11/metaLearningVQA/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1711.08105)
 

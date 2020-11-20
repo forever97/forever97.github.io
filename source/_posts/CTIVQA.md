@@ -4,7 +4,7 @@ date: 2020-08-27 13:08:17
 tags: [VQA, 迁移学习, 知识蒸馏, ICCV, 2019]
 mathjax: true
 categories: 视觉问答藏书阁
-cover: https://forever97.github.io/2020/08/27/CTIVQA/16.png
+cover: /2020/08/27/CTIVQA/16.png
 ---
 
 [Paper Download Address](https://arxiv.org/abs/1909.11874)

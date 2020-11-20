@@ -4,7 +4,7 @@ date: 2020-08-05 15:13:50
 tags: [VQA, attention, 2017]
 mathjax: true
 categories: 视觉问答藏书阁
-cover: https://forever97.github.io/2020/08/05/SAAA/1.png
+cover: /2020/08/05/SAAA/1.png
 ---
 [Paper Download Address](https://arxiv.org/pdf/1704.03162.pdf)
 

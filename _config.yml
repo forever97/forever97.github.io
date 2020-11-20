@@ -79,7 +79,9 @@ theme: butterfly
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:forever97/forever97.github.io.git
+  repository:
+    gitee: https://gitee.com/forever97/forever97.git
+    github: git@github.com:forever97/forever97.github.io.git
   branch: master
 
 live2d:

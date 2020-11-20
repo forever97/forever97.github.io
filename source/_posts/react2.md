@@ -4,7 +4,7 @@ date: 2020-11-17 08:21:39
 tags: [React]
 categories: React染坊
 mathjax: true
-cover: https://forever97.github.io/2020/11/17/react2/3.png
+cover: /2020/11/17/react2/3.png
 ---
 
 ## 项目总览

@@ -4,7 +4,7 @@ date: 2019-09-11 23:04:08
 tags: [生成函数, FFT]
 mathjax: true
 categories: 题解杂货铺
-cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
+cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem
 

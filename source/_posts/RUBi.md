@@ -4,7 +4,7 @@ date: 2020-08-20 13:45:30
 tags: [VQA, debias, NIPS, 2019]
 mathjax: true
 categories: 视觉问答藏书阁
-cover: https://forever97.github.io/2020/08/20/RUBi/9.png
+cover: /2020/08/20/RUBi/9.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1906.10169)
 

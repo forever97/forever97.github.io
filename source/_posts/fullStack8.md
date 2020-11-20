@@ -4,7 +4,7 @@ date: 2020-11-05 13:47:46
 tags: [D3]
 categories: D3茶楼
 mathjax: true
-cover: https://forever97.github.io/2020/11/05/fullStack8/4.png
+cover: /2020/11/05/fullStack8/4.png
 ---
 
 这回我们用祖传的数据来画一个雷达图

@@ -4,7 +4,7 @@ date: 2020-10-29 13:49:30
 tags: [D3]
 categories: D3茶楼
 mathjax: true
-cover: https://forever97.github.io/2020/10/29/fullStack3/6.png
+cover: /2020/10/29/fullStack3/6.png
 ---
 
 还是熟悉的数据，这回来做一个柱状图

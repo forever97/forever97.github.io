@@ -4,7 +4,7 @@ date: 2020-07-29 07:32:55
 tags: [count, code, VQA, ICLR, 2018]
 mathjax: true
 categories: 视觉问答藏书阁
-cover: https://forever97.github.io/2020/07/29/count/5.png
+cover: /2020/07/29/count/5.png
 ---
 [Code Download Address](https://github.com/Cyanogenoid/vqa-counting/blob/master/vqa-v2/counting.py)
 

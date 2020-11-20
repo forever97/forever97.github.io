@@ -4,7 +4,7 @@ date: 2019-08-28 11:04:29
 tags: [莫队, 可持久化线段树, 线段树, 树上倍增]
 mathjax: true
 categories: 题解杂货铺
-cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
+cover: /2020/10/19/Re0-1/8.png
 ---
 ## 集合版本
 

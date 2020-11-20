@@ -4,7 +4,7 @@ date: 2020-11-05 08:55:54
 tags: [D3]
 categories: D3茶楼
 mathjax: true
-cover: https://forever97.github.io/2020/11/05/fullStack7/1.png
+cover: /2020/11/05/fullStack7/1.png
 ---
 
 常用git的同学可能对热图(heatmap)已经很熟悉了，就是这个东西

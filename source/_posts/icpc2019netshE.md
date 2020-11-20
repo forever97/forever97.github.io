@@ -4,7 +4,7 @@ date: 2019-09-15 19:36:05
 tags: [生成函数, 泰勒展开]
 mathjax: true
 categories: 题解杂货铺
-cover: https://forever97.github.io/2020/10/19/Re0-1/8.png
+cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem
 

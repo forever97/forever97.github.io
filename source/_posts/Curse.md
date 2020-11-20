@@ -4,7 +4,7 @@ date: 2020-09-21 08:55:49
 tags: [bias, VIS, 2019]
 categories: 可视化胭脂铺
 mathjax: true
-cover: https://forever97.github.io/2020/09/21/Curse/10.png
+cover: /2020/09/21/Curse/10.png
 ---
 这篇是VIS的Bias & Patterns标签下的一篇文章
 

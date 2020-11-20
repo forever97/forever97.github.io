@@ -3,7 +3,7 @@ title: KL散度
 date: 2020-03-12 20:51:15
 tags: [KL散度, 最大似然估计, 交叉熵, JS散度]
 mathjax: true
-cover: https://forever97.github.io/2020/10/19/Re0-1/9.png
+cover: /2020/10/19/Re0-1/9.png
 ---
 ## 概率分布
 

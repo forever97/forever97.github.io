@@ -4,7 +4,7 @@ date: 2020-09-29 08:36:57
 tags: [bias, VIS, 2019]
 categories: 可视化胭脂铺
 mathjax: true
-cover: https://forever97.github.io/2020/09/29/GeometricScaling/1.png
+cover: /2020/09/29/GeometricScaling/1.png
 ---
 
 > IEEE引用格式：Y. Wei et al., “Evaluating perceptual bias during geometric scaling of scatterplots,” IEEE Trans. Vis. Comput. Graph., vol. 26, no. 1, pp. 321–331, 2020, doi: 10.1109/TVCG.2019.2934208.

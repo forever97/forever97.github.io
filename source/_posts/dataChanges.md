@@ -4,7 +4,7 @@ date: 2020-09-18 08:40:12
 tags: [VIS, 2019]
 categories: 可视化胭脂铺
 mathjax: true
-cover: https://forever97.github.io/2020/09/18/dataChanges/9.png
+cover: /2020/09/18/dataChanges/9.png
 ---
 这是看的第一篇关于可视化方向的顶会文章(VIS2019 Best Paper)，感觉跟CVPR的行文思路差别有点大，大致翻译了一下，可能会有些纰漏
 
