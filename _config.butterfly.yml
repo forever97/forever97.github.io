@@ -1,3 +1,24 @@
+# 自定义右键菜单
+GalMenu:
+  enable: true # true or false  是否开启右键
+  css:  /css/galmenu.css #css相对路径
+  js: /js/galmenu.js #js相对路径
+  audio: true  # true or false 是否开启点击音乐
+  music: /music/galmenu.mp3 #点击引用相对路径
+  MenuItem: #菜单链接和标签配置
+    item1: 镜像站
+    link1: /
+    item2: 时间轴
+    link2: /archives/
+    item3: 标签
+    link3: /tags/
+    item4: 分类
+    link4: /categories/
+    item5: 友人帐
+    link5: /link/
+    item6: 留言板
+    link6: /comments/
+
 # Main menu navigation (導航目錄)
 # --------------------------------------
 
@@ -632,6 +653,8 @@ preloader: false
 
 aside:
   enable: true
+  hide: false
+  button: true
   mobile: true # display on mobile
   position: right # left or right
   card_author:
@@ -816,7 +839,7 @@ pangu:
 # Lazyload (圖片懶加載)
 # https://github.com/verlok/lazyload
 lazyload:
-  enable: false
+  enable: true
   post: /img/loading.gif
 
 # PWA
@@ -848,11 +871,14 @@ inject:
     - <link rel="stylesheet" href="/gitcalendar/css/gitcalendar.css"/>
     - <link rel="stylesheet" href="/magnet/css/catalogMagnet.css"/>
     - <link rel="stylesheet" href="/cardlistpost/cardlistpost.css"/>
+    - <link rel="stylesheet" href="/css/font-awesome-animation.min.css">
+  # - <link rel="stylesheet" href="/css/mouse.css"/>
   # - <link rel="stylesheet" href="/xxx.css">
   bottom:
     - <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
     - <script src="/gitcalendar/js/gitcalendar.js"></script>
     - <script src="/magnet/js/catalogMagnet.js"></script>
+    - <script src="/js/mirror.js"></script>
     # - <script src="xxxx"></script>
 
 # CDN

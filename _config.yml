@@ -114,6 +114,12 @@ search:
   field: post
   content: true
   
+# hexo-admin authentification
+admin:
+  username: forever97
+  password_hash: $2a$10$l2FnptjbSWr1vRA/5BUbLe9rnNjJpAhliiNM8Bvmn3K.oQXuBBHKa
+  secret: zxcvbnm
+  
 
 
 
