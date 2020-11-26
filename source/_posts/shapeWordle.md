@@ -1,7 +1,7 @@
 ---
 title: ShapeWordle：阿基米德螺旋感知形状生成词云
 date: 2020-11-24 08:24:33
-tags: [VIS, 2019, 词云]
+tags: [VIS, 2019, 词云, TVCG, InfoVis]
 categories: 可视化胭脂铺
 cover: /2020/11/24/shapeWordle/1.png
 ---

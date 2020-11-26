@@ -95,7 +95,7 @@ live2d:
   model:
     use: 33.2017.newyear
   display:
-    position: left
+    position: right
     width: 200
     height: 300
   mobile:
