@@ -3,7 +3,7 @@ title: 为VQA生成原因
 date: 2020-07-07 08:10:00
 tags: [VQA, 2020, rationales generation]
 mathjax: true
-categories: 视觉问答藏书阁
+categories: VQA藏书阁
 cover: /2020/07/07/generatingRationales/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/2004.02032)

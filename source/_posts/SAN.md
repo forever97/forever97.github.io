@@ -3,7 +3,7 @@ title: SAN [层叠注意力机制]
 date: 2020-08-04 18:32:41
 tags: [VQA, attention, 2016]
 mathjax: true
-categories: 视觉问答藏书阁
+categories: VQA藏书阁
 cover: /2020/08/04/SAN/2.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1511.02274)

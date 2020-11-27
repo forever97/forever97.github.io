@@ -872,6 +872,8 @@ inject:
     - <link rel="stylesheet" href="/magnet/css/catalogMagnet.css"/>
     - <link rel="stylesheet" href="/cardlistpost/cardlistpost.css"/>
     - <link rel="stylesheet" href="/css/font-awesome-animation.min.css">
+    - <link rel="stylesheet" href="/swiper/swiper.min.css">
+    - <link rel="stylesheet" href="/swiper/swiperstyle.css">
   # - <link rel="stylesheet" href="/css/mouse.css"/>
   # - <link rel="stylesheet" href="/xxx.css">
   bottom:
@@ -879,6 +881,8 @@ inject:
     - <script src="/gitcalendar/js/gitcalendar.js"></script>
     - <script src="/magnet/js/catalogMagnet.js"></script>
     - <script src="/js/mirror.js"></script>
+    - <script src="/swiper/swiper.min.js"></script>
+    - <script src="/swiper/swiperindex.js"></script>
     # - <script src="xxxx"></script>
 
 # CDN

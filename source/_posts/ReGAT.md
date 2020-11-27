@@ -3,7 +3,7 @@ title: ReGAT [多类型图结构]
 date: 2020-08-07 15:18:09
 tags: [VQA, Graph Structure, attention, ICCV, 2019]
 mathjax: true
-categories: 视觉问答藏书阁
+categories: VQA藏书阁
 cover: /2020/08/07/ReGAT/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1903.12314)

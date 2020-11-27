@@ -3,7 +3,7 @@ title: SQulNTing [子问题一致性]
 date: 2020-07-09 07:59:19
 tags: [VQA, dataset, 2020, CVPR]
 mathjax: true
-categories: 视觉问答藏书阁
+categories: VQA藏书阁
 cover: /2020/07/09/SQuINTing/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/2001.06927)

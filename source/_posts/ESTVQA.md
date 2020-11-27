@@ -3,7 +3,7 @@ title: EST-VQA [双语文本VQA]
 date: 2020-07-20 07:27:09
 tags: [VQA, 2020, CVPR, dataset, TextVQA]
 mathjax: true
-categories: 视觉问答藏书阁
+categories: VQA藏书阁
 cover: /2020/07/20/ESTVQA/1.png
 ---
 [Paper Download Address](https://openaccess.thecvf.com/content_CVPR_2020/papers/Wang_On_the_General_Value_of_Evidence_and_Bilingual_Scene-Text_Visual_CVPR_2020_paper.pdf)

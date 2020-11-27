@@ -3,7 +3,7 @@ title: Conditioned Graph Structures [图结构]
 date: 2020-08-05 10:35:17
 tags: [VQA, NIPS, 2018, Graph Structure]
 mathjax: true
-categories: 视觉问答藏书阁
+categories: VQA藏书阁
 cover: /2020/08/05/graphStructure/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1806.07243)

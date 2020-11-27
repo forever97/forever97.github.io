@@ -3,7 +3,7 @@ title: CC-VQA [循环一致性]
 date: 2020-07-30 09:06:51
 tags: [VQA, CVPR, 2019]
 mathjax: true
-categories: 视觉问答藏书阁
+categories: VQA藏书阁
 cover: /2020/07/30/CCVQA/2.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1902.05660v1)

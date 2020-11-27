@@ -3,7 +3,7 @@ title: Tips and Tricks for Visual Question Answering
 date: 2020-07-23 07:50:12
 tags: [VQA, attention, CVPR, 2018]
 mathjax: true
-categories: 视觉问答藏书阁
+categories: VQA藏书阁
 cover: /2020/07/23/BUTD1/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1708.02711)

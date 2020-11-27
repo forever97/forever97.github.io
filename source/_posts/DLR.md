@@ -3,7 +3,7 @@ title: 通过分解语言表征来克服VQA中的语言先验
 date: 2020-07-03 20:58:39
 tags: [VQA, AAAI, 2020, debias]
 mathjax: true
-categories: 视觉问答藏书阁
+categories: VQA藏书阁
 cover: /2020/07/03/DLR/1.png
 ---
 [Paper Download Address](https://jingchenchen.github.io/files/papers/2020/AAAI_Decom_VQA.pdf)

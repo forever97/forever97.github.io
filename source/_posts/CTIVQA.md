@@ -3,7 +3,7 @@ title: CTI-VQA [知识蒸馏]
 date: 2020-08-27 13:08:17
 tags: [VQA, 迁移学习, 知识蒸馏, ICCV, 2019]
 mathjax: true
-categories: 视觉问答藏书阁
+categories: VQA藏书阁
 cover: /2020/08/27/CTIVQA/16.png
 ---
 
