@@ -2,8 +2,7 @@
 title: ICPC2019网络赛 南京站 E K Sum [杜教筛+欧拉降幂]
 date: 2019-09-01 22:24:35
 tags: [莫比乌斯反演, 杜教筛, 欧拉降幂, 数值分块]
-mathjax: true
-categories: 题解杂货铺
+categories: ✨题解杂货铺
 cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem

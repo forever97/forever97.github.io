@@ -2,7 +2,7 @@
 title: D3学习记录：散点图
 date: 2020-10-28 20:03:20
 tags: [D3]
-categories: D3茶楼
+categories: 🍵D3茶楼
 mathjax: true
 cover: /2020/10/28/fullStack2/5.png
 ---

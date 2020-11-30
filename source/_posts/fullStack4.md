@@ -2,7 +2,7 @@
 title: D3学习记录：动画与过渡
 date: 2020-10-29 16:23:51
 tags: [D3]
-categories: D3茶楼
+categories: 🍵D3茶楼
 mathjax: true
 cover: /2020/10/29/fullStack4/1.png
 ---

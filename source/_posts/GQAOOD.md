@@ -3,7 +3,7 @@ title: GQA-OOD [低频样本处理]
 date: 2020-07-08 08:01:56
 tags: [VQA, 2020, dataset]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/07/08/GQAOOD/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/2006.05121)

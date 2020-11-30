@@ -2,7 +2,7 @@
 title: ICPC2019网络赛 上海站 G Substring [Hash]
 date: 2019-09-16 14:10:31
 tags: [Hash]
-categories: 题解杂货铺
+categories: ✨题解杂货铺
 cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem

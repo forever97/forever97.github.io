@@ -3,7 +3,7 @@ title: Where To Look [注意力机制]
 date: 2020-07-27 07:27:22
 tags: [VQA, attention, CVPR, 2016]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/07/27/whereToLook/2.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1511.07394)

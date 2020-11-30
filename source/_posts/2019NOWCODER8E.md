@@ -2,8 +2,7 @@
 title: 2019NowCoder 8E Explorer [线段树分治+并查集]
 date: 2019-08-20 00:04:09
 tags: [线段树分治, 并查集, 离散化]
-mathjax: true
-categories: 题解杂货铺
+categories: ✨题解杂货铺
 cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem

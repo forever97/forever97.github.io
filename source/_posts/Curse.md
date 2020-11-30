@@ -2,7 +2,7 @@
 title: 可视化中知识的诅咒
 date: 2020-09-21 08:55:49
 tags: [bias, VIS, 2019]
-categories: 可视化胭脂铺
+categories: 💄VIS胭脂铺
 mathjax: true
 cover: /2020/09/21/Curse/10.png
 ---

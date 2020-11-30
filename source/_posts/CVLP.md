@@ -3,7 +3,7 @@ title: CVLP [预处理]
 date: 2020-08-14 15:40:52
 tags: [VQA, 对比学习, VLP, 预训练, 2020]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/08/14/CVLP/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/2007.13135)

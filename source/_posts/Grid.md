@@ -3,7 +3,7 @@ title: Grid Feats VQA [回归网格特征]
 date: 2020-08-18 07:51:20
 tags: [VQA, CVPR, 2020]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/08/18/Grid/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/2001.03615)

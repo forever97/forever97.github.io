@@ -2,7 +2,7 @@
 title: D3学习记录：雷达图
 date: 2020-11-05 13:47:46
 tags: [D3]
-categories: D3茶楼
+categories: 🍵D3茶楼
 mathjax: true
 cover: /2020/11/05/fullStack8/4.png
 ---

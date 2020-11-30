@@ -3,7 +3,7 @@ title: RAMEN [early fusion]
 date: 2020-08-28 15:13:36
 tags: [VQA, 2019]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/08/28/RAMEN/2.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1903.00366)

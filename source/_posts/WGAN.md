@@ -2,7 +2,7 @@
 title: Wasserstein GAN
 date: 2020-04-10 18:13:06
 tags: [GAN, WGAN]
-categories: GAN马戏团
+categories: 🎪GAN马戏团
 cover: /2020/10/19/Re0-1/9.png
 ---
 Wasserstein GAN希望采用Earth Mover Distance来取代JS-divergence，以解决GAN训练中梯度弥散和梯度不稳定的问题

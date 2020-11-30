@@ -3,7 +3,7 @@ title: Generative Adversarial Networks
 date: 2020-03-13 15:24:28
 tags: [GAN]
 mathjax: true
-categories: GAN马戏团
+categories: 🎪GAN马戏团
 cover: /2020/10/19/Re0-1/9.png
 ---
 

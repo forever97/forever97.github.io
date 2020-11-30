@@ -2,8 +2,7 @@
 title: fGAN--任意散度GAN
 date: 2020-04-03 17:09:42
 tags: [GAN, fGAN, 散度]
-mathjax: true
-categories: GAN马戏团
+categories: 🎪GAN马戏团
 cover: /2020/10/19/Re0-1/9.png
 ---
 fGAN的基本想法就是希望用不同的散度来取代JS散度

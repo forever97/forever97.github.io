@@ -2,7 +2,7 @@
 title: React学习记录：基本环境安装 (填坑记录)
 date: 2020-11-16 08:58:27
 tags: [React]
-categories: React染坊
+categories: 🎨React染坊
 mathjax: true
 cover: /2020/11/16/react1/1.png
 ---

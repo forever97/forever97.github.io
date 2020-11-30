@@ -3,7 +3,7 @@ title: seada-VQA [对抗数据扩充样本]
 date: 2020-08-19 15:10:15
 tags: [VQA, 数据增强, 对抗学习, ECCV, 2020]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/08/19/seadaVQA/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/2007.09592)

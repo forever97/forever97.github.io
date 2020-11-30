@@ -3,7 +3,7 @@ title: DFAF [动态模内模间注意流]
 date: 2020-07-29 18:28:58
 tags: [VQA, attention, CVPR, 2019]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/07/29/DFAF/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1812.05252)

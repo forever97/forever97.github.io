@@ -3,7 +3,7 @@ title: BUTD注意力机制
 date: 2020-07-15 07:34:28
 tags: [VQA, image captioning, attention, CVPR, 2018]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/07/15/BUTD/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1707.07998)

@@ -3,7 +3,7 @@ title: ICPC2019网络赛 上海站 E Counting Sequences II [生成函数+泰勒�
 date: 2019-09-15 19:36:05
 tags: [生成函数, 泰勒展开]
 mathjax: true
-categories: 题解杂货铺
+categories: ✨题解杂货铺
 cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem

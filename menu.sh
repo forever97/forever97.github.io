@@ -1,10 +1,8 @@
 #!/bin/sh
-#本脚本用于群友交流，完全开源，可以随意传阅，不过希望保留出处。
+# 改自Akilarlxh脚本
 echo "==========================================="
-echo "       欢迎使用萌新版Hexo控制脚本！"
-echo "            双击打开即可使用"
-echo "        更多内容可以访问我的博客"
-echo "          https://akilar.top"
+echo "       欢迎使用Hexo控制脚本！"
+echo "         双击打开即可使用"
 echo "==========================================="
 HexoPath=$(cd "$(dirname "$0")"; pwd)
 cd ${HexoPath}
@@ -12,20 +10,21 @@ printf "\033[32m Blog 根目录："${HexoPath}"\033[0m"
 echo " "
 echo "[0] 退出菜单"
 echo "=============以下功能需要在空文件夹内使用================"
-echo "[1] 初始化安装Hexo（仅在第一次安装时使用）"
-echo "[2] 从云端恢复Hexo（需要在脚本中配置仓库URL）"
+echo "[1] 初始化安装Hexo (仅在第一次安装时使用)"
+echo "[2] 从云端恢复Hexo (需用文本编辑脚本配置仓库URL)"
 echo "=============以下功能需要在Hexo文件夹内使用================"
 echo "[3] 开启本地预览"
-echo "[4] 重新编译后开启本地预览（修改过_config.yml需使用这个才能看到变化）"
+echo "[4] 重新编译后开启本地预览"
 echo "[5] 部署页面到博客网站"
-echo "[6] 从Github拉取最新版本（需要在脚本中配置仓库URL）"
+echo "[6] 从Github拉取最新版本 (需用文本编辑脚本配置仓库URL)"
 echo "[7] 提交本地修改到GitHub"
-echo "[8] 升级Hexo及插件（慎用）"
+echo "[8] 升级Hexo及插件 (慎用)"
 echo "[9] 安装butterfly主题"
 echo "[10] 安装Hexo-Admin(用于管理或撰写Hexo博文，适合初学者使用)"
+echo "[11] 新建一篇文章"
 echo "=============以下功能为全局指令================"
-echo "[11] 安装ssh密钥"
-echo "[12] 验证ssh密钥"
+echo "[12] 安装ssh密钥"
+echo "[13] 验证ssh密钥"
 echo " "
 printf "请选择需要的功能，默认选择[3] 开启本地预览"
 echo " "
@@ -50,10 +49,6 @@ hexo version
 printf "\033[32mINFO \033[0m 安装完成，您可以开始您的Hexo之旅了！\n"
 printf "\033[32mINFO \033[0m 请将本脚本文件放入Hexo文件夹以继续使用其他功能！\n"
 sleep 5s
-printf "\033[32mINFO \033[0m 请将本脚本文件放入Hexo文件夹以继续使用其他功能！\n"
-sleep 5s
-printf "\033[32mINFO \033[0m 请将本脚本文件放入Hexo文件夹以继续使用其他功能！\n"
-sleep 5s
 exit 0
 else
 if [ "$answer" = "2" ]; then
@@ -67,10 +62,6 @@ npm install -g hexo-cli
 # npm install gulp-cli -g #全局安装gulp，未配置不用开启
 npm install --save
 printf "\033[32mINFO \033[0m 恢复完成，您可以开始您的Hexo之旅了！\n"
-printf "\033[32mINFO \033[0m 请将本脚本文件放入Hexo文件夹以继续使用其他功能！\n"
-sleep 5s
-printf "\033[32mINFO \033[0m 请将本脚本文件放入Hexo文件夹以继续使用其他功能！\n"
-sleep 5s
 printf "\033[32mINFO \033[0m 请将本脚本文件放入Hexo文件夹以继续使用其他功能！\n"
 sleep 5s
 exit 0
@@ -123,9 +114,6 @@ git push origin master #2020年10月后github新建仓库默认分支改为main�
 printf "\033[32mINFO \033[0m 提交完毕，您的修改已上传至Github！\n"
 sleep 1s
 exec ${HexoPath}/menu.sh
-
-
-
 else
 if [ "$answer" = "8" ]; then
 printf "\033[32mINFO \033[0m 请先确认当前版本 ...\n"
@@ -175,13 +163,21 @@ sleep 2s
 hexo server
 sleep 1s
 exec ${HexoPath}/menu.sh
-
 else
 if [ "$answer" = "11" ]; then
+printf "\033[32mINFO \033[0m 输入文章名字: \n"
+sleep 1s
+read name
+hexo new "$name"
+printf "\033[32mINFO \033[0m 创建完毕 \n"
+sleep 1s
+exec ${HexoPath}/menu.sh
+else
+if [ "$answer" = "12" ]; then
 printf "\033[32mINFO \033[0m 正在重新设置github global config...\n"
-git config --global user.name "akilarlxh" # 记得替换用户名为自己的
-git config --global user.email "akilarlxh@gmail.com" # 记得替换邮箱为自己的
-ssh-keygen -t rsa -C akilarlxh@gmail.com # 记得替换邮箱为自己的
+git config --global user.name "forever97" # 记得替换用户名为自己的
+git config --global user.email "857426255@qq.com" # 记得替换邮箱为自己的
+ssh-keygen -t rsa -C 857426255@qq.com # 记得替换邮箱为自己的
 printf "\033[32mINFO \033[0m 即将打开sshkey，复制后可按 Ctrl+D 返回...\n"
 sleep 2s
 less ~/.ssh/id_rsa.pub
@@ -189,7 +185,7 @@ printf "\033[32mINFO \033[0m 配置完成，请将sshkey添加到Github！\n"
 sleep 1s
 exec ${HexoPath}/menu.sh
 else
-if [ "$answer" = "12" ]; then
+if [ "$answer" = "13" ]; then
 printf "\033[32mINFO \033[0m 正在验证SSHkey是否配置成功 ...\n"
 ssh -T git@github.com
 printf "\033[32mINFO \033[0m 验证完毕，您的SSHkey已成功绑定至Github！\n"
@@ -205,6 +201,7 @@ else
 printf "\033[31mERROR \033[0m 输入错误，请返回重新选择...\n"
 sleep 1s
 exec ${HexoPath}/menu.sh
+fi
 fi
 fi
 fi

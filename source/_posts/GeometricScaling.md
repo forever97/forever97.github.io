@@ -2,7 +2,7 @@
 title: 散点图缩放所产生的偏见
 date: 2020-09-29 08:36:57
 tags: [bias, VIS, 2019]
-categories: 可视化胭脂铺
+categories: 💄VIS胭脂铺
 mathjax: true
 cover: /2020/09/29/GeometricScaling/1.png
 ---

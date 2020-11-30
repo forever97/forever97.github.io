@@ -2,7 +2,7 @@
 title: D3学习记录：热图
 date: 2020-11-05 08:55:54
 tags: [D3]
-categories: D3茶楼
+categories: 🍵D3茶楼
 mathjax: true
 cover: /2020/11/05/fullStack7/1.png
 ---

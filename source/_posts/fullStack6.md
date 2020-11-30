@@ -2,7 +2,7 @@
 title: D3学习记录：地图
 date: 2020-11-03 15:08:53
 tags: [D3]
-categories: D3茶楼
+categories: 🍵D3茶楼
 mathjax: true
 cover: /2020/11/03/fullStack6/5.png
 ---

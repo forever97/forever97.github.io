@@ -2,7 +2,7 @@
 title: React学习记录：更强大的评论系统
 date: 2020-11-19 09:21:49
 tags: [React]
-categories: React染坊
+categories: 🎨React染坊
 mathjax: true
 cover: /2020/11/19/react3/1.png
 ---

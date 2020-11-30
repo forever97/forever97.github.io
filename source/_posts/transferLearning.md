@@ -3,7 +3,7 @@ title: 将迁移学习应用于VQA
 date: 2020-08-25 08:40:43
 tags: [VQA, 迁移学习, CVPR, 2019]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/08/25/transferLearning/2.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1810.02358)

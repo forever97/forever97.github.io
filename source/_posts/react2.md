@@ -2,7 +2,7 @@
 title: React学习记录：实现一个简单的评论系统
 date: 2020-11-17 08:21:39
 tags: [React]
-categories: React染坊
+categories: 🎨React染坊
 mathjax: true
 cover: /2020/11/17/react2/3.png
 ---

@@ -3,7 +3,7 @@ title: VQA as Meta Learning Task [元学习]
 date: 2020-08-11 16:41:43
 tags: [VQA, 元学习, ECCV, 2018]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/08/11/metaLearningVQA/1.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1711.08105)

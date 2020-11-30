@@ -3,7 +3,7 @@ title: HackerRank How Many Substrings [后缀自动机+线段树+动态树]
 date: 2019-09-11 11:47:20
 tags: [线段树, 后缀自动机, 动态树, 扫描线]
 mathjax: true
-categories: 题解杂货铺
+categories: ✨题解杂货铺
 cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem

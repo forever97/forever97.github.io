@@ -3,7 +3,7 @@ title: ICPC2019网络赛 南京站 D Robots [期望DP]
 date: 2019-09-02 10:38:31
 tags: [期望DP, 拓扑排序]
 mathjax: true
-categories: 题解杂货铺
+categories: ✨题解杂货铺
 cover: /2020/10/19/Re0-1/8.png
 ---
 ## Problem

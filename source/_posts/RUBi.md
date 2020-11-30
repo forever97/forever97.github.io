@@ -3,7 +3,7 @@ title: RUBi [question-only分支]
 date: 2020-08-20 13:45:30
 tags: [VQA, debias, NIPS, 2019]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/08/20/RUBi/9.png
 ---
 [Paper Download Address](https://arxiv.org/abs/1906.10169)

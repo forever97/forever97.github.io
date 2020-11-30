@@ -3,7 +3,7 @@ title: FPAIT [小样本学习]
 date: 2020-08-11 07:38:24
 tags: [VQA, 2018, ACMMM, 小样本学习]
 mathjax: true
-categories: VQA藏书阁
+categories: 📚VQA藏书阁
 cover: /2020/08/11/FPAIT/7.png
 ---
 [Paper Download Address](https://dl.acm.org/doi/10.1145/3240508.3240527)
