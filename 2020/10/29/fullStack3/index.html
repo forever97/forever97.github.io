@@ -1,0 +1,364 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D3学习记录：柱状图 | 未央の童话镇</title><meta name="keywords" content="D3"><meta name="author" content="forever97"><meta name="copyright" content="forever97"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="还是熟悉的数据，这回来做一个柱状图 [数据下载地址] 准备工作还是熟悉的数据载入 12const pathToJSON &#x3D; &quot;.&#x2F;data&#x2F;nyc_weather_data.json&quot;const dataset &#x3D; await d3.json(pathToJSON)  接着设置参数 1234567891011121314151617const width &#x3D; 600let di">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D3学习记录：柱状图">
+<meta property="og:url" content="https://forever97.top/2020/10/29/fullStack3/index.html">
+<meta property="og:site_name" content="未央の童话镇">
+<meta property="og:description" content="还是熟悉的数据，这回来做一个柱状图 [数据下载地址] 准备工作还是熟悉的数据载入 12const pathToJSON &#x3D; &quot;.&#x2F;data&#x2F;nyc_weather_data.json&quot;const dataset &#x3D; await d3.json(pathToJSON)  接着设置参数 1234567891011121314151617const width &#x3D; 600let di">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack3-6.png">
+<meta property="article:published_time" content="2020-10-29T13:49:30.000Z">
+<meta property="article:modified_time" content="2021-07-08T07:43:37.941Z">
+<meta property="article:author" content="forever97">
+<meta property="article:tag" content="D3">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack3-6.png"><link rel="shortcut icon" href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/favicon.png"><link rel="canonical" href="https://forever97.top/2020/10/29/fullStack3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="baidu-site-verification" content="f7c8ecf684c23d02cca2e82c827ff2a2"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?194bd025765eb0d478283a5eb4217ad4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: forever97","link":"链接: ","source":"来源: 未央の童话镇","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-08 07:43:37'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/gitcalendar/css/gitcalendar.css"/><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css"  media="defer" onload="this.media='all'"><link rel="stylesheet" href="/magnet/css/catalogMagnet.css"/><link rel="stylesheet" href="/swiper/swiper.min.css"><link rel="stylesheet" href="/swiper/swiperstyle.css"><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">144</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack3-6.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">未央の童话镇</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">D3学习记录：柱状图</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-29T13:49:30.000Z" title="发表于 2020-10-29 13:49:30">2020-10-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-07-08T07:43:37.941Z" title="更新于 2021-07-08 07:43:37">2021-07-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%F0%9F%8D%B5D3%E8%8C%B6%E6%A5%BC/">🍵D3茶楼</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>还是熟悉的数据，这回来做一个柱状图</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/forever97/dataViz/blob/main/fullStackD3/lineChart/data/nyc_weather_data.json">[数据下载地址]</a></p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>还是熟悉的数据载入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pathToJSON = <span class="string">&quot;./data/nyc_weather_data.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> dataset = <span class="keyword">await</span> d3.json(pathToJSON)</span><br></pre></td></tr></table></figure>
+
+<p>接着设置参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> width = <span class="number">600</span></span><br><span class="line"><span class="keyword">let</span> dimensions = &#123;</span><br><span class="line">    width: width,</span><br><span class="line">    height: width * <span class="number">0.9</span>,</span><br><span class="line">    margin: &#123;</span><br><span class="line">        top: <span class="number">30</span>,</span><br><span class="line">        right: <span class="number">10</span>,</span><br><span class="line">        bottom: <span class="number">50</span>,</span><br><span class="line">        left: <span class="number">50</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line">dimensions.boundedWidth = dimensions.width </span><br><span class="line">    - dimensions.margin.left </span><br><span class="line">    - dimensions.margin.right</span><br><span class="line">dimensions.boundedHeight = dimensions.height </span><br><span class="line">    - dimensions.margin.top </span><br><span class="line">    - dimensions.margin.bottom</span><br></pre></td></tr></table></figure>
+
+<p>处理画布和bound</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> wrapper = d3</span><br><span class="line">    .select(<span class="string">&#x27;#wrapper&#x27;</span>)</span><br><span class="line">    .append(<span class="string">&#x27;svg&#x27;</span>)</span><br><span class="line">    .attr(<span class="string">&#x27;width&#x27;</span>, dimensions.width)</span><br><span class="line">    .attr(<span class="string">&#x27;height&#x27;</span>, dimensions.height)</span><br><span class="line"><span class="keyword">const</span> bounds = wrapper</span><br><span class="line">    .append(<span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">    .style(</span><br><span class="line">        <span class="string">&#x27;transform&#x27;</span>,</span><br><span class="line">        <span class="string">`translate(<span class="subst">$&#123;</span></span></span><br><span class="line"><span class="string"><span class="subst">            dimensions.margin.left</span></span></span><br><span class="line"><span class="string"><span class="subst">        &#125;</span>px, <span class="subst">$&#123;</span></span></span><br><span class="line"><span class="string"><span class="subst">            dimensions.margin.top</span></span></span><br><span class="line"><span class="string"><span class="subst">        &#125;</span>)`</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>准备先用柱状图对湿度humidity进行一个统计</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> metricAccessor = <span class="function"><span class="params">d</span> =&gt;</span> d.humidity</span><br></pre></td></tr></table></figure>
+
+<p>然后根据湿度的范围创建一个比例尺</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xScale = d3</span><br><span class="line">    .scaleLinear()</span><br><span class="line">    .domain(d3.extent(dataset, metricAccessor))</span><br><span class="line">    .range([<span class="number">0</span>, dimensions.boundedWidth])</span><br><span class="line">    .nice()</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据分组"><a href="#数据分组" class="headerlink" title="数据分组"></a>数据分组</h2><p>然后我们需要对数据进行分组，决定他们都是属于哪个bin的</p>
+<p>这里采用histogram方法，首先需要通过domain传入域，然后通过value告诉生成器获取值的方法，因为dataset是对象集，我们要获得对应的湿度值，thresholds可以告诉生成器我们希望它生成几个bin，当然不一定完全听你的，但是生成器会尽可能接近设定的组数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> binsGenerator = d3.histogram()</span><br><span class="line">    .domain(xScale.domain())</span><br><span class="line">    .value(metricAccessor)</span><br><span class="line">    .thresholds(<span class="number">12</span>)</span><br></pre></td></tr></table></figure>
+
+<p>分组并查看</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bins = binsGenerator(dataset)</span><br><span class="line"><span class="built_in">console</span>.log(bins)</span><br></pre></td></tr></table></figure>
+
+<p>可以看到一共分出了15组</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack3-1.png"></p>
+<p>然后我们就可以根据我们的bin来创建y比例尺了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> yAccessor = <span class="function"><span class="params">d</span> =&gt;</span> d.length</span><br><span class="line"><span class="keyword">const</span> yScale = d3.scaleLinear()</span><br><span class="line">    .domain([<span class="number">0</span>, d3.max(bins, yAccessor)])</span><br><span class="line">    .range([dimensions.boundedHeight, <span class="number">0</span>])</span><br><span class="line">    .nice()</span><br></pre></td></tr></table></figure>
+
+<p>分组之后的x0和x1表示组内湿度的下限和上限，length表示组内的元素数量</p>
+<h2 id="绘制数据"><a href="#绘制数据" class="headerlink" title="绘制数据"></a>绘制数据</h2><p>首先生成一个组来画柱子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> binsGroup = bounds.append(<span class="string">&quot;g&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> binGroups = binsGroup.selectAll(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    .data(bins)</span><br><span class="line">    .enter().append(<span class="string">&quot;g&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>绘制柱子，注意提到过的svg的y轴是从上到下的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> barPadding = <span class="number">1</span> <span class="comment">// 柱子间距</span></span><br><span class="line"><span class="keyword">const</span> barRects = binGroups.append(<span class="string">&quot;rect&quot;</span>)</span><br><span class="line">    .attr(<span class="string">&quot;x&quot;</span>, <span class="function"><span class="params">d</span> =&gt;</span> xScale(d.x0) + barPadding / <span class="number">2</span>)</span><br><span class="line">    .attr(<span class="string">&quot;y&quot;</span>, <span class="function"><span class="params">d</span> =&gt;</span> yScale(yAccessor(d)))</span><br><span class="line">    .attr(<span class="string">&quot;width&quot;</span>, <span class="function"><span class="params">d</span> =&gt;</span> d3.max([<span class="number">0</span>, xScale(d.x1) - xScale(d.x0) - barPadding]))</span><br><span class="line">    .attr(<span class="string">&quot;height&quot;</span>, <span class="function"><span class="params">d</span> =&gt;</span> dimensions.boundedHeight - yScale(yAccessor(d)))</span><br><span class="line">    .attr(<span class="string">&quot;fill&quot;</span>, <span class="string">&quot;cornflowerblue&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>成功绘制了柱子</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack3-2.png"></p>
+<p>然后我们在柱子上方写上对应的数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> barText = binGroups.filter(yAccessor)</span><br><span class="line">    .append(<span class="string">&quot;text&quot;</span>)</span><br><span class="line">    .attr(<span class="string">&quot;x&quot;</span>, <span class="function"><span class="params">d</span> =&gt;</span> xScale(d.x0) + (xScale(d.x1) - xScale(d.x0)) / <span class="number">2</span>)</span><br><span class="line">    .attr(<span class="string">&quot;y&quot;</span>, <span class="function"><span class="params">d</span> =&gt;</span> yScale(yAccessor(d)) - <span class="number">5</span>)</span><br><span class="line">    .text(yAccessor)</span><br><span class="line">    .style(<span class="string">&quot;text-anchor&quot;</span>, <span class="string">&quot;middle&quot;</span>)</span><br><span class="line">    .attr(<span class="string">&quot;fill&quot;</span>, <span class="string">&quot;darkgrey&quot;</span>)</span><br><span class="line">    .style(<span class="string">&quot;font-size&quot;</span>, <span class="string">&quot;12px&quot;</span>)</span><br><span class="line">    .style(<span class="string">&quot;font-family&quot;</span>, <span class="string">&quot;sans-serif&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>.filter()的参数为一个接受一个数据点并返回一个值的函数，数据集中任何返回错误值的项都将被删除</p>
+<p>效果如下</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack3-3.png"></p>
+<p>接着我们可以在图像上标注一根代表平均值的线</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mean = d3.mean(dataset, metricAccessor)</span><br><span class="line"><span class="keyword">const</span> meanLine = bounds.append(<span class="string">&quot;line&quot;</span>)</span><br><span class="line">    .attr(<span class="string">&quot;x1&quot;</span>, xScale(mean))</span><br><span class="line">    .attr(<span class="string">&quot;x2&quot;</span>, xScale(mean))</span><br><span class="line">    .attr(<span class="string">&quot;y1&quot;</span>, -<span class="number">15</span>)</span><br><span class="line">    .attr(<span class="string">&quot;y2&quot;</span>, dimensions.boundedHeight)</span><br><span class="line">    .attr(<span class="string">&quot;stroke&quot;</span>, <span class="string">&quot;maroon&quot;</span>)</span><br><span class="line">    .attr(<span class="string">&quot;stroke-dasharray&quot;</span>, <span class="string">&quot;2px 4px&quot;</span>) <span class="comment">// 虚线，参数为实虚比例</span></span><br></pre></td></tr></table></figure>
+
+<p>再加个字儿</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> meanLabel = bounds</span><br><span class="line">    .append(<span class="string">&#x27;text&#x27;</span>)</span><br><span class="line">    .attr(<span class="string">&#x27;x&#x27;</span>, xScale(mean))</span><br><span class="line">    .attr(<span class="string">&#x27;y&#x27;</span>, <span class="number">15</span>)</span><br><span class="line">    .text(<span class="string">&#x27;mean&#x27;</span>)</span><br><span class="line">    .attr(<span class="string">&#x27;fill&#x27;</span>, <span class="string">&#x27;maroon&#x27;</span>)</span><br><span class="line">    .style(<span class="string">&#x27;font-size&#x27;</span>, <span class="string">&#x27;12px&#x27;</span>)</span><br><span class="line">    .style(<span class="string">&#x27;text-anchor&#x27;</span>, <span class="string">&#x27;middle&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack3-4.png"></p>
+<p>补一手x轴和标注</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xAxisGenerator = d3.axisBottom()</span><br><span class="line">    .scale(xScale)</span><br><span class="line"><span class="keyword">const</span> xAxis = bounds.append(<span class="string">&quot;g&quot;</span>)</span><br><span class="line">    .call(xAxisGenerator)</span><br><span class="line">    .style(<span class="string">&quot;transform&quot;</span>, <span class="string">`translateY(<span class="subst">$&#123;dimensions.boundedHeight&#125;</span>px)`</span>)</span><br><span class="line"><span class="keyword">const</span> xAxisLabel = xAxis.append(<span class="string">&quot;text&quot;</span>)</span><br><span class="line">    .attr(<span class="string">&quot;x&quot;</span>, dimensions.boundedWidth / <span class="number">2</span>)</span><br><span class="line">    .attr(<span class="string">&quot;y&quot;</span>, dimensions.margin.bottom - <span class="number">10</span>)</span><br><span class="line">    .attr(<span class="string">&quot;fill&quot;</span>, <span class="string">&quot;black&quot;</span>)</span><br><span class="line">    .style(<span class="string">&quot;font-size&quot;</span>, <span class="string">&quot;1.4em&quot;</span>)</span><br><span class="line">    .text(metricAccessor)</span><br><span class="line">    <span class="comment">// 大小写转换</span></span><br><span class="line">    .style(<span class="string">&quot;text-transform&quot;</span>, <span class="string">&quot;capitalize&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack3-5.png"></p>
+<h2 id="代码模板化"><a href="#代码模板化" class="headerlink" title="代码模板化"></a>代码模板化</h2><p>说到代码模板化，其实我们前边一直在做这件事情，用metricAccessor来表示我们要计算的湿度，我们只要将其它的属性作为metricAccessor传递进去就能创建对应的图表了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> drawHistogram = <span class="function"><span class="params">metric</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> metricAccessor = <span class="function"><span class="params">d</span> =&gt;</span> d[metric]</span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后用一个循环对于每种属性去调用这个函数，就能够画出对应属性的图表</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> metrics = [</span><br><span class="line">    <span class="string">&quot;windSpeed&quot;</span>,</span><br><span class="line">    <span class="string">&quot;moonPhase&quot;</span>,</span><br><span class="line">    <span class="string">&quot;dewPoint&quot;</span>,</span><br><span class="line">    <span class="string">&quot;humidity&quot;</span>,</span><br><span class="line">    <span class="string">&quot;uvIndex&quot;</span>,</span><br><span class="line">    <span class="string">&quot;windBearing&quot;</span>,</span><br><span class="line">    <span class="string">&quot;temperatureMin&quot;</span>,</span><br><span class="line">    <span class="string">&quot;temperatureMax&quot;</span>,</span><br><span class="line">]</span><br><span class="line">metrics.forEach(drawHistogram)</span><br></pre></td></tr></table></figure>
+
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack3-6.png"></p>
+<p><a target="_blank" rel="noopener" href="https://forever97.github.io/dataViz/fullStackD3/barChart/">[演示地址]</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">forever97</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://forever97.top/2020/10/29/fullStack3/">https://forever97.top/2020/10/29/fullStack3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://forever97.top" target="_blank">未央の童话镇</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/D3/">D3</a></div><div class="post_share"><div class="social-share" data-image="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack3-6.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/10/29/fullStack4/"><img class="prev-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack4-1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">D3学习记录：动画与过渡</div></div></a></div><div class="next-post pull-right"><a href="/2020/10/28/fullStack2/"><img class="next-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack2-5.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">D3学习记录：散点图</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/10/28/fullStack1/" title="D3学习记录：折线图"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack1-8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-28</div><div class="title">D3学习记录：折线图</div></div></a></div><div><a href="/2020/10/28/fullStack2/" title="D3学习记录：散点图"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack2-5.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-28</div><div class="title">D3学习记录：散点图</div></div></a></div><div><a href="/2020/10/29/fullStack4/" title="D3学习记录：动画与过渡"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack4-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-29</div><div class="title">D3学习记录：动画与过渡</div></div></a></div><div><a href="/2020/11/03/fullStack5/" title="D3学习记录：交互"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack5-2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-03</div><div class="title">D3学习记录：交互</div></div></a></div><div><a href="/2020/11/03/fullStack6/" title="D3学习记录：地图"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack6-5.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-03</div><div class="title">D3学习记录：地图</div></div></a></div><div><a href="/2020/11/05/fullStack7/" title="D3学习记录：热图"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack7-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-05</div><div class="title">D3学习记录：热图</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Twikoo</span><span class="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">forever97</div><div class="author-info__description">在人海里梦游</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">144</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forever97"><i class="fab fa-github"></i><span>来给我加星星</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forever97" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://gitee.com/forever97/" target="_blank" title="Gitee"><i class="fab fa-google"></i></a><a class="social-icon" href="https://www.cnblogs.com/forever97" target="_blank" title="博客园"><i class="fas fa-blog"></i></a><a class="social-icon" href="http://wpa.qq.com/msgrd?v=3&amp;uin=857426255&amp;site=qq&amp;menu=yes" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:857426255@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content"><h2 style="color:orange; margin:2px;">🍊欢迎光临本站</h2> 如果卡顿请访问 <a target="_blank" rel="noopener" href="https://forever97.gitee.io" style="cursor:pointer; color:#fff; background-color:orange; padding:2px 5px; border-radius:5px;">Gitee镜像站</a> <br></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E7%BB%84"><span class="toc-number">2.</span> <span class="toc-text">数据分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%98%E5%88%B6%E6%95%B0%E6%8D%AE"><span class="toc-number">3.</span> <span class="toc-text">绘制数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%A8%A1%E6%9D%BF%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">代码模板化</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/08/FASSD/" title="FA-SSD：使用上下文和注意力机制的小目标检测"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/FASSD-6.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="FA-SSD：使用上下文和注意力机制的小目标检测"/></a><div class="content"><a class="title" href="/2021/07/08/FASSD/" title="FA-SSD：使用上下文和注意力机制的小目标检测">FA-SSD：使用上下文和注意力机制的小目标检测</a><time datetime="2021-07-08T13:55:21.000Z" title="发表于 2021-07-08 13:55:21">2021-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/22/mmdetection/" title="mmdetection训练自己的数据集"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mmdetection训练自己的数据集"/></a><div class="content"><a class="title" href="/2021/06/22/mmdetection/" title="mmdetection训练自己的数据集">mmdetection训练自己的数据集</a><time datetime="2021-06-22T09:30:28.000Z" title="发表于 2021-06-22 09:30:28">2021-06-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/21/vue14/" title="VUE3.0：组合式api的引入"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/vue3.0.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VUE3.0：组合式api的引入"/></a><div class="content"><a class="title" href="/2021/05/21/vue14/" title="VUE3.0：组合式api的引入">VUE3.0：组合式api的引入</a><time datetime="2021-05-21T21:02:47.000Z" title="发表于 2021-05-21 21:02:47">2021-05-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/16/vue13/" title="VUE学习笔记：混入"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/vuecli.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VUE学习笔记：混入"/></a><div class="content"><a class="title" href="/2021/05/16/vue13/" title="VUE学习笔记：混入">VUE学习笔记：混入</a><time datetime="2021-05-16T22:19:33.000Z" title="发表于 2021-05-16 22:19:33">2021-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/16/vue12/" title="VUE学习笔记：过滤"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/vuecli.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VUE学习笔记：过滤"/></a><div class="content"><a class="title" href="/2021/05/16/vue12/" title="VUE学习笔记：过滤">VUE学习笔记：过滤</a><time datetime="2021-05-16T15:36:28.000Z" title="发表于 2021-05-16 15:36:28">2021-05-16</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/fullStack3-6.png)"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2021 By forever97</div><div class="footer_custom_text"><p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://demo.jerryc.me/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://metroui.org.ua/index.html "><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站托管于Vercel">&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'blogtalk-6g6nlayif96df94c',
+      region: ''
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'blogtalk-6g6nlayif96df94c',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'znUsAPKaAhvsce1vGdQabwNA-MdYXbMMI',
+      appKey: 'IXAxuH2tjf4O7iYSNPOnzMFe',
+      placeholder: '记得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'robohash',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Twikoo' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/gitcalendar/js/gitcalendar.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@latest/source/js/issues.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/magnet/js/catalogMagnet.js"></script><script src="/swiper/swiper.min.js"></script><script src="/swiper/swiperindex.js"></script><script src="/js/moments.js"></script><script src="/js/smooth-scrolling.js"></script><script src="/js/custom.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div><!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>未央の时光机</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='/'|| '/' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/33.2017.newyear.model.json"},"display":{"position":"right","width":200,"height":300},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>

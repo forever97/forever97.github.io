@@ -1,0 +1,375 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Generative Adversarial Networks | 未央の童话镇</title><meta name="keywords" content="GAN"><meta name="author" content="forever97"><meta name="copyright" content="forever97"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="GAN(generative adversarial networks)指生成对抗网络 GAN包含一个Generator(以下简称$G$)和一个Discriminator(以下简称$D$) $G$是一个生成器，其本质是一个多层感知机，接收一个向量，将其映射到新的数据空间(输出为图片，句子或者其它) $D$是一个判别器，也是一个多层感知机，输出一个标量，表示输入数据属于真实数据的概率 GAN就是$G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Generative Adversarial Networks">
+<meta property="og:url" content="https://forever97.top/2020/03/13/GAN/index.html">
+<meta property="og:site_name" content="未央の童话镇">
+<meta property="og:description" content="GAN(generative adversarial networks)指生成对抗网络 GAN包含一个Generator(以下简称$G$)和一个Discriminator(以下简称$D$) $G$是一个生成器，其本质是一个多层感知机，接收一个向量，将其映射到新的数据空间(输出为图片，句子或者其它) $D$是一个判别器，也是一个多层感知机，输出一个标量，表示输入数据属于真实数据的概率 GAN就是$G">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ganpic.png">
+<meta property="article:published_time" content="2020-03-13T15:24:28.000Z">
+<meta property="article:modified_time" content="2021-07-08T07:43:37.937Z">
+<meta property="article:author" content="forever97">
+<meta property="article:tag" content="GAN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ganpic.png"><link rel="shortcut icon" href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/favicon.png"><link rel="canonical" href="https://forever97.top/2020/03/13/GAN/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="baidu-site-verification" content="f7c8ecf684c23d02cca2e82c827ff2a2"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?194bd025765eb0d478283a5eb4217ad4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: forever97","link":"链接: ","source":"来源: 未央の童话镇","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-07-08 07:43:37'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/gitcalendar/css/gitcalendar.css"/><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css"  media="defer" onload="this.media='all'"><link rel="stylesheet" href="/magnet/css/catalogMagnet.css"/><link rel="stylesheet" href="/swiper/swiper.min.css"><link rel="stylesheet" href="/swiper/swiperstyle.css"><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">144</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ganpic.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">未央の童话镇</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Generative Adversarial Networks</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-03-13T15:24:28.000Z" title="发表于 2020-03-13 15:24:28">2020-03-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-07-08T07:43:37.937Z" title="更新于 2021-07-08 07:43:37">2021-07-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%F0%9F%8E%AAGAN%E9%A9%AC%E6%88%8F%E5%9B%A2/">🎪GAN马戏团</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>GAN(generative adversarial networks)指生成对抗网络</p>
+<p>GAN包含一个Generator(以下简称$G$)和一个Discriminator(以下简称$D$)</p>
+<p>$G$是一个生成器，其本质是一个多层感知机，接收一个向量，将其映射到新的数据空间(输出为图片，句子或者其它)</p>
+<p>$D$是一个判别器，也是一个多层感知机，输出一个标量，表示输入数据属于真实数据的概率</p>
+<p>GAN就是$G$和$D$协同演化的过程</p>
+<p>用图像生成作为例子，就是$G$不断去生成图片企图混淆真实图片，欺骗过$D$</p>
+<p>而$D$呢，则是不断提高自己的辨别能力，尝试分辨出真实图片和$G$产生的虚假图片</p>
+<p>那么GAN作为整体的最优化问题该如何去表示？</p>
+<p>判别器$D$需要做的事情是判定x是来自数据集$Data$的概率，因此我们需要最大化$E_{x\sim p_{data}(x)}[logD(x)]$</p>
+<p>再考虑企图去欺骗$D$的$G$，有$E_{z\sim p_{z}(z)}[1-logD(G(z))]$，判别器希望这项最大化，而生成器$G$希望这项最小化</p>
+<p>所以我们得到了GAN的目标函数</p>
+<p>$min_Gmax_DV(D,G)=E_{x\sim p_{data}(x)}[logD(x)]+E_{z\sim p_{z}(z)}[1-logD(G(z))]$</p>
+<p>这是一个极大极小博弈的过程，在具体实现中这是迭代的，轮流进行</p>
+<p>在每次迭代中：</p>
+<p>我们首先固定$G$的参数，用随机的$vector$(原始GAN的论文中采用的是高斯噪声)去得到$Data_G$，并且从$Data$中抽取$Sample$，我们将产生的$Data_G$和Sample混合打上标签用于训练$D$</p>
+<p>在$D$的训练完成之后，我们固定$D$的参数，不断用随机的$vector$通过$G$去得到$Data_G$，用$D$对生成打分，调整$G$的参数直到得到较高的分数，也就是在做的是learn to fool discriminator</p>
+<p>迭代直到模型达到最优，也就是$D$已经混淆了$Data_G$和原始$Data$，判断输入来自两者的概率都是$0.5$</p>
+<p>这就像是一个什么都不懂的幼儿园小朋友在学画画，那么幼儿园老师只要一个很低的判定标准就能够给小红花的，看到大致一个圆脸，和两个眼睛就能好好表扬一通，那么小朋友们通过这个标准就知道画一个圈中间扣两个洞是好的，等到了一年级，二年级，老师也会根据学生的水平提高评判标准，标准的更新则带来了学生水平的提高，相互促进</p>
+<p>接下来我们需要证明，最优化问题存在唯一解，并且满足$P_{Data}$=$P_G$，也就是数据的概率分布相同</p>
+<p>首先将期望展开为积分</p>
+<p>$\int p_{data}(x)logD(x)dx+\int p_{z}(z)(1-logD(G(z)))dz$</p>
+<p>=$\int p_{data}(x)logD(x)dx+\int p_G(x)(1-logD(x))dx$</p>
+<p>以上积分等式原始GAN论文认为可通过</p>
+<p>$E_{z\sim p_{z}(z)}\log(1-D(G(z)))=E_{x\sim p_{G(x)}}\log (1-D(x))$</p>
+<p>来证明，来源于测度论中的 $Radon-Nikodym$ 定理</p>
+<p>$f(D)=p_{data}log(D)+p_G(1-log(D))$</p>
+<p>我们求解取得极值时的参数</p>
+<p>$\frac{df(D)}{dD}=p_{data} \times \frac{1}{D} + P_G \times \frac{1}{1-D} \times -1=0$</p>
+<p>可以得到$D^*(x)=\frac{P_{data}(x)}{P_{data}(x)+P_G(x)}$</p>
+<p>GAN的目标是使得$P_{Data}$=$P_G$，在这种情况下$D^*(x)=\frac{1}{2}$</p>
+<p>至此我们得到了原文中的第一条推论</p>
+<blockquote>
+<p>For G fixed, the optimal discriminator D is<br>$D^*<em>G(x)=\frac{P</em>{data}(x)}{P_{data}(x)+P_G(x)}$</p>
+</blockquote>
+<p>也就是说在固定$G$的参数的情况下，得到能够使得价值函数最大化的最优的$D$</p>
+<p>证明$G$是极大极小博弈的解，还需要考虑求使得价值函数最小化的生成器$G$</p>
+<p>作者在文中提出定理</p>
+<blockquote>
+<p>The global minimum of the virtual training criterion $C(G)$ is achieved if and only if $p_g=p_{data}$. At that point，$C(G)$ achieves the value $-log4$</p>
+</blockquote>
+<p>$P_G=P_{Data}$的充分性证明是比较简单的，因为我们fix了$D$的参数，去求解使得$V(G,D^*)$最小的$G$，因为$P_G=P_{Data}$，因此$D=\frac{1}{2}$</p>
+<p>所以$V(G,D^*)=\int p_{data}(x)log(\frac{1}{2})dx+\int p_G(x)(1-\frac{1}{2})dx$</p>
+<p>=$-log2\int p_{data}(x)dx-log2\int p_G(x)dx$</p>
+<p>=$-2log2$ = $-log4$</p>
+<p>$P_G=P_{Data}$的必要性证明则需要从$C(G)=-log4$反推</p>
+<p>$C(G)=\int p_{data}(x)logD(x)dx+\int p_G(x)(1-logD(x))dx$</p>
+<p>=$\int (p_{data}(x)log(\frac{p_{data}(x)}{p_{data}(x)+p_G(x)})+p_G(x)log(\frac{p_G(x)}{p_{data}(x)+p_G(x)}))dx$</p>
+<p>=$\int ((log2-log2)p_{data}(x)+p_{data}(x)log(\frac{p_{data}(x)}{p_{data}(x)+p_G(x)})+(log2-log2)p_G(x)+p_G(x)log(\frac{p_G(x)}{p_{data}(x)+p_G(x)}))dx$</p>
+<p>=$-log2\int_x(p_G(x)+p_{data}(x))dx+\int_xp_{data}(x)(log2+log(\frac{p_{data}(x)}{p_{data}(x)+p_G(x)}))+p_G(x)(log2+log(\frac{p_G(x)}{p_{data}(x)+p_G(x)}))dx$</p>
+<p>因为$-log2\int_x(p_G(x)+p_{data}(x))dx=-log4$</p>
+<p>所以$C(G)=-log4+\int_xp_{data}(x)(log2+log(\frac{p_{data}(x)}{p_{data}(x)+p_G(x)}))+p_G(x)(log2+log(\frac{p_G(x)}{p_{data}(x)+p_G(x)}))dx$</p>
+<p>=$-log4+\int_xp_{data}(x)(log(\frac{p_{data}(x)}{(p_{data}(x)+p_G(x))/2}))+p_G(x)(log(\frac{p_G(x)}{(p_{data}(x)+p_G(x))/2}))dx$</p>
+<p>=$-log4+D_{KL}(p_{data}(x)||\frac{p_{data}(x)+p_G(x)}{2})+D_{KL}(p_G(x)||\frac{p_{data}(x)+p_G(x)}{2})$</p>
+<p>=$-log4+2D_{JS}(p_{data}||p_G)$</p>
+<p>当$p_G=p_{data}$时，JS散度为0</p>
+<p>证毕，当且仅当生成数据分布等于真实数据分布时得到最优的Generator</p>
+<p><a target="_blank" rel="noopener" href="https://forever97.github.io/2020/03/12/KLdivergence/" title="With a Title">(KL散度和JS散度说明戳此处)</a></p>
+<p>现在我们明白了GAN的工作原理和目标函数的正确性</p>
+<p>那么我们来解决一些理论上的问题，为什么$G$不直接从真实图片中学习，以及为什么$D$选择做鉴定而不是直接去生成图片呢</p>
+<p>若$G$选择直接从图片中学习然后生成，则学习的流程为</p>
+<p>图片1 -&gt; auto-encoder -&gt; code -&gt; NN Decoder -&gt; 图片2</p>
+<p>即我们需要一个编码器将图片转化为vector，然后NN试图将这个图片还原，也就是图片1和图片2要尽可能相似</p>
+<p>但是这样产生的$G$是没有creat能力的，通俗一点讲，就是他画不出没见过的图片，学习最终将code和image定死，学习两张不同朝向的1并不能使得它产生一个正向的1，而可能是噪声</p>
+<p>VAE在这个问题上有所改进，在code进入NN之前加入了noise，希望图片仍然能被还原，这样的约束提高了网络creat的能力，但是没有对抗的加入，VAE的图片会相对的比GAN产生的模糊</p>
+<p>还有一个问题是，缺乏监督者，因为想要input和output尽量像未必会使得结果向需要的靠拢，pixel的比对仍然属于component level的，每个神经元在同一个layer难以相互影响，那么达成目标可能需要更深的网络，并且容易造成过拟合</p>
+<p>那么如果想采用$D$直接学习并且生成呢</p>
+<p>$D$是可以做到Creat的，因为$D$本质上是一个Evaluation Function，Discriminator比起Generator存在的优势就是可以从整体上判定图片，我们只要穷举输入，根据Discriminator给出的分数选择高的生成</p>
+<p>那么考虑Discriminator的训练，我们发现我们只有正样本(真实的图片)，则最大的问题就是如何寻找负样本(noise？画的差的图？)，我们需要一个质量好的负样本才能训练Discriminator</p>
+<p>这个训练可以采用迭代的方法</p>
+<p>先用不太好的负样本(noise)和正样本得到第一代的Discriminator，然后一代的Discriminator就可以生成质量略微提升的负样本，然后用这个负样本和Data去训练下一代的Discriminator</p>
+<p>问题在于得到负样本的过程相当于求解argmax problem，这是一个不同情况极其个例的求解问题，难度比较高(模型未知)，甚至极大似然估计难以得到结果</p>
+<p>因此有了GAN，Generator本质就是学习如何解argmax problem的解题机器，更容易一般化问题(不需要知道模型，直接通过NN解)，Discriminator本质就是两个数据分布的距离计算器</p>
+<p>GAN是一种structured learning，Generator是一种Bottom Up方法，只能从component层面学习生成，Discriminator是Top Down方法，能够对整体evaluate，两者结合产生了更好的效果(生成图片更清晰)</p>
+<p>但是GAN也存在难训练，易崩溃的问题，在学习过程中，生成器可能会发生退化，反复生成相同样本，导致判别器指向相似的地方，使得训练难以继续，而前面提到的不需要预知模型带来优点的同时也带来了模型过于自由的问题，使得在图片质量较高，pixel较多情况下GAN变得非常不可控</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">forever97</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://forever97.top/2020/03/13/GAN/">https://forever97.top/2020/03/13/GAN/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://forever97.top" target="_blank">未央の童话镇</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/GAN/">GAN</a></div><div class="post_share"><div class="social-share" data-image="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ganpic.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/03/25/CGAN/"><img class="prev-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ganpic.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Conditional Generative Adversarial Nets</div></div></a></div><div class="next-post pull-right"><a href="/2020/03/12/KLdivergence/"><img class="next-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/tag.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">KL散度</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/03/25/CGAN/" title="Conditional Generative Adversarial Nets"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ganpic.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-25</div><div class="title">Conditional Generative Adversarial Nets</div></div></a></div><div><a href="/2020/03/27/CycleGAN/" title="Cycle Generative Adversarial Nets"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ganpic.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-27</div><div class="title">Cycle Generative Adversarial Nets</div></div></a></div><div><a href="/2020/03/27/CycleGAN1/" title="CycleGAN的隐写术"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ganpic.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-27</div><div class="title">CycleGAN的隐写术</div></div></a></div><div><a href="/2020/04/10/WGAN/" title="Wasserstein GAN"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ganpic.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-10</div><div class="title">Wasserstein GAN</div></div></a></div><div><a href="/2020/04/03/fGAN/" title="fGAN--任意散度GAN"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ganpic.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-03</div><div class="title">fGAN--任意散度GAN</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Twikoo</span><span class="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">forever97</div><div class="author-info__description">在人海里梦游</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">144</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forever97"><i class="fab fa-github"></i><span>来给我加星星</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forever97" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://gitee.com/forever97/" target="_blank" title="Gitee"><i class="fab fa-google"></i></a><a class="social-icon" href="https://www.cnblogs.com/forever97" target="_blank" title="博客园"><i class="fas fa-blog"></i></a><a class="social-icon" href="http://wpa.qq.com/msgrd?v=3&amp;uin=857426255&amp;site=qq&amp;menu=yes" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:857426255@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content"><h2 style="color:orange; margin:2px;">🍊欢迎光临本站</h2> 如果卡顿请访问 <a target="_blank" rel="noopener" href="https://forever97.gitee.io" style="cursor:pointer; color:#fff; background-color:orange; padding:2px 5px; border-radius:5px;">Gitee镜像站</a> <br></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/08/FASSD/" title="FA-SSD：使用上下文和注意力机制的小目标检测"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/FASSD-6.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="FA-SSD：使用上下文和注意力机制的小目标检测"/></a><div class="content"><a class="title" href="/2021/07/08/FASSD/" title="FA-SSD：使用上下文和注意力机制的小目标检测">FA-SSD：使用上下文和注意力机制的小目标检测</a><time datetime="2021-07-08T13:55:21.000Z" title="发表于 2021-07-08 13:55:21">2021-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/22/mmdetection/" title="mmdetection训练自己的数据集"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mmdetection训练自己的数据集"/></a><div class="content"><a class="title" href="/2021/06/22/mmdetection/" title="mmdetection训练自己的数据集">mmdetection训练自己的数据集</a><time datetime="2021-06-22T09:30:28.000Z" title="发表于 2021-06-22 09:30:28">2021-06-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/21/vue14/" title="VUE3.0：组合式api的引入"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/vue3.0.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VUE3.0：组合式api的引入"/></a><div class="content"><a class="title" href="/2021/05/21/vue14/" title="VUE3.0：组合式api的引入">VUE3.0：组合式api的引入</a><time datetime="2021-05-21T21:02:47.000Z" title="发表于 2021-05-21 21:02:47">2021-05-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/16/vue13/" title="VUE学习笔记：混入"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/vuecli.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VUE学习笔记：混入"/></a><div class="content"><a class="title" href="/2021/05/16/vue13/" title="VUE学习笔记：混入">VUE学习笔记：混入</a><time datetime="2021-05-16T22:19:33.000Z" title="发表于 2021-05-16 22:19:33">2021-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/16/vue12/" title="VUE学习笔记：过滤"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/vuecli.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VUE学习笔记：过滤"/></a><div class="content"><a class="title" href="/2021/05/16/vue12/" title="VUE学习笔记：过滤">VUE学习笔记：过滤</a><time datetime="2021-05-16T15:36:28.000Z" title="发表于 2021-05-16 15:36:28">2021-05-16</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ganpic.png)"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2021 By forever97</div><div class="footer_custom_text"><p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://demo.jerryc.me/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://metroui.org.ua/index.html "><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站托管于Vercel">&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'blogtalk-6g6nlayif96df94c',
+      region: ''
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'blogtalk-6g6nlayif96df94c',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'znUsAPKaAhvsce1vGdQabwNA-MdYXbMMI',
+      appKey: 'IXAxuH2tjf4O7iYSNPOnzMFe',
+      placeholder: '记得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'robohash',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Twikoo' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/gitcalendar/js/gitcalendar.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@latest/source/js/issues.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/magnet/js/catalogMagnet.js"></script><script src="/swiper/swiper.min.js"></script><script src="/swiper/swiperindex.js"></script><script src="/js/moments.js"></script><script src="/js/smooth-scrolling.js"></script><script src="/js/custom.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div><!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>未央の时光机</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='/'|| '/' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/33.2017.newyear.model.json"},"display":{"position":"right","width":200,"height":300},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>
