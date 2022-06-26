@@ -1,0 +1,368 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>散点图缩放所产生的偏见 | 未央の童话镇</title><meta name="keywords" content="2019,bias,VIS"><meta name="author" content="forever97"><meta name="copyright" content="forever97"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="IEEE引用格式：Y. Wei et al., “Evaluating perceptual bias during geometric scaling of scatterplots,” IEEE Trans. Vis. Comput. Graph., vol. 26, no. 1, pp. 321–331, 2020, doi: 10.1109&#x2F;TVCG.2019.2934208.  文章简">
+<meta property="og:type" content="article">
+<meta property="og:title" content="散点图缩放所产生的偏见">
+<meta property="og:url" content="https://forever97.top/2020/09/29/GeometricScaling/index.html">
+<meta property="og:site_name" content="未央の童话镇">
+<meta property="og:description" content="IEEE引用格式：Y. Wei et al., “Evaluating perceptual bias during geometric scaling of scatterplots,” IEEE Trans. Vis. Comput. Graph., vol. 26, no. 1, pp. 321–331, 2020, doi: 10.1109&#x2F;TVCG.2019.2934208.  文章简">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GeometricScaling-1.png">
+<meta property="article:published_time" content="2020-09-29T08:36:57.000Z">
+<meta property="article:modified_time" content="2022-06-26T06:44:17.741Z">
+<meta property="article:author" content="forever97">
+<meta property="article:tag" content="2019">
+<meta property="article:tag" content="bias">
+<meta property="article:tag" content="VIS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GeometricScaling-1.png"><link rel="shortcut icon" href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/favicon.png"><link rel="canonical" href="https://forever97.top/2020/09/29/GeometricScaling/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="baidu-site-verification" content="f7c8ecf684c23d02cca2e82c827ff2a2"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?194bd025765eb0d478283a5eb4217ad4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: forever97","link":"链接: ","source":"来源: 未央の童话镇","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-26 06:44:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/gitcalendar/css/gitcalendar.css"/><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css"  media="defer" onload="this.media='all'"><link rel="stylesheet" href="/magnet/css/catalogMagnet.css"/><link rel="stylesheet" href="/swiper/swiper.min.css"><link rel="stylesheet" href="/swiper/swiperstyle.css"><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GeometricScaling-1.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">未央の童话镇</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div><div id="rightmenu" style="flex:1"><div id="search-button" style="position:absolute;right:2%"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">散点图缩放所产生的偏见</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-29T08:36:57.000Z" title="发表于 2020-09-29 08:36:57">2020-09-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-06-26T06:44:17.741Z" title="更新于 2022-06-26 06:44:17">2022-06-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%F0%9F%92%84VIS%E8%83%AD%E8%84%82%E9%93%BA/">💄VIS胭脂铺</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>18分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>IEEE引用格式：Y. Wei et al., “Evaluating perceptual bias during geometric scaling of scatterplots,” IEEE Trans. Vis. Comput. Graph., vol. 26, no. 1, pp. 321–331, 2020, doi: 10.1109/TVCG.2019.2934208.</p>
+</blockquote>
+<h2 id="文章简介"><a href="#文章简介" class="headerlink" title="文章简介"></a>文章简介</h2><p>在现代数据分析场景中，散点图经常被缩放以适应不同的显示，同时在不同显式设备上共享散点图是协作数据分析交流中的一种常规操作</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GeometricScaling-1.png"></p>
+<p>缩放散点图最直接的方法几何缩放(同步和比例地放大或缩小整个图以及其中的对象)。几何变化会导致视觉感知偏见，从而影响数据特征的感知一致性(数量、相关性和聚类)，不利于交互式数据探索，如上图所示，在讲述者的散点图中有两个簇，然而显示在移动设备上的时候，这是无法区分的，在下图中，左右两个方框内具有相同数量的点，但是人们总会认为右边方框中的点是更多的，此外，心理学研究证明，当patch的大小增加时，patch的点被认为是稀疏的</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GeometricScaling-2.png"></p>
+<p>已有的研究考虑了散点图的设计决策(点颜色，宽高比和动画)，和散点图在移动设备，高分辨率显示和浸入式环境中的使用问题，然而散点图尺度并没有得到系统的研究</p>
+<p>为了弥补这一研究空白，作者团队进行了对照实验来研究这种偏见。具体来说，偏见是指视觉特征的感知值与物理值之间的偏差。文章强调了三个视觉特征(即:数量、相关性和聚类分离，如图所示)，并提出了三个假设：几何尺度可能导致偏见；数据分布会影响偏见；而改变点的半径可以减少偏见</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GeometricScaling-3.png"></p>
+<p>实验采用两间隔强迫选择(2IFC)方法和双向阶梯(2WS)设计来模拟散点图缩放场景，并收集参与者根据主观经验比较一系列原始和缩放散点图对的选择模式。选取7个层次的尺度比和点半径，利用精心准备的合成数据生成13个层次的视觉特征，2个分布(正态分布和均匀分布)的散点图。在几次初步研究确定实验后，招募了20名参与者并进行了3轮试验，每一轮由准备、介绍与辅导、预实验、正式实验、主观问卷组成</p>
+<p>作者记录了被试的选择模式和主观问题回答作为实验结果并进行了主观平等点(PSE)分析，从这些选择模式中得出定量偏见，并对这些偏见进行了一系列统计分析。分析结果表明，第一个假设得到了充分的肯定，第二个假设得到了充分的否定，第三个假设得到了部分的肯定。作者还从主观问卷调查中得到了其他有趣的发现，并系统地总结了这些成果</p>
+<p>本文首次尝试理解由几何尺度引起的散点图的感知偏差，贡献了一个精心设计的评估和一系列有益的发现</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>视觉感知根据认知复杂性，可以分为三个层次，从直接的视觉刺激(如位子，颜色和密度/数量)中获得的低级感知被称为注意力前处理(preattentive processing)，中层感知是从刺激模式中获得的理解，如相关性和聚类分离，更高层次的感知，如记忆性、美学和参与性是建立在理解基础上的用户认知，在这项工作中，研究了散点图缩放对感知视觉特征的影响。主要研究了一个低级的(数值，在视觉分析的大多数场景中被视为密度)和两个中级的(相关性和聚类分离)视觉特征</p>
+<p>许多作品研究了散点图视觉编码的设计评价和自动决策，设计评价研究了特定场景中散点图的视觉编码，并在许多方面提供了经验指导，如点的大小和颜色，高宽比，维度的选择，娱乐，互动和动画，质量度量，例如杂乱减少和集群检测，度量图表执行某些分析任务的能力。然而，现有的研究主要集中在散点图固定不变时的设计决策，而本文感兴趣的是改变显示尺寸的情况</p>
+<p>随着显示设备的发展，对分析不同显示器上的数据的要求越来越高，而不仅仅是桌面显示器。研究人员已经注意到显示尺寸强烈影响散点图的可用性。他们研究了显示尺寸对散点图设计决策的影响，如手机上的交互作用、大分辨率显示的认知过程，以及沉浸式环境下的图形布局，此外，显示技术的进步为探索性分析提供了新的场景。一方面，大型显示器允许同时显示许多图表，从而形成多视图接口。另一方面，由于空间感知和无线连接技术的应用，多设备组合越来越多地用于提供涉及多人的协作数据分析。这些新场景导致了散点图的频繁缩放。然而，很少有研究研究散点图尺度的影响，在这项工作中，目标是寻找可能的解决方案，以减轻散点图缩放对视觉一致性的影响</p>
+<p>感知偏见是一个被广泛研究的重要问题，它考虑了场景之间的感知差异，包括三种情况：1.感知到的视觉特征与定量统计的差异；2.个体间感知的差异；3.不同设计中感知到的视觉差异，已有的研究中还没有系统地评估散点图缩放所引起的感知偏见</p>
+<h2 id="问题和假设"><a href="#问题和假设" class="headerlink" title="问题和假设"></a>问题和假设</h2><p>如前文所提到的，为了保持显示的感知一致性，最直接的方法就是采用几何缩放，但是作者的基本观察是几何缩放会导致感知偏见，这种偏见会影响感知一致性</p>
+<pre><code>当事实的信念偏离现实时，就会产生知觉偏见 —— Jerit</code></pre>
+<p>根据经验，当散点图被缩放时，人们经常会误配视觉特征的感知值和实际值(当笔记本电脑上的散点图投射到窗帘上的时候，人们可能会觉得放大后的散点图有更少的点)，因此作者产生的想法是几何尺度会导致感知偏见，此外，作者对影响偏见的因素感兴趣(是否涉及某种规则，能否找到减少偏见的方法)，在这项工作中的，团队进行了对照试验来探究这些问题，为了指导实验设计，提出了如下假设：</p>
+<ol>
+<li><p>假设几何尺度会导致散点图中感知到的视觉特征出现偏差，包括数量、相关性和聚类分离，并且偏差和尺度比存在线性关系</p>
+</li>
+<li><p>假设几何尺度引起的偏见会受到数据分布的影响</p>
+</li>
+<li><p>假设改变点的半径可以减少偏见</p>
+</li>
+</ol>
+<h2 id="实验设计"><a href="#实验设计" class="headerlink" title="实验设计"></a>实验设计</h2><p>实验中的外部刺激是2D散点图的视觉编码和渲染选项，作者将所有散点图的纵横比设为1来消除纵横比造成的干扰，所有的散点图都用灰色背景和黑色细边界来渲染，将所有散点图的x和y维域归一化为[0,1]，散点图中的点用黑色的圆圈表示(唯一例外是两种颜色的圆圈表示两个聚类)，散点图中的半径是相同的，当散点图被缩放时，视觉编码，包括散点图的宽度和高度，轴的长度和点的半径，都按比例缩放</p>
+<p>作者采用带有双向楼梯设计(2WS)的双间隔强迫选择方法(two-interval forced choice，2IFC)来模拟散点图缩放场景，并测量人们的主观体验</p>
+<p>2IFC是一种通过一个人的选择模式来衡量其主观体验的方法，在2IFC试验中，受试者被要求在参考刺激和测试刺激对之间做出判断。判断是一种主观比较，以获得视觉特征值较大的刺激，每种视觉特征和尺度比的组合，在2IFC任务中都需要进行一系列的试验</p>
+<p>合理的2IFC序列的构建涉及两个重要的考虑因素。(1)检测视觉特征的等级必须覆盖一个合适的范围。太少的水平会使偏差测量不够精确，太多的水平会导致过多的试验。(2)在一系列试验中，特征层次出现的顺序必须精心设计。一个随机序列需要许多试验来获得一个准确的偏差，而参与者可以找到规律性水平排序</p>
+<p>作者使用2WS设计来确定特征级别的出现顺序。楼梯式设计是指，测试散点图的特征水平不同，使得下一次试验困难或简单，参考散点图保持在基线水平。顺序可以从- 6层(前梯)或+6层(后梯)开始;两者都位于基线附近，因此形成了一个双向楼梯</p>
+<p>图中展示了一个参与者在2WS序列中的实验结果。在前梯或后梯中，由于参考散点图和测试散点图的特征水平非常接近，使得判断变得困难，所以在多次单调变化(箭头)后，试验在基线(高亮区域)附近的一定间隔内波动</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GeometricScaling-4.png"></p>
+<p>这种波动的选择模式正是2IFC &amp; 2WS方法的目的，通过这种方法，可以使用PSE来测量参与者的主观体验，从而得出偏差，每个方向的试验次数设置为15次，共30次。该次数大于特征级别数的两倍，从而保证了波动模式的发生</p>
+<p>E1用于测量几何尺度对散点图的三个视觉特征:数量、相关和聚类分离所造成的感知偏差。E1的变量包括scale ratio、feature、feature level。对于每种尺度比和fea- ture组合，每个参与者被要求完成30个试验的2IFC和2WS序列，从而获得偏倚测量的选择模式。每个参与者对应7个尺度比，完成7个序列，共210次试验，检测尺度比变化时的变化趋势，三个特征一共630次试验，所有点的位置被限制在一个以(0.5,0.5)为中心，0.5为半径的约束圆内。如果任何点超过了这个约束圆，那么这个点被删除并重新生成。因此，点云在散点图中心呈正态分布，且分布范围适中，重叠极小</p>
+<p>E2关注的是数据分布的影响，因此它与E1共享相同的变量设置，其数据生成与大多数设置中的E1相似。不同的是点集是从均匀分布中采样的。注意，对于E2中的相关检验，作者构造了一个约束椭圆，然后从椭圆内的均匀分布中采样。约束椭圆的中心点为(0.5,0.5)，主轴沿散射图的对角线方向从左下到右上，主轴的长度被设置为1，而副轴的长度是一个随机数。因此，作者生成几个候选点集并计算它们的相关系数。随后选择了满足各层次值要求且误差小于0.005的候选值</p>
+<p>E3旨在研究改变点半径对感知视觉特征的影响。研究了三个变量:点半径、特征和特征水平，E3中使用的数据与E1中相同。唯一的区别是这些点是用不同的半径渲染的</p>
+<p>考虑到实验任务耗时且视觉吃力，团队招募了20名参与者，使用有散点图进行数据分析经验的非应届毕业生和研究生，年龄19-25岁，中位年龄21岁，而非使用亚马逊的土耳其机器人，这样可以观察被试的心理状态，控制实验过程，此外，提供了一个独立安静的实验室，最小的外部干扰，我们要求参与者在实验前至少早睡三天，这样他们就能得到充分的休息和充分的体力。团队还准备了咖啡和零食，帮助参与者在休息时放松。完成这项研究的参与者每小时得到6美元的报酬</p>
+<p>团队邀请了5名参与者进行了3次试点研究。这些研究有助于确定实验设计的细节。在试点研究中，作者发现2IFC判断的稳定性在白天比在晚上要高得多。这表明，人的精神和实验环境对2IFC判断的形成有很大的影响。因此，本文在白天安排了所有的实验</p>
+<p>为了确定实验顺序，首先遵循E1、E2和E3的顺序。每个实验都包含这三个特征。注意到，在一次实验中，参与者不得不重新关注不同的特征。因此，团队在第二个试验中使用了以特性为主的顺序。在E1 - E3的一轮测试中，只有一个特征被测试以保持参与者思维模式的连续性，此外，作者反复调整数据生成参数(如特征值范围和间隔)，界面和程序(如增加练习试验和预试验阶段，调整休息时间跨度)</p>
+<p>作者为正式研究设计了一个三轮的实验过程。这三轮的核心变量是视觉特征。即每个参与者在一轮中完成一个特征的三个实验(E1, E2, E3)，并通过三轮完成所有特征(numerosity, correlation, cluster separation)。每一轮有四个实验阶段</p>
+<p>准备阶段：实验指导老师首先带领参与者进入实验室，然后帮助参与者调整显示器的位置和高度，确保屏幕中央的点与眼睛平齐</p>
+<p>介绍阶段：这个阶段让参与者熟悉实验过程、任务、视觉特征和数据。这个阶段通常需要大约10分钟</p>
+<p>预备实验：在完成教程之后，参与者需要为当前要测试的特性执行一个简单的预实验来确定参与者是否充分准备好了</p>
+<p>正式实验：参与者点击“开始”按钮开始进行个人判断。在完成一个实验的所有试验后，参与者休息2 - 3分钟，然后继续进行下一个实验</p>
+<p>在完成了一轮实验后，参与者被要求填写一份问卷来收集他们对当前被检查的视觉特征的主观感受。问卷设置了两类问题：第一类询问的是对做2IFC判断的整体难度水平(DL)的主观感受。例如，”散点图大小的变化是否会使你难以判断正态分布的数值?”如果是的话，那么有多难呢?参与者使用李克特五分制对它进行评分，从1(最低难度)到5(最高难度)不等，第二类是询问在不同的标度比或点半径下进行2IFC判断的困难倾向(DT)的主观体验。例如，”随着散点图大小从小到大的变化，对正态分布数值的感知做出判断的难度是如何变化的?”</p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>从实验中收集所有客观和主观的结果。客观结果记录了参与每个2IFC试验的参与者的信息，包括选择、参考散点图的位置、实验变量和完成时间。主观结果从问卷中提取，包括24个问题和对每位参与者的访谈记录。以下主要从以下三个方面对结果进行分析</p>
+<p>—— 异常选择模式识别</p>
+<p>一些参与者在2IFC判断的几个小时内会偶尔分心，导致在一系列试验中出现异常的选择模式，作者进行了方差分析来识别剧烈波动的选择模式，计算一个序列的10个基本实验的特征水平的方差，一个大的差异同行表明出现剧烈波动的选择模式，这是基于十点研究中参与者的反馈得到的，此外，团队通过观察序列在第二次或第三次试验中是否波动，手工检查了具有早期波动选择模式的少量序列。最后，识别了16%的异常序列。将这些参数标记为离群值，并用具有相同实验变量的所有参与者的偏差均值来代替从这些离群值中测量的偏差</p>
+<p>—— 偏见测量</p>
+<p>基于人类心理测量功能和韦伯定律，某一参与者在一个比例比/点半径上对一个视觉特征的偏差可以通过他/她对一系列试验的选择(使用主观相等点(PSE)和客观相等点(POE))进行定量测量。在这种情况下，当试验的试验散点图和参考散点图在本质上具有相同的特征值时，被试做出随机选择。因此，PSE是在一系列试验中选择test &lt; reference的0.5概率点，POE是基准特征值，其中试验特征值与参考特征图的实际特征值客观相等。因此，如果散点图缩放引起了感知偏差，则对2WS序列中的PSE与POE进行一定间隔的分离，间隔就是偏差，等于PSE减去POE</p>
+<p>—— 显著性分析</p>
+<p>作者对每个实验进行了两次显著性分析，第一个是参与者之间的偏见。首先使用夏皮罗-威尔克检验检验正态性，发现大多数结果不遵循正态分布(p &lt; 0.05)，然后使用非参数Friedman和ANOVA检验进行检验。结果表明，对于每个实验和视觉特征，不同参与者的偏误没有显著差异。因此，不同参与者的偏见可以得到平等对待。第二个显著性分析是不同尺度比/点半径之间的偏差。夏皮罗-威尔克检验表明，所有结果不遵循正态分布(p &lt; 0.05)。因此，使用非参数Friedman检验来检查每个视觉特征的7个尺度比/点半径的偏差是否存在显著差异</p>
+<p>作者假设几何尺度对三个视觉特征的感知存在偏差，且偏差可能与尺度比成线性关系。这一假设得到了充分的证实。随着偏差的存在，当尺度比不为100%时，所有特征都表现出一定程度的偏差，而当尺度比为100%时，偏差非常接近于0。这说明增大和缩小测试散点图会影响三个特征的感知一致性</p>
+<p>作者假设偏差会受到数据分布的影响。通过特征和尺度比对E1(正态分布)和E2(均匀分布)的偏差进行两两t检验，以检验其显著性差异，然后采用Bonferroni校正将显著性水平从p = 0.05降低到0.00714(0.05/7)，因为在t检验中作者将每个特征的偏倚测量结果除以7个尺度比。三种特征的E1和E2在7个尺度比上的偏差均无显著差异(p &lt; 0.00714)。这一假设被完全否定了。作者认为，正态分布形成的视觉模式可能与均匀分布形成的视觉模式存在效率低下的差异</p>
+<p>作者假设改变点的半径可以减小偏差。E3中，试验散点图按固定比例缩放，其点半径变化了7个层次，而参考散点图的基线半径不变(r = 2)，即E1中所有散点图的点半径。选择两个比例比(63%和252%)对放大和缩小情况进行测试。这个假设在一定程度上证实了该观点</p>
+<p>实验结果如图</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GeometricScaling-5.png"></p>
+<p>客观结果反映了三个主要发现。首先，几何分割会导致对三个视觉特征(聚类度、相关性和聚类分离)的感知偏见。偏见与标度比呈线性关系；即当标度比增大或减小时，偏差的绝对值增大。其次，从正态分布和均匀分布的散点图测量的偏差之间没有显著性差异。第三，改变点的半径可以纠正偏差。这种校正只出现在一定的半径范围内，在数度和大尺度比的情况下，校正效果较大</p>
+<p>主观结果发现也分三个方面，首先，数量的影响最大，参与者大致能认识到偏差和量表比率的关系，第二，一些参与者报告说，在均匀分布的散点图中，集合尺度对偏差的影响比在正太分布的散点图中要小一点，第三，参与者对改变点半径b的偏差校正效果不明显</p>
+<h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><p>文章中研究了散点图低水平和中水平分量，但高水平分量除外，作者认为，偏见在散点图缩放中是普遍存在的，但是可以以不同的形式表现出来，作者初步研究了正态分布和均匀分布的影响，多样化的数据分布在未来值得探索，文中只研究了点半径对偏见的影响，其它视觉通道需要进一步研究，如颜色，对比度，不透明度和亮度等</p>
+<p>实验设计中得到的最重要的教训是试点研究的重要性，在试点研究中团队验证了2AFC方法，实验的随机序列以及从E1到E3的实验顺序是不合理的，作者发现，如果实验持续进行，参与者的表现会随着时间的推移而下降，为了尽量减少疲劳对实验结果的影响，作者建立了各种严格的休息机制，在一个实验中完成所有的实验后，要求参与者休息2 - 3分钟，然后继续进行下一个实验。在一轮实验结束后，参与者有一个小时的休息时间，在下一轮实验开始前会进行一个预实验来测试参与者的心理状态。参与者被允许在几天内完成所有的实验，如果他们报告强烈的疲劳感或在实验中遇到了意想不到的情况，此外实验中的散点图均在一个统一的桌面显示器上显示，这种做法减少了可控实验，降低了生态效度。可以进一步探讨不同的显示设备和屏幕分辨率如何影响几何缩放引起的偏差</p>
+<p>从少量异常序列测量的偏差被替换为具有相同实验变量的所有参与者的偏差平均值。作者仔细检查了这些序列，以确保它们都有明显的错误选择模式，但这样的替换仍可能对实验结果产生潜在的影响，在E1方面，作者对各量表比中所有参与者的偏差均值进行线性回归和趋势分析，因为参与者之间的偏差不存在显著差异。团队没有调查所有个体的偏见，而是关注总体的平均表现，这与Harrison等人的研究相似，对于E3，还没有得到一个准确的模型来指导偏差校正。主要原因可能是点半径和比例尺比率的测试水平仍然不够</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">forever97</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://forever97.top/2020/09/29/GeometricScaling/">https://forever97.top/2020/09/29/GeometricScaling/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://forever97.top" target="_blank">未央の童话镇</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/2019/">2019</a><a class="post-meta__tags" href="/tags/bias/">bias</a><a class="post-meta__tags" href="/tags/VIS/">VIS</a></div><div class="post_share"><div class="social-share" data-image="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GeometricScaling-1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/10/19/Re0-1/"><img class="prev-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/R1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">从零开始的算法竞赛入门教程：基础语法与函数思想</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/22/cognitive-biases/"><img class="next-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/cognitive-biases-2.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">信息可视化中的认知偏见</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/09/21/Curse/" title="可视化中知识的诅咒"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/Curse-10.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-21</div><div class="title">可视化中知识的诅咒</div></div></a></div><div><a href="/2020/09/22/cognitive-biases/" title="信息可视化中的认知偏见"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/cognitive-biases-2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-22</div><div class="title">信息可视化中的认知偏见</div></div></a></div><div><a href="/2020/11/26/barcodeTree/" title="BarcodeTree：多层次结构的可伸缩比较"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/barcodeTree-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-26</div><div class="title">BarcodeTree：多层次结构的可伸缩比较</div></div></a></div><div><a href="/2020/09/18/dataChanges/" title="Data Changes Everything"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/dataChanges-9.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-18</div><div class="title">Data Changes Everything</div></div></a></div><div><a href="/2020/11/24/shapeWordle/" title="ShapeWordle：阿基米德螺旋感知形状生成词云"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/shapeWordle-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-24</div><div class="title">ShapeWordle：阿基米德螺旋感知形状生成词云</div></div></a></div><div><a href="/2020/10/21/VIS2019-1/" title="VIS2019论文整理(1)"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/VIS2019.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-21</div><div class="title">VIS2019论文整理(1)</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Twikoo</span><span class="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">forever97</div><div class="author-info__description">在人海里梦游</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forever97"><i class="fab fa-github"></i><span>来给我加星星</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forever97" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://gitee.com/forever97/" target="_blank" title="Gitee"><i class="fab fa-google"></i></a><a class="social-icon" href="https://www.cnblogs.com/forever97" target="_blank" title="博客园"><i class="fas fa-blog"></i></a><a class="social-icon" href="http://wpa.qq.com/msgrd?v=3&amp;uin=857426255&amp;site=qq&amp;menu=yes" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:857426255@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content"><h2 style="color:orange; margin:2px;">🍊欢迎光临本站</h2> 如果卡顿请访问 <a target="_blank" rel="noopener" href="https://forever97.gitee.io" style="cursor:pointer; color:#fff; background-color:orange; padding:2px 5px; border-radius:5px;">Gitee镜像站</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">文章简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">相关工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%92%8C%E5%81%87%E8%AE%BE"><span class="toc-number">3.</span> <span class="toc-text">问题和假设</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1"><span class="toc-number">4.</span> <span class="toc-text">实验设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">实验结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A8%E8%AE%BA"><span class="toc-number">6.</span> <span class="toc-text">讨论</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React Hooks"/></a><div class="content"><a class="title" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks">React基础速通计划：React Hooks</a><time datetime="2022-06-26T14:26:47.000Z" title="发表于 2022-06-26 14:26:47">2022-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React组件"/></a><div class="content"><a class="title" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件">React基础速通计划：React组件</a><time datetime="2022-06-19T11:09:45.000Z" title="发表于 2022-06-19 11:09:45">2022-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React基础与JSX"/></a><div class="content"><a class="title" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX">React基础速通计划：React基础与JSX</a><time datetime="2022-06-16T15:58:27.000Z" title="发表于 2022-06-16 15:58:27">2022-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/07/eventloop/" title="JS事件循环"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/eventloop.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS事件循环"/></a><div class="content"><a class="title" href="/2021/09/07/eventloop/" title="JS事件循环">JS事件循环</a><time datetime="2021-09-07T14:32:33.000Z" title="发表于 2021-09-07 14:32:33">2021-09-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/31/promise/" title="Promise详解"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/promise.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Promise详解"/></a><div class="content"><a class="title" href="/2021/08/31/promise/" title="Promise详解">Promise详解</a><time datetime="2021-08-31T10:04:59.000Z" title="发表于 2021-08-31 10:04:59">2021-08-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GeometricScaling-1.png)"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2022 By forever97</div><div class="footer_custom_text"><p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://demo.jerryc.me/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://metroui.org.ua/index.html "><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站托管于Vercel">&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'blogtalk-6g6nlayif96df94c',
+      region: ''
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'blogtalk-6g6nlayif96df94c',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'znUsAPKaAhvsce1vGdQabwNA-MdYXbMMI',
+      appKey: 'IXAxuH2tjf4O7iYSNPOnzMFe',
+      placeholder: '记得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'robohash',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Twikoo' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/gitcalendar/js/gitcalendar.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@latest/source/js/issues.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/magnet/js/catalogMagnet.js"></script><script src="/swiper/swiper.min.js"></script><script src="/swiper/swiperindex.js"></script><script src="/js/moments.js"></script><script src="/js/smooth-scrolling.js"></script><script src="/js/custom.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div><!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>未央の时光机</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='/'|| '/' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/33.2017.newyear.model.json"},"display":{"position":"right","width":200,"height":300},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>

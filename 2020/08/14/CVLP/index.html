@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CVLP [预处理] | 未央の童话镇</title><meta name="keywords" content="VQA,2020,对比学习,VLP,预训练"><meta name="author" content="forever97"><meta name="copyright" content="forever97"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="Paper Download Address Code Download Address Introduction语言预训练彻底改变了自然语言理解(NLU)，与此同时，在视觉分支上提出了视觉语言预训练(VLP)，VLP所依赖的网络结构与以往的方法相似，但通过大规模的预训练获得语义信息，使模型具有更好的性能和泛化能力 两种著名的VLP方法LXMERT和ViLBERT均是将标记的视觉区域的特征回归或分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CVLP [预处理]">
+<meta property="og:url" content="https://forever97.top/2020/08/14/CVLP/index.html">
+<meta property="og:site_name" content="未央の童话镇">
+<meta property="og:description" content="Paper Download Address Code Download Address Introduction语言预训练彻底改变了自然语言理解(NLU)，与此同时，在视觉分支上提出了视觉语言预训练(VLP)，VLP所依赖的网络结构与以往的方法相似，但通过大规模的预训练获得语义信息，使模型具有更好的性能和泛化能力 两种著名的VLP方法LXMERT和ViLBERT均是将标记的视觉区域的特征回归或分">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-1.png">
+<meta property="article:published_time" content="2020-08-14T15:40:52.000Z">
+<meta property="article:modified_time" content="2022-06-26T06:44:17.741Z">
+<meta property="article:author" content="forever97">
+<meta property="article:tag" content="VQA">
+<meta property="article:tag" content="2020">
+<meta property="article:tag" content="对比学习">
+<meta property="article:tag" content="VLP">
+<meta property="article:tag" content="预训练">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-1.png"><link rel="shortcut icon" href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/favicon.png"><link rel="canonical" href="https://forever97.top/2020/08/14/CVLP/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="baidu-site-verification" content="f7c8ecf684c23d02cca2e82c827ff2a2"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?194bd025765eb0d478283a5eb4217ad4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: forever97","link":"链接: ","source":"来源: 未央の童话镇","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-26 06:44:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/gitcalendar/css/gitcalendar.css"/><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css"  media="defer" onload="this.media='all'"><link rel="stylesheet" href="/magnet/css/catalogMagnet.css"/><link rel="stylesheet" href="/swiper/swiper.min.css"><link rel="stylesheet" href="/swiper/swiperstyle.css"><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-1.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">未央の童话镇</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div><div id="rightmenu" style="flex:1"><div id="search-button" style="position:absolute;right:2%"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CVLP [预处理]</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-08-14T15:40:52.000Z" title="发表于 2020-08-14 15:40:52">2020-08-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-06-26T06:44:17.741Z" title="更新于 2022-06-26 06:44:17">2022-06-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%F0%9F%93%9AVQA%E8%97%8F%E4%B9%A6%E9%98%81/">📚VQA藏书阁</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2007.13135">Paper Download Address</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ArcherYunDong/CVLP-">Code Download Address</a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>语言预训练彻底改变了自然语言理解(NLU)，与此同时，在视觉分支上提出了视觉语言预训练(VLP)，VLP所依赖的网络结构与以往的方法相似，但通过大规模的预训练获得语义信息，使模型具有更好的性能和泛化能力</p>
+<p>两种著名的VLP方法LXMERT和ViLBERT均是将标记的视觉区域的特征回归或分类作为自监督学习的代理任务(pretext task)，作者在其中发现了一些问题：1) 噪声标注: L2特征回归和分类在视觉基因组中受到噪声标注的影响；2)领域偏置: 由于视觉特征是由视觉基因组上预先训练好的物体检测器生成的，特征回归和标记的区域的分类会使预先训练好的视觉语言模型继承来自视觉的偏置基因组，这使得在其它下游任务上取得较差的泛化能力</p>
+<p>为了解决噪声标注和领域差距的问题，文中提出了对比视觉语言预训练(CVLP)，借鉴了度量学习中流行的对比学习框架来解决领域偏差和有噪声的标签问题，CVLP用对比学习代替了区域回归和分类，对比学习的目的是区分正样本和负样本，不需要任何注释，因此可以解决有噪声的标注和领域偏置问题</p>
+<p>由于Tranformer的巨大内存成本，为对比学习而扩大batch size是非常困难的，对比学习的一个突出问题是负样本的大小对性能有很大的限制，而负样本的大小又受到batch size大小的限制，基于记忆库的思想，作者建立了一个动态记忆队列，缓存前一个区域的上下文特征，并作为对比学习中的负样本，相应的缓存特征在训练过程中逐渐漂移(drift)，从而使之前缓存的负样本在内存队列中失效，同时，从缓慢移动的查询网络中提取特征并存储到内存队列中，当队列中充满特征时，最早的视觉上下文特征将从存储库中删除，一个单纯的对比学习是无效的，因为网络将很容易学会区分正样本和负样本，为了解决这一问题，作者采用随机分层密钥网络来增加特征的多样性</p>
+<p>本文的贡献总结如下：</p>
+<ol>
+<li>提出了一种新的视觉语言预训练对比学习框架，解决了之前的视觉语言预训练方法(如LXMERT和ViLBERT)遇到的领域偏置和噪声标注问题</li>
+<li>在CVLP上进行了广泛的消融研究，以验证提出的方法，CVLP预训练相比strong baseline (LXMERT) 取得显著的改善，特别是当预训练和精细训练阶段之间的区域差距变得更大时。CVLP可以在所有三个数据集(VQA, NLVR2，和GQA)上超过LXMERT的性能</li>
+</ol>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h3 id="Self-supervised-Learning-in-Vision-Language-and-Multi-modality"><a href="#Self-supervised-Learning-in-Vision-Language-and-Multi-modality" class="headerlink" title="Self-supervised Learning in Vision, Language and Multi-modality"></a>Self-supervised Learning in Vision, Language and Multi-modality</h3><p>与需要大量数据标注的监督式训练相比，自监督式学习通过在一个代理任务中构造一个损失来自动学习有用的特征，而不需要人工标注，在计算机视觉中，上下文编码器通过image in-painting来学习特征，<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1603.09246">Jiasaw</a>通过预测排列特征的位置来学习特征，<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1901.09005">Kolesnikov et al</a>对之前提出的自监督学习方法进行了大规模的研究，结果表明，自监督任务的性能随着骨干(backbone)的变化而变化</p>
+<p>NLU采用下一词预测(GPT)，下一句预测或标记词预测(BERT)，进行大规模预训练，通常采用Transformer架构进行训练，显著提高了在GLUE基准上的NLU的准确率，LXMERT和ViLBERT表明，标记的词和视觉区域也可以产生良好的视觉-语言表征</p>
+<h3 id="Contrastive-Learning"><a href="#Contrastive-Learning" class="headerlink" title="Contrastive Learning"></a>Contrastive Learning</h3><p>对比学习是自监督学习的一个分支，它利用对比损失来学习对下游任务有用的表示，对比丢失鼓励编码的实例特性与正键(positive keys)类似，而与负键保持距离，不同的对比学习方法采用不同的策略产生正键和负键，这是影响学习表征质量的重要因素，<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1805.01978">Wu et al</a>从存储整个训练数据集实例特性的大型内存存储中选择键，还有一些研究使用当前的小批处理示例生成密钥，Moco提出一种动量编码器来动态生成键并将它们存储在一个固定大小的队列中</p>
+<h3 id="Multi-modality-Reasoning"><a href="#Multi-modality-Reasoning" class="headerlink" title="Multi-modality Reasoning"></a>Multi-modality Reasoning</h3><p>目前的视觉语言预训练的骨干是建立在多模态推理结构上的，图像字幕和VQA是激发多模态融合架构设计的两个流行任务，基于关注的结构已广泛应用于多模态融合，<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1502.03044">Xu et al</a>首先提出了软关注和硬关注，表明注意力模型具有良好的性能和可解释性，<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1511.02274">Yang et al</a>通过叠加注意模型，提出了一种多层注意模型，<a target="_blank" rel="noopener" href="https://forever97.github.io/2020/07/15/1707-07998/">BUTD特征</a>展示了使用对象级特性的好处，最近越来越多研究建模对象和单词之间的关系作为表征学习，比如DCN，BAN，DFAF，MCAN，QBN，CA-RN以及STSGR</p>
+<h2 id="Contrastive-Visual-Linguistic-Pretraining-CVLP"><a href="#Contrastive-Visual-Linguistic-Pretraining-CVLP" class="headerlink" title="Contrastive Visual-Linguistic Pretraining (CVLP)"></a>Contrastive Visual-Linguistic Pretraining (CVLP)</h2><p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-1.png"></p>
+<p>CVLP的结构包括Query Network (QueryNet)和Key Network (KeyNet)，它们都包含一个语言Transformer编码器，一个视觉Transformer编码器和一个多模融合Transformer编码器，初始化时，QueryNet和KeyNet具有相同的参数，QueryNet使用可视化和文本输入的masking策略来生成跨模态嵌入，而KeyNet将mask仅应用于文本输入，生成上下文化的可视特性，KeyNet将输出推入一个动态内存队列中，连续生成负样本来计算交叉模态对比损失，利用跨模mask语言建模损失、匹配损失和对比损失的组合对整个CVLP模型进行训练</p>
+<h3 id="Multi-modality-Fusion"><a href="#Multi-modality-Fusion" class="headerlink" title="Multi-modality Fusion"></a>Multi-modality Fusion</h3><p>给定来自视觉语言数据集的图像-句子对，作者首先使用WordPieces技术和映射一个token $W_j$到它相应的嵌入$h_{emb}(W_j) \in R^{d_w}$，其中$d_w=768$，视觉位置bbox B和视觉特征F，通过Faster R-CNN得到，$B,F=RCNN(I)$，然后计算CVLP的视觉输入和文本输入</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-2.png"></p>
+<p>$g_F$和$g_{P-ROI}$是两个全连接层，负责对$F_i$和$B_i$做映射，$h_{P-word}$是一个位置编码函数，CVLP同时在QueryNet和KeyNet上做mask，选择$15%$的输入文本token做替换，一部分token被替换为特殊的[MASK] token，另一部分用随机的token替换，对于视觉区域，作者使用不同的mask策略:所选区域的特征可以被设为零，也可以被其他图像的区域特征所替代，与QueryNet不同，KeyNet只对文本输入使用mask，同时保持所有可视区域特性不变。KeyNet和QueryNet被初始化为具有相同的层和参数，它们都包含9层语言Transformer编码器，5层视觉Transformer编码器和5层的多模融合Transformer编码器</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-3.png"></p>
+<p>其中，$r_i$在视觉分支中代表一个自我注意层，$l_i$在语言分支中代表一个自我注意层，$co_i$在多模态融合分支中代表一个共同注意层</p>
+<p>三种编码器分别由视觉自注意模块、语言自注意模块和视觉-语言共注意模块实现，视觉自注意利用注意模型中的关键、查询和值特征进行区域特征之间的信息融合，将关键，查询和价值的视觉特征记为$K_v$，$Q_v$，$V_v$，相应的语言特征为$K_w$，$Q_w$，$V_w$，模内信息融合可以表示为：</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-4.png"></p>
+<p>其中，Transformer层的注意模块可表示为:</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-5.png"></p>
+<p>然后用模间融合模块来融合语言和视觉特征的信息，模间融合过程是双向的，包括从语言到视觉的信息融合和从视觉到语言的信息融合</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-6.png"></p>
+<p>通过模内/模间特征融合，可以得到一个多模上下文特征嵌入，上下文特征在一个紧凑的特征向量中编码多模态交互，基于上下文特征在CVLP中用于语言分支的mask loss和视觉分支的对比loss</p>
+<h3 id="Mask-Loss-for-Language-Branch"><a href="#Mask-Loss-for-Language-Branch" class="headerlink" title="Mask Loss for Language Branch"></a>Mask Loss for Language Branch</h3><p>在预训练阶段，CVLP相比于LXMERT执行了许多不同的pretext task，CVLP不包含监督任务，因此不依赖于人工标注，对于语言分支，作者将mask语言建模和图像-语言匹配预测作为两个代理任务</p>
+<p>mask loss是由BERT首先提出的，后续的ViLBERT方法除了语言mask loss外，还增加了视觉特征mask loss</p>
+<p>这个损失mask上下文表示，并利用上下文信息预测了mask特征，通过优化mask loss，Transformer隐式地学习了对上下文信息的编码，这有助于对下游任务进行泛化，在CVLP中，作者只对文本输入使用mask loss。此外，还增加了一个匹配损失，它涉及到一个二值Yes/No分类来预测句子是否与视觉特征匹配， mask loss可以用下面的形式来表示</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-7.png"></p>
+<p>$\theta$表示语言Transformer编码器的参数，$w_m$和$\overline{w/m}$是要预测的mask token和没有被mask的上下文token</p>
+<p>匹配损失定义为</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-8.png"></p>
+<p>$W_{CLS}$表示[CLS] token，在图片-文本匹配的代理任务中对视觉-语言信息进行编码</p>
+<h3 id="Contrastive-Loss-for-Visual-Branch"><a href="#Contrastive-Loss-for-Visual-Branch" class="headerlink" title="Contrastive Loss for Visual Branch"></a>Contrastive Loss for Visual Branch</h3><p>对比学习通过从一组负特征中区分视觉上相似的特征对来进行自我监督的表征学习，通过将Faster R-CNN提取的视觉区域特征输入到QueryNet和KeyNet中可以获得正向query-key对，其他batch的所有区域特征都被用作负键，然后通过更新网络权值进行对比学习，使以下损失最小化</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-9.png"></p>
+<p>$\tau$表示the temperature of Softmax(?)，$v_i^{key+}$是$v_i^{query}$的所有正键(positive key)，$v_j^{memory-queue}$作为计算$L_{contrast}$的负样本</p>
+<p>传统的对比学习方法受到反例数量的限制，实际过程中， 获得大量的负样本也是非常耗时的，受动量对比(MoCo)的启发，作者构建了一个动态的视觉记忆队列来存储KeyNet生成的特性，视觉记忆队列先为空，KeyNet生成的特性逐渐放入队列中，随着训练的进行，可以获得一个大的视觉队列作为负样本，对比学习的效果在很大程度上取决于视觉队列的特征多样性。一旦队列满了，就删除最早的特性。视觉记忆队列表示为</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-10.png"></p>
+<p>$\overline{v_{b,n}^i}$表示第i次迭代第b张照片的第n个区域的视觉特征，视觉记忆队列的一个缺点是训练过程中的特征漂移。随着神经网络的快速更新，所提取的特征可能很快就会过时，使得存储在视觉队列中的负样本失效，为了解决这个问题，作者将KeyNet的权重定义为QueryNet的移动平均线(moving average)，QueryNet是通过随机梯度下降训练的，网络的更新记为</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-11.png"></p>
+<p>m是动量值(momentum value)，$\theta_k$和$\theta_q$是来自KeyNet和QueryNet中的参数值，这种对比学习方式在训练过程中视觉记忆队列大，特征漂移小，可以取得较好的学习效果</p>
+<h3 id="Randomly-Layer-Dropping-Key-Network"><a href="#Randomly-Layer-Dropping-Key-Network" class="headerlink" title="Randomly Layer-Dropping Key Network"></a>Randomly Layer-Dropping Key Network</h3><p>对比学习训练无监督表示学习的一个重要因素是负样本的多样性，对比学习很容易过拟合，从而使表示学习过程失效，作者观察到，随着训练过程的进行，对比学习损失变得非常小，这表明已经发生过拟合，作者通过随机Layer-dropping关键网络，来增加存储在视觉记忆队列中的特征的多样性，droplayer策略包含KeyNet中self-attention和co-attention层的随机dropout，在对比学习的训练过程中，可以增加特征的多样性，防止过拟合，randomly layer-dropping Key Network可以表示如下</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-12.png"></p>
+<p>SPL表示是否在某层进行随机drop，由上式可知，在预训练过程中，即使是KeyNet中的层也可能以0.5的抽样概率被丢弃</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>预训练模型在VQA Task上的比较</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-13.png"></p>
+<p>在多项任务上和SOTA的比较</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-14.png"></p>
+<p>attention可视化</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-15.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">forever97</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://forever97.top/2020/08/14/CVLP/">https://forever97.top/2020/08/14/CVLP/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://forever97.top" target="_blank">未央の童话镇</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/VQA/">VQA</a><a class="post-meta__tags" href="/tags/2020/">2020</a><a class="post-meta__tags" href="/tags/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0/">对比学习</a><a class="post-meta__tags" href="/tags/VLP/">VLP</a><a class="post-meta__tags" href="/tags/%E9%A2%84%E8%AE%AD%E7%BB%83/">预训练</a></div><div class="post_share"><div class="social-share" data-image="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/08/18/Grid/"><img class="prev-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/Grid-1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Grid Feats VQA [回归网格特征]</div></div></a></div><div class="next-post pull-right"><a href="/2020/08/12/smallSampleLearning/"><img class="next-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/smallSampleLearning-1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">小样本学习</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/07/02/CSSVQA/" title="CSS-VQA [反事实]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CSSVQA-2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-02</div><div class="title">CSS-VQA [反事实]</div></div></a></div><div><a href="/2020/07/03/DLR/" title="通过分解语言表征来克服VQA中的语言先验"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/DLR-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-03</div><div class="title">通过分解语言表征来克服VQA中的语言先验</div></div></a></div><div><a href="/2020/07/20/ESTVQA/" title="EST-VQA [双语文本VQA]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-20</div><div class="title">EST-VQA [双语文本VQA]</div></div></a></div><div><a href="/2020/07/08/GQAOOD/" title="GQA-OOD [低频样本处理]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GQAOOD-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-08</div><div class="title">GQA-OOD [低频样本处理]</div></div></a></div><div><a href="/2020/08/18/Grid/" title="Grid Feats VQA [回归网格特征]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/Grid-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-18</div><div class="title">Grid Feats VQA [回归网格特征]</div></div></a></div><div><a href="/2020/07/09/SQuINTing/" title="SQulNTing [子问题一致性]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SQulNTing-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-09</div><div class="title">SQulNTing [子问题一致性]</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Twikoo</span><span class="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">forever97</div><div class="author-info__description">在人海里梦游</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forever97"><i class="fab fa-github"></i><span>来给我加星星</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forever97" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://gitee.com/forever97/" target="_blank" title="Gitee"><i class="fab fa-google"></i></a><a class="social-icon" href="https://www.cnblogs.com/forever97" target="_blank" title="博客园"><i class="fas fa-blog"></i></a><a class="social-icon" href="http://wpa.qq.com/msgrd?v=3&amp;uin=857426255&amp;site=qq&amp;menu=yes" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:857426255@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content"><h2 style="color:orange; margin:2px;">🍊欢迎光临本站</h2> 如果卡顿请访问 <a target="_blank" rel="noopener" href="https://forever97.gitee.io" style="cursor:pointer; color:#fff; background-color:orange; padding:2px 5px; border-radius:5px;">Gitee镜像站</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Related-Work"><span class="toc-number">2.</span> <span class="toc-text">Related Work</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Self-supervised-Learning-in-Vision-Language-and-Multi-modality"><span class="toc-number">2.1.</span> <span class="toc-text">Self-supervised Learning in Vision, Language and Multi-modality</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Contrastive-Learning"><span class="toc-number">2.2.</span> <span class="toc-text">Contrastive Learning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multi-modality-Reasoning"><span class="toc-number">2.3.</span> <span class="toc-text">Multi-modality Reasoning</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Contrastive-Visual-Linguistic-Pretraining-CVLP"><span class="toc-number">3.</span> <span class="toc-text">Contrastive Visual-Linguistic Pretraining (CVLP)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Multi-modality-Fusion"><span class="toc-number">3.1.</span> <span class="toc-text">Multi-modality Fusion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mask-Loss-for-Language-Branch"><span class="toc-number">3.2.</span> <span class="toc-text">Mask Loss for Language Branch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Contrastive-Loss-for-Visual-Branch"><span class="toc-number">3.3.</span> <span class="toc-text">Contrastive Loss for Visual Branch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Randomly-Layer-Dropping-Key-Network"><span class="toc-number">3.4.</span> <span class="toc-text">Randomly Layer-Dropping Key Network</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiments"><span class="toc-number">4.</span> <span class="toc-text">Experiments</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React Hooks"/></a><div class="content"><a class="title" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks">React基础速通计划：React Hooks</a><time datetime="2022-06-26T14:26:47.000Z" title="发表于 2022-06-26 14:26:47">2022-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React组件"/></a><div class="content"><a class="title" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件">React基础速通计划：React组件</a><time datetime="2022-06-19T11:09:45.000Z" title="发表于 2022-06-19 11:09:45">2022-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React基础与JSX"/></a><div class="content"><a class="title" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX">React基础速通计划：React基础与JSX</a><time datetime="2022-06-16T15:58:27.000Z" title="发表于 2022-06-16 15:58:27">2022-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/07/eventloop/" title="JS事件循环"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/eventloop.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS事件循环"/></a><div class="content"><a class="title" href="/2021/09/07/eventloop/" title="JS事件循环">JS事件循环</a><time datetime="2021-09-07T14:32:33.000Z" title="发表于 2021-09-07 14:32:33">2021-09-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/31/promise/" title="Promise详解"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/promise.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Promise详解"/></a><div class="content"><a class="title" href="/2021/08/31/promise/" title="Promise详解">Promise详解</a><time datetime="2021-08-31T10:04:59.000Z" title="发表于 2021-08-31 10:04:59">2021-08-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-1.png)"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2022 By forever97</div><div class="footer_custom_text"><p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://demo.jerryc.me/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://metroui.org.ua/index.html "><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站托管于Vercel">&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'blogtalk-6g6nlayif96df94c',
+      region: ''
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'blogtalk-6g6nlayif96df94c',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'znUsAPKaAhvsce1vGdQabwNA-MdYXbMMI',
+      appKey: 'IXAxuH2tjf4O7iYSNPOnzMFe',
+      placeholder: '记得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'robohash',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Twikoo' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/gitcalendar/js/gitcalendar.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@latest/source/js/issues.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/magnet/js/catalogMagnet.js"></script><script src="/swiper/swiper.min.js"></script><script src="/swiper/swiperindex.js"></script><script src="/js/moments.js"></script><script src="/js/smooth-scrolling.js"></script><script src="/js/custom.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div><!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>未央の时光机</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='/'|| '/' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/33.2017.newyear.model.json"},"display":{"position":"right","width":200,"height":300},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>

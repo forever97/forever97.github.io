@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EST-VQA [双语文本VQA] | 未央の童话镇</title><meta name="keywords" content="VQA,CVPR,2020,dataset,TextVQA"><meta name="author" content="forever97"><meta name="copyright" content="forever97"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="Paper Download Address 对数据集中的巧合相关性的学习使得VQA系统难以泛化，巧合相关性在数据集中并不稳定，当测试集中的分布与训练集不同时，基于巧合相关性所学习到的东西就不再work 泛化VQA存在的一个潜在问题就是无法判断正确答案是否由正确的理由产生，通过推理得到的答案和通过巧合相关性得到的答案表面上是完全一致的 文章中提出一种度量VQA性能的方法，它通过要求算法证明其推理的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EST-VQA [双语文本VQA]">
+<meta property="og:url" content="https://forever97.top/2020/07/20/ESTVQA/index.html">
+<meta property="og:site_name" content="未央の童话镇">
+<meta property="og:description" content="Paper Download Address 对数据集中的巧合相关性的学习使得VQA系统难以泛化，巧合相关性在数据集中并不稳定，当测试集中的分布与训练集不同时，基于巧合相关性所学习到的东西就不再work 泛化VQA存在的一个潜在问题就是无法判断正确答案是否由正确的理由产生，通过推理得到的答案和通过巧合相关性得到的答案表面上是完全一致的 文章中提出一种度量VQA性能的方法，它通过要求算法证明其推理的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-1.png">
+<meta property="article:published_time" content="2020-07-20T07:27:09.000Z">
+<meta property="article:modified_time" content="2022-06-26T06:44:17.741Z">
+<meta property="article:author" content="forever97">
+<meta property="article:tag" content="VQA">
+<meta property="article:tag" content="CVPR">
+<meta property="article:tag" content="2020">
+<meta property="article:tag" content="dataset">
+<meta property="article:tag" content="TextVQA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-1.png"><link rel="shortcut icon" href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/favicon.png"><link rel="canonical" href="https://forever97.top/2020/07/20/ESTVQA/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="baidu-site-verification" content="f7c8ecf684c23d02cca2e82c827ff2a2"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?194bd025765eb0d478283a5eb4217ad4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: forever97","link":"链接: ","source":"来源: 未央の童话镇","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-26 06:44:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/gitcalendar/css/gitcalendar.css"/><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css"  media="defer" onload="this.media='all'"><link rel="stylesheet" href="/magnet/css/catalogMagnet.css"/><link rel="stylesheet" href="/swiper/swiper.min.css"><link rel="stylesheet" href="/swiper/swiperstyle.css"><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-1.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">未央の童话镇</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div><div id="rightmenu" style="flex:1"><div id="search-button" style="position:absolute;right:2%"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">EST-VQA [双语文本VQA]</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-07-20T07:27:09.000Z" title="发表于 2020-07-20 07:27:09">2020-07-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-06-26T06:44:17.741Z" title="更新于 2022-06-26 06:44:17">2022-06-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%F0%9F%93%9AVQA%E8%97%8F%E4%B9%A6%E9%98%81/">📚VQA藏书阁</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_CVPR_2020/papers/Wang_On_the_General_Value_of_Evidence_and_Bilingual_Scene-Text_Visual_CVPR_2020_paper.pdf">Paper Download Address</a></p>
+<p>对数据集中的巧合相关性的学习使得VQA系统难以泛化，巧合相关性在数据集中并不稳定，当测试集中的分布与训练集不同时，基于巧合相关性所学习到的东西就不再work</p>
+<p>泛化VQA存在的一个潜在问题就是无法判断正确答案是否由正确的理由产生，通过推理得到的答案和通过巧合相关性得到的答案表面上是完全一致的</p>
+<p>文章中提出一种度量VQA性能的方法，它通过要求算法证明其推理的合理性来鼓励泛化</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-1.png"></p>
+<p>之前也有相关工作研究过推理过程，但是因为提供理由的形式是有限的而饱受困扰，文章中的方法是提供一个简单的指示，说明它的答案是基于图像的哪个区域，若VQA系统提供了正确的答案和正确的图像区域，则说明其推理过程是正确的</p>
+<p>作者在Scene Text VQA上做测试，选择这种测试集的原因是大部分VQA model在Text VQA数据集上表现不佳，但是图片中的文本对图片的理解往往是很有指示意义的，而且文本VQA问题通常不太容易通过利用数据中的巧合相关性来解决</p>
+<p>同时，因为文本VQA图像中出现的文本范围十分广泛，因此基于分类的方法很容易过拟合，需要开发替代方法，并且这些方法可以推广到其它方面</p>
+<p>图中是一些Text VQA中的挑战</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-2.png"></p>
+<p>图(a)不需要任何文本内容就可以作答，图(b)拥有不止一个正确答案，图(c)需要先验知识才能回答，图(d)不能够直接从图片内容中获得答案，需要model拥有额外的技能</p>
+<p>下图是Evidence-Baced VQA和传统VQA(LoRRA)的对比，可以看出来目前的VQA方法严重依赖于通过分析训练集中的答案而构造的预定义答案空间，从而限制了泛化</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-3.png"></p>
+<p>Text-VQA数据集采取的是传统的VQA评估方式，也就是准确率，ST-VQA数据集软分数度量方式，但是这些都是结果导向的评估方式，并未评估推理过程，这种基于分类的VQA系统容易过度拟合到一个固定的答案空间，不容易推广到其它数据集</p>
+<p>为了解决这些问题，文章中提出了一种新的scene-text based VQA数据集，命名为Evidence-based Scene Text Visual Question Answering(EST-VQA)，其中包含了三个task：cross language challenge，localization challenge以及traditional challenge，此外进行了一系列实验确定了这三个挑战的baseline</p>
+<p>文章主要贡献有：</p>
+<ol>
+<li>Dataset：EST-VQA数据集提供了图片，问题和答案，以及对于每个问题的一个bounding box，将导向答案的区域框出来，数据集的目的是支持开发更接近实际应用程序所要求的性能水平的文本VQA方法，同时也鼓励开发泛化的通用VQA方法</li>
+<li>Evaluation Metric：文章中提出了一种Evidence-based评估方法，要求VQA在预测答案的时候提供证据，同时，提出了一种新的VQA模型，在新的度量标准下，单纯的分类模型可能很难有好的效果</li>
+<li>Bilingual：EST-VQA是首个双语场景文本VQA数据集，其中包含了英语和中文的问题和答案，双语数据集可以更好地激励VQA系统泛化，因为对于多种语言的数据集来说，表层的相关性更难被挖掘，所选择的语言在语法上也特别不同，反映了不同的文化人群，这导致了不同的问题统计，进一步鼓励了泛化</li>
+</ol>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>相比于传统的VQA，文本VQA数据集更多关注于依赖于文本的问题，model需要读取和理解图片中的文本内容</p>
+<p>[1]中提出了Text-VQA和一个baseline model LoRRA，如图所示</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-4.png"></p>
+<p>Amanpreet Singh, Vivek Natarajan, Meet Shah, Yu Jiang, Xinlei Chen, Dhruv Batra, Devi Parikh, and Marcus Rohrbach. Towards vqa models that can read. In Proc. IEEE Conf. Comp. Vis. Patt. Recogn., pages 8317–8326, 2019</p>
+<p>类似的数据集还有ST-VQA，OCR-VQA，这些数据集都提供了图片和依赖于图片中文本的QA对，但是文中的数据集与这些数据集有一些重要的不同之处：</p>
+<p>Diversity：现有数据集更多地关注问题回答部分，而在模型的训练和评估中几乎忽略了OCR部分，而EST-VQA关注了这一点</p>
+<p>Evaluation Metric：</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-5.png"></p>
+<p>NL是normalized Levenshtein distance</p>
+<h2 id="EST-VQA"><a href="#EST-VQA" class="headerlink" title="EST-VQA"></a>EST-VQA</h2><h3 id="数据收集"><a href="#数据收集" class="headerlink" title="数据收集"></a>数据收集</h3><ol>
+<li><p>图片：图片一共20757张，英文的场景文本图像来自于Total-Text，ICDAR 2013，ICDAR 2015，CTW1500，MLT，COCO Text，中文的场景文本图像来自于LSVT</p>
+</li>
+<li><p>问题和答案：包含15056个英文问题和13006个汉语问题，问题和答案可以跨语言，比如英文提问图片中商店的名字，如果是中文则答案输出中文。问题和答案必须和图片中的文本有关，标注人需要再图片中用bounding box标注出回答相关的区域作为证据。并且不存在yes/no类别以及存在多种回答的问题</p>
+</li>
+</ol>
+<p>中英文问题分布见下图</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-6.png"></p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-7.png"></p>
+<p>问题和答案的数量如下图</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-8.png"></p>
+<h3 id="Evidence-based-评估方法"><a href="#Evidence-based-评估方法" class="headerlink" title="Evidence-based 评估方法"></a>Evidence-based 评估方法</h3><p>在实验中，作者发现了一个有趣的现象，若真实答案被包含在预生成的答案字典中，则普通的VQA模型可以在不提取图片中文本内容的情况下回答正确问题，这种模型严重依赖于预定义的答案池，无法处理超出词汇列表的情况。因此难以判定模型是理解并推理完成了问题还是overfit了答案空间。作者提出了Evidence-based评估方法(EvE)，要求模型为自己预测的答案提供证据</p>
+<p>EvE评估包含两个步骤，check答案和check证据，文章中采用了normalized Levenshtein similarity score(见上文公式)来check答案，最后用IoU度量来确定证据是否充分</p>
+<p>对Evidence的评估如图</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-9.png"></p>
+<p>$B_{gt}$和$B_{det}$是GT以及预测的bounding box</p>
+<p>评估示例如下图</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-10.png"></p>
+<h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>Text-VQA和OCR-VQA遵循和一般VQA数据集相同的评估规则，ST-VQA虽说提出了三个任务，但是每个任务的区别只在于外部信息的大小，这些都不足以全面评价VQA模型的能力</p>
+<p>文章中设计了三个相关的任务，并且采用在线评估</p>
+<h4 id="Cross-Language-Challenge-CLC"><a href="#Cross-Language-Challenge-CLC" class="headerlink" title="Cross Language Challenge (CLC)"></a>Cross Language Challenge (CLC)</h4><p>因为数据集是双语的，因此要求模型能够在两种语言之中提取共同的知识，作者采用单语框架(Chinese-only,English-only)和双语框架来评估，用EvE来度量性能</p>
+<h4 id="Localization-Challenge-LC"><a href="#Localization-Challenge-LC" class="headerlink" title="Localization Challenge (LC)"></a>Localization Challenge (LC)</h4><p>作者提出要求VQA model在预测答案的同时将导向答案的证据用bounding box框起来，而非简单地用现成的OCR系统来获取OCR token。因此这个task主要是要求VQA有理解问题和正确定位答案相关区域的能力，采用GT和predicted bounding box之间的IoU作为度量标准</p>
+<h4 id="Traditional-Challenge-TC"><a href="#Traditional-Challenge-TC" class="headerlink" title="Traditional Challenge (TC)"></a>Traditional Challenge (TC)</h4><p>这部分和传统的VQA task一致，不考虑evidence，将预测答案与GT之间的归一化Levenshtein相似度评分作为这一Task的度量</p>
+<h2 id="Baselines-and-Results"><a href="#Baselines-and-Results" class="headerlink" title="Baselines and Results"></a>Baselines and Results</h2><p>经过一系列实验和分析(略)，作者发现测试的SOTA模型均不能同时输出答案和相关的bounding box，因此提出了一个新的VQA模型：QA R-CNN</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-11.png"></p>
+<p>如图所示，模型包含两个部分，Focusing Module (FM)和Reasoning Module (RM)，FM的核心部分是为text detection准备的Faster R-CNN。除了传统的Faster R-CNN输出的bounding box和对象标签之外，QA R-CNN还为每个box生成一个关注得分。对于词嵌入(word embedding)的生成，英文的采用GloVe，中文的则采用Word2Vec，然后词嵌入馈入LSTM来生成问题特征。然后连接图片和问题两部分特征，区分box和非box部分，这使得QA R-CNN能够将其注意力集中到图像中可能出现答案的区域</p>
+<p>这里有一个简单的想法是，模型可以直接使用关注分数最高的box的底层文本作为问题的答案，然而这种做法忽略了文本当中的丰富语义</p>
+<p>因此引入RM模块，以进一步完善通道，用FastText模型来取得OCR的词嵌入，再将词嵌入与图像特征和问题嵌入做进一步的融合，用于进一步的分类</p>
+<p>实验结果展示</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-12.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">forever97</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://forever97.top/2020/07/20/ESTVQA/">https://forever97.top/2020/07/20/ESTVQA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://forever97.top" target="_blank">未央の童话镇</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/VQA/">VQA</a><a class="post-meta__tags" href="/tags/CVPR/">CVPR</a><a class="post-meta__tags" href="/tags/2020/">2020</a><a class="post-meta__tags" href="/tags/dataset/">dataset</a><a class="post-meta__tags" href="/tags/TextVQA/">TextVQA</a></div><div class="post_share"><div class="social-share" data-image="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/07/23/BUTD1/"><img class="prev-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/BUTD1-1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Tips and Tricks for Visual Question Answering</div></div></a></div><div class="next-post pull-right"><a href="/2020/07/17/SE/"><img class="next-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SE-1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Squeeze-and-Excitation Networks</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/07/09/SQuINTing/" title="SQulNTing [子问题一致性]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SQulNTing-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-09</div><div class="title">SQulNTing [子问题一致性]</div></div></a></div><div><a href="/2020/07/02/CSSVQA/" title="CSS-VQA [反事实]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CSSVQA-2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-02</div><div class="title">CSS-VQA [反事实]</div></div></a></div><div><a href="/2020/07/08/GQAOOD/" title="GQA-OOD [低频样本处理]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GQAOOD-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-08</div><div class="title">GQA-OOD [低频样本处理]</div></div></a></div><div><a href="/2020/08/18/Grid/" title="Grid Feats VQA [回归网格特征]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/Grid-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-18</div><div class="title">Grid Feats VQA [回归网格特征]</div></div></a></div><div><a href="/2020/07/15/BUTD/" title="BUTD注意力机制"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/BUTD-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-15</div><div class="title">BUTD注意力机制</div></div></a></div><div><a href="/2020/07/30/CCVQA/" title="CC-VQA [循环一致性]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CCVQA-2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-30</div><div class="title">CC-VQA [循环一致性]</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Twikoo</span><span class="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">forever97</div><div class="author-info__description">在人海里梦游</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forever97"><i class="fab fa-github"></i><span>来给我加星星</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forever97" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://gitee.com/forever97/" target="_blank" title="Gitee"><i class="fab fa-google"></i></a><a class="social-icon" href="https://www.cnblogs.com/forever97" target="_blank" title="博客园"><i class="fas fa-blog"></i></a><a class="social-icon" href="http://wpa.qq.com/msgrd?v=3&amp;uin=857426255&amp;site=qq&amp;menu=yes" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:857426255@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content"><h2 style="color:orange; margin:2px;">🍊欢迎光临本站</h2> 如果卡顿请访问 <a target="_blank" rel="noopener" href="https://forever97.gitee.io" style="cursor:pointer; color:#fff; background-color:orange; padding:2px 5px; border-radius:5px;">Gitee镜像站</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">相关工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EST-VQA"><span class="toc-number">2.</span> <span class="toc-text">EST-VQA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86"><span class="toc-number">2.1.</span> <span class="toc-text">数据收集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Evidence-based-%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">Evidence-based 评估方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Task"><span class="toc-number">2.3.</span> <span class="toc-text">Task</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cross-Language-Challenge-CLC"><span class="toc-number">2.3.1.</span> <span class="toc-text">Cross Language Challenge (CLC)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Localization-Challenge-LC"><span class="toc-number">2.3.2.</span> <span class="toc-text">Localization Challenge (LC)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Traditional-Challenge-TC"><span class="toc-number">2.3.3.</span> <span class="toc-text">Traditional Challenge (TC)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Baselines-and-Results"><span class="toc-number">3.</span> <span class="toc-text">Baselines and Results</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React Hooks"/></a><div class="content"><a class="title" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks">React基础速通计划：React Hooks</a><time datetime="2022-06-26T14:26:47.000Z" title="发表于 2022-06-26 14:26:47">2022-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React组件"/></a><div class="content"><a class="title" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件">React基础速通计划：React组件</a><time datetime="2022-06-19T11:09:45.000Z" title="发表于 2022-06-19 11:09:45">2022-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React基础与JSX"/></a><div class="content"><a class="title" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX">React基础速通计划：React基础与JSX</a><time datetime="2022-06-16T15:58:27.000Z" title="发表于 2022-06-16 15:58:27">2022-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/07/eventloop/" title="JS事件循环"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/eventloop.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS事件循环"/></a><div class="content"><a class="title" href="/2021/09/07/eventloop/" title="JS事件循环">JS事件循环</a><time datetime="2021-09-07T14:32:33.000Z" title="发表于 2021-09-07 14:32:33">2021-09-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/31/promise/" title="Promise详解"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/promise.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Promise详解"/></a><div class="content"><a class="title" href="/2021/08/31/promise/" title="Promise详解">Promise详解</a><time datetime="2021-08-31T10:04:59.000Z" title="发表于 2021-08-31 10:04:59">2021-08-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-1.png)"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2022 By forever97</div><div class="footer_custom_text"><p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://demo.jerryc.me/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://metroui.org.ua/index.html "><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站托管于Vercel">&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'blogtalk-6g6nlayif96df94c',
+      region: ''
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'blogtalk-6g6nlayif96df94c',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'znUsAPKaAhvsce1vGdQabwNA-MdYXbMMI',
+      appKey: 'IXAxuH2tjf4O7iYSNPOnzMFe',
+      placeholder: '记得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'robohash',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Twikoo' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/gitcalendar/js/gitcalendar.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@latest/source/js/issues.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/magnet/js/catalogMagnet.js"></script><script src="/swiper/swiper.min.js"></script><script src="/swiper/swiperindex.js"></script><script src="/js/moments.js"></script><script src="/js/smooth-scrolling.js"></script><script src="/js/custom.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div><!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>未央の时光机</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='/'|| '/' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/33.2017.newyear.model.json"},"display":{"position":"right","width":200,"height":300},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>

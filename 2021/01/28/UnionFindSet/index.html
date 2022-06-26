@@ -1,0 +1,512 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>并查集 | 未央の童话镇</title><meta name="keywords" content="并查集"><meta name="author" content="forever97"><meta name="copyright" content="forever97"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="并查集概念当我们在做题的时候，会有一些关于集合的操作，比如将两个集合合并，查询一个元素是否属于某个集合，判断两个元素是否属于同个集合等，并查集就是一种用于处理这些情况的数据结构，并 指集合合并， 查 指元素查询 既然有集合和元素关系判定的需求，那么首先我们得标识集合，比如说碗属于餐具，那么这里餐具就是这个集合的标识(名字)，在并查集中，集合有多种标识方法，最常见的一种是将代表元素作为集合表示，比如">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并查集">
+<meta property="og:url" content="https://forever97.top/2021/01/28/UnionFindSet/index.html">
+<meta property="og:site_name" content="未央の童话镇">
+<meta property="og:description" content="并查集概念当我们在做题的时候，会有一些关于集合的操作，比如将两个集合合并，查询一个元素是否属于某个集合，判断两个元素是否属于同个集合等，并查集就是一种用于处理这些情况的数据结构，并 指集合合并， 查 指元素查询 既然有集合和元素关系判定的需求，那么首先我们得标识集合，比如说碗属于餐具，那么这里餐具就是这个集合的标识(名字)，在并查集中，集合有多种标识方法，最常见的一种是将代表元素作为集合表示，比如">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-1.png">
+<meta property="article:published_time" content="2021-01-28T10:53:19.000Z">
+<meta property="article:modified_time" content="2022-06-26T06:44:17.745Z">
+<meta property="article:author" content="forever97">
+<meta property="article:tag" content="并查集">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-1.png"><link rel="shortcut icon" href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/favicon.png"><link rel="canonical" href="https://forever97.top/2021/01/28/UnionFindSet/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="baidu-site-verification" content="f7c8ecf684c23d02cca2e82c827ff2a2"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?194bd025765eb0d478283a5eb4217ad4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: forever97","link":"链接: ","source":"来源: 未央の童话镇","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-26 06:44:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/gitcalendar/css/gitcalendar.css"/><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css"  media="defer" onload="this.media='all'"><link rel="stylesheet" href="/magnet/css/catalogMagnet.css"/><link rel="stylesheet" href="/swiper/swiper.min.css"><link rel="stylesheet" href="/swiper/swiperstyle.css"><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-1.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">未央の童话镇</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div><div id="rightmenu" style="flex:1"><div id="search-button" style="position:absolute;right:2%"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">并查集</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-01-28T10:53:19.000Z" title="发表于 2021-01-28 10:53:19">2021-01-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-06-26T06:44:17.745Z" title="更新于 2022-06-26 06:44:17">2022-06-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%F0%9F%8D%AD%E7%AE%97%E6%B3%95%E5%B9%BC%E5%84%BF%E5%9B%AD/">🍭算法幼儿园</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="并查集概念"><a href="#并查集概念" class="headerlink" title="并查集概念"></a>并查集概念</h2><p>当我们在做题的时候，会有一些关于集合的操作，比如将两个集合合并，查询一个元素是否属于某个集合，判断两个元素是否属于同个集合等，并查集就是一种用于处理这些情况的数据结构，<strong>并</strong> 指集合合并， <strong>查</strong> 指元素查询</p>
+<p>既然有集合和元素关系判定的需求，那么首先我们得<strong>标识集合</strong>，比如说碗属于餐具，那么这里餐具就是这个集合的标识(名字)，在并查集中，集合有多种标识方法，最常见的一种是将<strong>代表元素</strong>作为集合表示，比如一个集合中包含了碗和盘子，那么我们可以随便选择一个，比如说碗，来标识集合</p>
+<p>在具体实现中，并查集通过树形结构来实现，用根元素来标识集合，每个元素连向父节点，用于标识集合的根元素则<strong>连向自己</strong></p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-2.png"></p>
+<p>那么查找的时候只要沿着链寻找到根元素即可确定集合，查找的逻辑非常简单，沿着链往上查找，直到找到一个父节点连接指向自己的元素，，我们用c++简单地实现一下这个过程，这里用f数组表示父节点连接</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查找 searchfather</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sf</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (f[x] == x) <span class="keyword">return</span> x; <span class="comment">// 如果找到根元素则直接返回答案</span></span><br><span class="line">    <span class="keyword">return</span> sf(f[x]); <span class="comment">// 否则返回 [继续往上找得到的答案]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在介绍并查集是如何实现集合合并之前，我们现在看一下并查集需要做哪些<strong>预处理</strong></p>
+<p>我们知道如果一个元素它的父节点连接如果指向自己，说明它用于标识这个集合 (当然用指向0，指向特殊值来标识都可以，上述例子是指向自己)，那么一开始每个元素都独立成为一个集合，就需要对每个元素自己构成的集合进行预处理————将父节点连接指向自己</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-3.png"></p>
+<p>用代码表示就是</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 预处理</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    f[i] = i;</span><br></pre></td></tr></table></figure>
+
+<p>而两个集合的合并，本质上就是，让代表两个集合的树结构成为一个树结构，并选出一个元素作为代表 (根元素)，那么我们发现一个最为简单的处理方法就是，将一棵树的根连向另一棵树的根，这样做就能满足所有的条件</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-4.png"></p>
+<p>如上图所示的两个集合，我们只要将5号节点的父节点连接指向1节点或者将1节点的父节点连接指向5节点即可完成合并</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-5.png"></p>
+<p>但是在正常情况下，都需要先找到集合的标识再对两个集合进行合并，需求一般长成这样</p>
+<div class="note orange no-icon flat"><p>将3所在的集合和6所在的集合进行合并</p>
+</div>
+
+<p>这时候我们就需要先找到3所在的集合和6所在的集合，并对着两个集合的根元素做父节点连接操作，我们用C++代码简单地写一下这个过程</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 合并x所在的集合和y所在的集合</span></span><br><span class="line">fx = sf(x); <span class="comment">// 找到 x 所在集合</span></span><br><span class="line">fy = sf(y); <span class="comment">// 找到 y 所在集合</span></span><br><span class="line">f[fx] = fy; <span class="comment">// 将两者合并</span></span><br></pre></td></tr></table></figure>
+
+<p>当然熟练之后你可以把查找和合并写的更简洁</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查找 三目表达式</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sf</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123; <span class="keyword">return</span> x == f[x] ? x : sf(f[x]); &#125;</span><br><span class="line"><span class="comment">// 合并</span></span><br><span class="line">f[sf(x)] = sf(y); </span><br></pre></td></tr></table></figure>
+
+<h2 id="查找路径优化"><a href="#查找路径优化" class="headerlink" title="查找路径优化"></a>查找路径优化</h2><p>如果按照上述方法构建并查集并查找元素，会存在一个问题，如果不巧在合并的过程中形成了一条链，那么查找的复杂度会非常的高 (需要一路沿着父节点连接向上查找)，当然你可以说运气不好，但是一个优秀的算法必须要保证<strong>稳定的复杂度</strong>，在不同的测试数据情况下都表现良好</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-6.png"></p>
+<p>这里介绍两种常用的查找路径优化方式</p>
+<h3 id="路径压缩"><a href="#路径压缩" class="headerlink" title="路径压缩"></a>路径压缩</h3><p>最常用的一种查找路径优化方式是路径压缩，其基本思想是</p>
+<div class="note orange no-icon flat"><p>在查找集合根元素的同时对查找经过的路径进行压缩</p>
+</div>
+
+<p>比如说，如果查找下图4节点所在集合的根元素，在查找过程中将4节点和3节点的父元素连接全都<strong>改为指向根节点</strong>，这样在下次查找的时候就不需要经过非常长的查找路径了</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-7.png"></p>
+<p>具体的实现非常的简单，就是在每个经过的节点处，将其父节点连接指向元素更改为，<strong>查询根元素返回的答案</strong>，这里用C++代码进行演示</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sf</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> f[x] == x ? x : f[x] = sf(f[x]); </span><br><span class="line">    <span class="comment">// sf(f[x])返回的结果是集合的根元素</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>路径压缩后的查询均摊复杂度为$O(\alpha(n))$，这里$\alpha$指代反阿克曼函数</p>
+<h3 id="按秩合并"><a href="#按秩合并" class="headerlink" title="按秩合并"></a>按秩合并</h3><p>另一种常用的方式是按秩合并，通俗一点地说就是通过有序的集合合并方式，<strong>限制并查集树的高度</strong></p>
+<p>具体的实现思路就是，在合并的时候瞅瞅哪个集合树的高度是更高的，那么将其根元素作为合并后集合的根元素，因为高度小的集合并入高度大的集合，是不会增加高度的，只有两个高度相同的集合合并，才会使得高度增加</p>
+<p>这里只要对于每个集合多维护一个参数h来表示高度(秩)即可，C++代码实现如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fx = sf(x);</span><br><span class="line">    <span class="keyword">int</span> fy = sf(y);</span><br><span class="line">    <span class="comment">// 保证fx的高度小于等于fy</span></span><br><span class="line">    <span class="keyword">if</span> (h[fx] &gt; h[fy]) swap(fx, fy);</span><br><span class="line">    <span class="comment">// 合并</span></span><br><span class="line">    f[fx] = fy;</span><br><span class="line">    <span class="comment">// 高度增加的情况</span></span><br><span class="line">    <span class="keyword">if</span> (h[fx] == h[fy]) h[fy]++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="并查集例题"><a href="#并查集例题" class="headerlink" title="并查集例题"></a>并查集例题</h2><div class="note green no-icon flat"><p><strong>亲戚</strong></p>
+<p>你将得到一些亲戚关系的信息，如同Marry和Tom是亲戚，Tom和Ben是亲戚，等等。从这些信息中，你可以推出Marry和Ben是亲戚。请写一个程序，对于我们的关心的亲戚关系的提问，以最快的速度给出答案。</p>
+</div>
+
+<p>这个例题就是并查集的基础应用</p>
+<ul>
+<li><p>信息处理</p>
+<p>  A和B是亲戚：f[sf(A)]=sf(B)</p>
+</li>
+<li><p>询问处理</p>
+<p>  A和B是否是亲戚：判断sf(A)是否等于sf(B)</p>
+</li>
+<li><p>注意点</p>
+<p>  集合初始化</p>
+</li>
+</ul>
+<hr>
+<div class="note green no-icon flat"><p><strong>畅通工程</strong></p>
+<p>某省调查城镇交通状况，得到现有城镇道路统计表，表中列出了每条道路直接连通的城镇。省政府“畅通工程”的目标是使全省任何两个城镇间都可以实现交通（但不一定有直接的道路相连，只要互相间接通过道路可达即可）。问最少还需要建设多少条道路？</p>
+</div>
+
+<p>这个题涉及到并查集的一个常见的应用，连通分量计数，换句话说，就是统计有几个集合，因为距离全图连通还需要添加的边数就是集合的数量减一</p>
+<p>统计集合的数量只需要计算做完集合合并之后，父节点连接指向自己的点 (f[i] == i) 的数目即可</p>
+<hr>
+<div class="note green no-icon flat"><p><strong>团伙</strong></p>
+<p>在某城市里住着 n 个人，任何两个认识的人不是朋友就是敌人，而且满足： </p>
+<ol>
+<li>我朋友的朋友是我的朋友； </li>
+<li>我敌人的敌人是我的朋友； </li>
+</ol>
+<p>所有是朋友的人组成一个团伙。告诉你关于这 n 个人的 m 条信息，即某两个人是朋友， 或者某两个人是敌人，请你编写一个程序，计算出这个城市<strong>最多</strong>可能有多少个团伙？ </p>
+</div>
+
+<p>首先我们需要对题目的信息进行化简</p>
+<p>朋友的朋友是朋友符合正常的集合合并逻辑，不需要特殊处理，敌人的敌人是朋友该如何处理是解决这个问题的关键</p>
+<p>我们记x的敌人为enemy[x]，因为敌人的敌人是朋友，则A和B是敌人这个条件其实包含了两个信息：</p>
+<ol>
+<li>enemy[A]和B是朋友</li>
+<li>enemy[B]和A是朋友</li>
+</ol>
+<p>所以这个题的处理逻辑就是，存储每个元素第一次出现的enemy，通过朋友的关系传递来标识集合</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 处理敌人关系</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">EUnion</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (enemy[a]) Union(b, enemy[a]);</span><br><span class="line">    <span class="keyword">else</span> enemy[a] = b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 对于敌人关系需要处理两条信息</span></span><br><span class="line">EUnion(A,B), EUnion(B,A)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<div class="note green no-icon flat"><p><strong>巴士旅行</strong></p>
+<p>有n个城市，被m条边表示m条无向道路，每条边有一个时间，表示坐巴士从一个城市到另一城市需要等待的时间。Jack最多等待巴士x分钟，也就是说需要等待超过x分钟的巴士他就不会去坐，他在城市里可以得到休息，使得他恢复等待巴士的耐心。求有多少对城市(a,b), 他可以通过坐巴士的方式从a城市到达b城市。(a,b)和(b,a)算作不同的对</p>
+<p>有多组询问，每组给出一个x，表示Jack最多等待的时间，求出在不同x条件下的答案</p>
+</div>
+
+<p>考虑单组询问，对于给定x，将所有边权不超过x的边的两端点所在的集合合并，最后每个集合对答案的贡献为 </p>
+<p>$size * (size - 1)$</p>
+<p>考虑每次集合合并对答案造成的影响，假设将大小为 s1 的集合和大小为 s2 的集合进行合并，那么对答案的贡献为 </p>
+<p>$(s1 + s2) * (s1 + s2 - 1) - s1 * (s1 - 1) - s2 * (s2 - 1)$ </p>
+<p>即新产生的集合的贡献减去消失的集合贡献</p>
+<p>我们可以记录每个询问原来位于询问列表中的位置，然后对询问根据x大小进行排序，对边按照权值大小进行排序，从小到大对边端点所在的两个集合进行合并处理，在处理完排序后询问列表对应的值之后将答案记录到对应的询问上</p>
+<p>最后还原询问的顺序并输出即可</p>
+<h2 id="种类关系处理"><a href="#种类关系处理" class="headerlink" title="种类关系处理"></a>种类关系处理</h2><p>为了说明什么是种类关系，我们先来看一个题</p>
+<div class="note green no-icon flat"><p><strong>阵营</strong></p>
+<p>在某场战争中有两个敌对的阵营，周围城镇的士兵不是来自阵营A就是来自阵营B，现在告诉你一些士兵之间的关系，即他们来自同一个阵营或者来自不同的阵营，之后询问一些士兵之间的关系：来自同一阵营，来自敌对阵营，或者不确定 </p>
+</div>
+
+<p>这里有两个阵营，所以种类只有两种，非A即B，区别于上面的团伙一题</p>
+<p><strong>用并查集来处理</strong>种类关系通常有两种方法：加权和拆点 (处理种类关系的方法还有很多，暂且不讨论)</p>
+<h3 id="拆点"><a href="#拆点" class="headerlink" title="拆点"></a>拆点</h3><p>拆点，顾名思义，就是将一个点拆成多个点</p>
+<p>以阵营一题为例，我们用两个点来表示一个士兵，一个点表示<strong>该士兵属于A阵营</strong>，另一个点表示<strong>该士兵属于B阵营</strong></p>
+<p>如果我们现在有两个士兵a和b，那么可以得到四个命题</p>
+<div class="note no-icon flat"><ol>
+<li>a士兵属于A阵营</li>
+<li>a士兵属于B阵营</li>
+<li>b士兵属于A阵营</li>
+<li>b士兵属于B阵营</li>
+</ol>
+</div>
+
+<p>如果得到信息 a士兵和b士兵属于同一阵营，那么1和3两个命题可以同时成立，2和4两个命题可以同时成立；如果得到的信息是 a士兵和b士兵属于不同阵营，那么1和4两个命题，2和3两个命题同时成立</p>
+<p>我们将<strong>同时成立的命题归为一个集合</strong>，查询两个士兵关系的时候，对士兵对应的命题(两个点)的集合关系进行判断，就可以得到士兵之间的关系</p>
+<p>在具体实现中，我们用点x表示x士兵属于A阵营，用点(x+n)表示x士兵属于B阵营</p>
+<ul>
+<li>若给出信息：x和y属于同一阵营，则 Union(x ,y), Union(x+n, y+n)</li>
+<li>若给出信息：x和y属于不同阵营，则 Union(x, y+n), Union(x+n, y)</li>
+<li>若查询x和y的关系：<ul>
+<li>若sf(x)==sf(y)||sf(x+n)==sf(y+n), 则为同一阵营</li>
+<li>若sf(x+n)==sf(y)||sf(x)==sf(y+n), 则为敌对阵营</li>
+<li>否则，关系未知</li>
+</ul>
+</li>
+</ul>
+<h3 id="加权"><a href="#加权" class="headerlink" title="加权"></a>加权</h3><p>加权的意思就是给边赋予权值，来表示并查集树上，点和父节点之间的关系，因为是树状结构，所以边信息可以直接记录在子节点上，而不需要额外对边进行处理</p>
+<p>还是以阵营一题为例</p>
+<p>假设我们在做并查集处理的时候在边上多记录一个信息，表示两点是敌对还是同阵营，那么在不做路径压缩的情况下，我们可以得到类似下图的结构</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-8.png"></p>
+<p>那么，通过计算路径上敌对边出现的次数，我们可以得到<strong>每个点和根元素之间的关系</strong>，如果两个点处在同一个集合中，我们又分别知道了这两个点和根元素的关系，那么这两个点的关系也可以轻易得到</p>
+<p>那么压缩路径的情况下，无非是，更新路径上每个节点的父节点连接的同时，更新其向上连接的边属性(敌对/同阵营)，最终达到如下图所示的效果</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-9.png"></p>
+<p>我们用1表示敌对，0表示同阵营，那么点和集合根元素的关系即<strong>路径上经过的1数量对2取模得到的结果</strong>，也就是路径上的数字和对2取模</p>
+<p>我们用r数组来表示点与父节点的关系，那么查找的代码可以这么写</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sf</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (f[x] == x) <span class="keyword">return</span> x;	</span><br><span class="line">    <span class="keyword">int</span> fx = sf(f[x]); <span class="comment">// 保留父节点连接f[x]</span></span><br><span class="line">    r[x] = (r[x] + r[f[x]]) % <span class="number">2</span>; <span class="comment">// 此时，r[f[x]]为父节点和根元素的关系</span></span><br><span class="line">    <span class="keyword">return</span> f[x] = fx; <span class="comment">// 更新父节点连接</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而在两个集合合并的时候，我们需要先计算出两个节点和集合根节点之间的，然后用两个节点之间的关系去更新根节点之间的关系</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> fx, <span class="keyword">int</span> fy, <span class="keyword">int</span> d)</span></span>&#123;</span><br><span class="line">    f[fy] = fx;</span><br><span class="line">    r[fy] = (r[y] + r[x] + d) % <span class="number">2</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="种类关系处理例题"><a href="#种类关系处理例题" class="headerlink" title="种类关系处理例题"></a>种类关系处理例题</h2><h3 id="食物链"><a href="#食物链" class="headerlink" title="食物链"></a>食物链</h3><div class="note green no-icon flat"><p><strong>食物链</strong></p>
+<p>草原上有三种物种，分别为A,B,C，A吃B，B吃C，C吃A。给定若干条信息，信息分为两种</p>
+<ol>
+<li>1 x y 表示x和y是同类</li>
+<li>2 x y 表示x吃y</li>
+</ol>
+<p>问给出的信息有几条是和前面相违背的</p>
+</div>
+
+<p>这题同样可以用上述种类关系处理的两种方法来做</p>
+<div class="tabs" id="test"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#test-1">🌼 拆点</button></li><li class="tab"><button type="button" data-href="#test-2">🌻 加权</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="test-1"><p>将每个点拆点，比如x拆为，x-A，x-B，x-C 表示x属于A类，x属于B类，和x属于C类 (具体实现中用 x, x+n, x+2*n表示)</p>
+<p>如果x和y属于同类，那么合并x-A和y-A，x-B和y-B，x-C和y-C</p>
+<p>如果是x吃y的情况，那么合并x-A和y-B，x-B和y-C，x-C和y-A</p>
+<p>对于条件矛盾判断:</p>
+<p>如果给出信息是x和y属于同类，但是x和y+n或x和y+2n已经在同个集合中，那么该信息矛盾;</p>
+<p>如果给出信息是x吃y，但是x和y或x和y+2n在同一个集合中，那么该信息矛盾</p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="test-2"><p>用边关系 0 表示x和y同类， 1 表示x吃y，2 表示x被y吃，则x和根结点的关系为其路径上经过的边权之和对3取余的结果，处理方式同阵营一题</p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="带权并查集例题"><a href="#带权并查集例题" class="headerlink" title="带权并查集例题"></a>带权并查集例题</h2><p>在介绍种类关系处理的时候，我们已经介绍了加权方法，就是对每个节点附加信息，表示和父节点之间的关系，在压缩的时候同时进行加权信息的计算，除了种类关系表示之外，带权并查集还有更多的用途，这里用几个例题加以说明</p>
+<div class="note green no-icon flat"><p><strong>龙珠</strong></p>
+<p>有标号为1到n的n个龙珠，分别放在对应标号为1到n的n个城市里。下面有两种操作:</p>
+<ol>
+<li>T A B表示把A龙珠所在城市的所有龙珠都转移到B龙珠所在的城市中</li>
+<li>Q A 表示查询A，需要知道A龙珠现在所在的城市，A所在的城市有几颗龙珠，A转移到这个城市移动了多少次，分别输出3个整数，表示上述信息。</li>
+</ol>
+</div>
+
+<p>我们来看每次询问需要输出的三个信息</p>
+<ol>
+<li>A所在的城市</li>
+<li>A所在的城市的龙珠数目</li>
+<li>A龙珠到这个城市移动了几次</li>
+</ol>
+<p>第一条信息用朴素的并查集就可以维护，第二条信息在两个集合合并的时候将集合大小相加即可 (记录在根元素)</p>
+<p>而第三条信息的维护，需要在集合合并的时候加权给根元素连接的那条边，并在压缩时需要向下传递</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-10.png"></p>
+<p>我们可以发现每个龙珠从原来所在的城市移出仅会发生一次，所以每次移动，直接加权1即可，合并和路径压缩代码如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路径压缩</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sf</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> (f[x] == x) <span class="keyword">return</span> x;  </span><br><span class="line">    <span class="keyword">int</span> fx = sf(f[x]); <span class="comment">// 保留父节点连接f[x]</span></span><br><span class="line">    move[x] += move[f[x]]; <span class="comment">// 计算移动次数和</span></span><br><span class="line">    <span class="keyword">return</span> f[x] = fx;  <span class="comment">// 更新父节点连接</span></span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">// 合并</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;  </span><br><span class="line">    fx = sf(x); </span><br><span class="line">    fy = sf(y);  </span><br><span class="line">    <span class="keyword">if</span>(fx != fy)&#123;  </span><br><span class="line">        f[fx] = fy;  </span><br><span class="line">        count[fy] += count[fx]; <span class="comment">// 龙珠数量统计</span></span><br><span class="line">        move[fx] = <span class="number">1</span>; <span class="comment">// 移动次数加权  </span></span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<div class="note green no-icon flat"><p><strong>试题判断</strong></p>
+<p>有n次询问，给出a到b区间的总和 (试题的区间分数)</p>
+<p>如果一个“子区间和”与前面的“子区间和”冲突，即为错误（而且这个“子区间和”将在接下来的判断中被忽略）</p>
+<p>问这n次给出的总和中有几次是和前面已经给出的是矛盾的 </p>
+</div>
+
+<p>题目中给出了若干个区间和信息，我们先将其转化成点信息，区间和即前缀和的差，我们记$S_x$表示前x题的总分，那么a到b区间的和为c，就等价于式子 $S_b-S_a=c$</p>
+<p>所以问题转化为给定若干个点之间的数值差，计算矛盾的次数，我们将数值差记录到边权上，压缩的同时计算数值差即可</p>
+<p>核心代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路径加权</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sf</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x == f[x]) <span class="keyword">return</span> f[x];</span><br><span class="line">    <span class="keyword">int</span> fx = sf(f[x]);</span><br><span class="line">    sum[x] += sum[f[x]];</span><br><span class="line">    <span class="keyword">return</span> f[x] = fx;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = sf(x), b = sf(y);</span><br><span class="line">    <span class="keyword">if</span> (a == b) &#123;</span><br><span class="line">        <span class="keyword">if</span> (sum[y] != sum[x] + data) ans++;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    sum[b] = sum[x] + data - sum[y];</span><br><span class="line">    f[b] = a;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<div class="note orange no-icon flat"><p>未完待续</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">forever97</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://forever97.top/2021/01/28/UnionFindSet/">https://forever97.top/2021/01/28/UnionFindSet/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://forever97.top" target="_blank">未央の童话镇</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/">并查集</a></div><div class="post_share"><div class="social-share" data-image="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/02/26/cssLayout/"><img class="prev-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/cssLayout-1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CSS布局方式</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/22/bfc/"><img class="next-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/BFC-1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BFC详解</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/08/20/2019NOWCODER8E/" title="2019NowCoder 8E Explorer [线段树分治+并查集]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/solution.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-08-20</div><div class="title">2019NowCoder 8E Explorer [线段树分治+并查集]</div></div></a></div><div><a href="/2019/08/19/CF938G/" title="CF 938 G Shortest Path Queries [线段树分治+并查集+线性基]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/solution.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-08-19</div><div class="title">CF 938 G Shortest Path Queries [线段树分治+并查集+线性基]</div></div></a></div><div><a href="/2019/12/09/GYM102396C/" title="Gym 102396C Jet Trains [启发式合并+并查集]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/solution.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-09</div><div class="title">Gym 102396C Jet Trains [启发式合并+并查集]</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Twikoo</span><span class="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">forever97</div><div class="author-info__description">在人海里梦游</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forever97"><i class="fab fa-github"></i><span>来给我加星星</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forever97" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://gitee.com/forever97/" target="_blank" title="Gitee"><i class="fab fa-google"></i></a><a class="social-icon" href="https://www.cnblogs.com/forever97" target="_blank" title="博客园"><i class="fas fa-blog"></i></a><a class="social-icon" href="http://wpa.qq.com/msgrd?v=3&amp;uin=857426255&amp;site=qq&amp;menu=yes" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:857426255@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content"><h2 style="color:orange; margin:2px;">🍊欢迎光临本站</h2> 如果卡顿请访问 <a target="_blank" rel="noopener" href="https://forever97.gitee.io" style="cursor:pointer; color:#fff; background-color:orange; padding:2px 5px; border-radius:5px;">Gitee镜像站</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E6%9F%A5%E9%9B%86%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">并查集概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E8%B7%AF%E5%BE%84%E4%BC%98%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">查找路径优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E5%8E%8B%E7%BC%A9"><span class="toc-number">2.1.</span> <span class="toc-text">路径压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E7%A7%A9%E5%90%88%E5%B9%B6"><span class="toc-number">2.2.</span> <span class="toc-text">按秩合并</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E6%9F%A5%E9%9B%86%E4%BE%8B%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">并查集例题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%8D%E7%B1%BB%E5%85%B3%E7%B3%BB%E5%A4%84%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">种类关系处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%86%E7%82%B9"><span class="toc-number">4.1.</span> <span class="toc-text">拆点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E6%9D%83"><span class="toc-number">4.2.</span> <span class="toc-text">加权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%8D%E7%B1%BB%E5%85%B3%E7%B3%BB%E5%A4%84%E7%90%86%E4%BE%8B%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">种类关系处理例题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A3%9F%E7%89%A9%E9%93%BE"><span class="toc-number">5.1.</span> <span class="toc-text">食物链</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%A6%E6%9D%83%E5%B9%B6%E6%9F%A5%E9%9B%86%E4%BE%8B%E9%A2%98"><span class="toc-number">6.</span> <span class="toc-text">带权并查集例题</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React Hooks"/></a><div class="content"><a class="title" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks">React基础速通计划：React Hooks</a><time datetime="2022-06-26T14:26:47.000Z" title="发表于 2022-06-26 14:26:47">2022-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React组件"/></a><div class="content"><a class="title" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件">React基础速通计划：React组件</a><time datetime="2022-06-19T11:09:45.000Z" title="发表于 2022-06-19 11:09:45">2022-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React基础与JSX"/></a><div class="content"><a class="title" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX">React基础速通计划：React基础与JSX</a><time datetime="2022-06-16T15:58:27.000Z" title="发表于 2022-06-16 15:58:27">2022-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/07/eventloop/" title="JS事件循环"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/eventloop.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS事件循环"/></a><div class="content"><a class="title" href="/2021/09/07/eventloop/" title="JS事件循环">JS事件循环</a><time datetime="2021-09-07T14:32:33.000Z" title="发表于 2021-09-07 14:32:33">2021-09-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/31/promise/" title="Promise详解"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/promise.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Promise详解"/></a><div class="content"><a class="title" href="/2021/08/31/promise/" title="Promise详解">Promise详解</a><time datetime="2021-08-31T10:04:59.000Z" title="发表于 2021-08-31 10:04:59">2021-08-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/UnionFindSet-1.png)"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2022 By forever97</div><div class="footer_custom_text"><p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://demo.jerryc.me/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://metroui.org.ua/index.html "><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站托管于Vercel">&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'blogtalk-6g6nlayif96df94c',
+      region: ''
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'blogtalk-6g6nlayif96df94c',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'znUsAPKaAhvsce1vGdQabwNA-MdYXbMMI',
+      appKey: 'IXAxuH2tjf4O7iYSNPOnzMFe',
+      placeholder: '记得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'robohash',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Twikoo' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/gitcalendar/js/gitcalendar.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@latest/source/js/issues.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/magnet/js/catalogMagnet.js"></script><script src="/swiper/swiper.min.js"></script><script src="/swiper/swiperindex.js"></script><script src="/js/moments.js"></script><script src="/js/smooth-scrolling.js"></script><script src="/js/custom.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div><!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>未央の时光机</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='/'|| '/' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/33.2017.newyear.model.json"},"display":{"position":"right","width":200,"height":300},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>

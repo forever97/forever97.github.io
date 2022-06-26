@@ -1,0 +1,263 @@
+:root{
+    --card-bg: #fafae8;
+    --btn-bg: orange;
+    --text-bg-hover: orange;
+    --btn-hover-color: #ff7242;
+    --hr-border: orange;
+    --hr-before-color: orange;
+}
+
+/* 朋友圈item背景 */
+.moments-item{
+    background-color: #ffa50012;
+}
+
+/* 文章内列表编号 */
+#article-container ol li:before, 
+#article-container ul li:before{
+    background-color: orange;
+}
+
+/* 目录 */
+#aside-content #card-toc .toc-content .toc-link.active {
+    border-left-color: orange;
+    background: rgba(255, 166, 0, 0.5);
+    color: #fff;
+}
+
+/* 文章标题链接 */
+#article-container a{
+    color: #ff7242;
+}
+
+/* 轮播图边框 */
+.blog-slider__img img{
+    border: orange solid 1px;
+}
+.blog-slider__title:hover{
+    color: orange;
+}
+
+/* 链接 */
+a{
+    text-decoration: none !important;
+}
+/* 时光机链接 */
+.history_slide_link a:hover{
+    color: orange;
+}
+/* 分类页面链接 */
+.article-sort-item-title:hover{
+    color: orange;
+}
+/* 标签页链接 */
+.tag-cloud-list a:hover{
+    color: orange !important;
+}
+
+/* 导航栏链接 */
+#nav.fixed a:hover, #nav.fixed #site-name:hover, #nav.fixed #toggle-menu:hover {
+    color: orange;
+}
+#nav .menus_items .menus_item > a::after{
+    display: none;
+}
+
+
+/* 本地搜索 */
+.search-dialog__title{
+    color: #ff7242;
+}
+#local-search .search-dialog .local-search-box input{
+    border: 2px solid orange;
+}
+#local-search .search-dialog .local-search__hit-item:before{
+    border-color: orange;
+}
+#local-search .search-dialog .local-search__hit-item a:hover {
+    color: orange;
+}
+
+/* 磁贴 */
+figure.gallery-group{
+    border: orange solid 2px;
+}
+
+/* 首页侧边栏文章标题，首页文章标题 */
+#aside-content .aside-list > .aside-list-item .content > .title:hover,
+#recent-posts > .recent-post-item >.recent-post-info > .article-title:hover {
+    color: orange;
+}
+
+/* 文章分类 tag */
+.article-meta__categories {
+    background-color: #fdf0e3;
+    padding: 2px 2px;
+    border-radius: 4px;
+    border: #fbe4ba solid 2px;
+    color: #6d3e0f!important;
+    line-height: 40px;
+}
+.article-meta__categories:hover{
+    border: orange solid 2px;
+}
+
+/* 文章标签 tag */
+.article-meta__tags{
+    background-color: orange;
+    color: #fff!important;
+    padding: 2px 10px;
+    border-radius: 4px;
+}
+
+.article-meta__tags:hover{
+    background-color: #ff7242;
+}
+
+/* 侧边栏头像框 */
+#aside-content .card-info img{
+    border: orange solid 2px;
+}
+
+/* 侧边栏按钮 */
+#aside-content .card-info #card-info-btn{
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* 页脚透明 */
+#footer {
+    background: transparent !important;
+}
+
+/* 头图透明 */
+#page-header {
+    background: transparent !important;
+}
+
+/* 文末标签*/
+#post .tag_share .post-meta__tags {
+    border: 1px solid orange;
+    color: orange;
+}
+
+#post .tag_share .post-meta__tags:hover{
+    background-color: orange;
+}
+
+/* 背景色 */
+div#post,
+div#page,
+div#archive,
+div#tag,
+div#category {
+    background: #fafae8;
+}
+
+/*首页文章图片*/
+#recent-posts > .recent-post-item .post_cover img.post_bg{
+    width: 90%;
+    height: 80%;
+    margin: 5%;
+    border: #ffe4b3 solid 2px;
+}
+
+/*首页文章图片框*/
+#recent-posts>.recent-post-item .post_cover {
+    width: 60%;
+}
+/*控制手机自适应*/
+@media screen and (max-width: 768px) {
+    #recent-posts>.recent-post-item .post_cover {
+        width: 100%;
+    }
+}
+
+/* 文末版权信息 */
+#post .post-copyright .post-copyright-meta{
+    color:#ff7242;
+}
+#post .post-copyright::before{
+    background-color: orange;
+}
+#post .post-copyright .post-copyright-info a:hover{
+    color:orange;
+}
+#post .post-copyright{
+    background-color: #fbe4ba7e;
+}
+
+/* 文章内表格 */
+table th {
+    background-color: #ff8c2a;
+}
+table tr:nth-child(2n) {
+    background-color: white;
+}
+table tr:nth-child(2n+1) {
+    background-color: #f7cc95;
+}
+
+/* 首页边框 */
+.recent-post-item,
+.card-widget{
+    border: 2px solid #ffa50080;
+}
+
+/* 友链 */
+/* .flink#article-container .flink-list > .flink-list-item{
+    background-color: #f9f1e9;
+    border: 2px dashed #ffefd2;
+    margin: 10px 7px;
+}
+.flink#article-container .flink-list > .flink-list-item:hover{
+    border: 2px solid orange;
+}
+.flink#article-container .flink-list > .flink-list-item a img{
+    border: 2px solid #ffefd2;
+} */
+.flink-list > a:hover:before {
+    background-color: rgb(252, 205, 118,0.8);
+}
+
+/* 百宝箱 */
+#article-container a.button {
+    color: #ff7242;
+    margin: 8px;
+    background-color: #f9f1e9;
+    border: 2px solid #ffefd2;
+    border-radius: 10px;
+}
+
+/* 小鸡腿儿特供 */
+[data-title="向上吧少女"]::before{
+    background-color: rgba(252, 156, 188, 0.8)!important;
+}
+
+/* 菜单栏按钮修改*/
+/*
+极其离谱的问题出现了
+当给菜单栏的子菜单设置圆角
+并为了hover状态依旧是圆角，采用了border-radius:hidden的时候
+鼠标向下摸到子菜单的时候，因为hover判定区域被hidden，子菜单会缩回
+必须将margin-top设置成0才可以保证被判定到，但是效果会很差
+*/
+#nav .menus_items .menus_item .menus_item_child li {
+    display: inline-block;
+}
+ul.menus_item_child{
+    overflow: hidden;
+    border-radius: 10px;
+}
+#nav .menus_item_child {
+    margin-top: 0px !important;
+}
+
+/* 菜单栏调整 */
+#nav span{
+    margin: 5px;
+}
+#nav .site-page{
+    padding: 10px;
+}
+

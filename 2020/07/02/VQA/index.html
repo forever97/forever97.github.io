@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VQA:数据集，算法和未来挑战 [综述] | 未央の童话镇</title><meta name="keywords" content="VQA,2017,文献综述"><meta name="author" content="forever97"><meta name="copyright" content="forever97"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="Paper Download Address VQA(Visual Question Answering)是一个计算机视觉task，给定一个图片相关的问题和对应的图片，通过程序推断出答案 要求解决的问题是任意的，并且包含了诸多计算机视觉当中的子问题，比如  目标识别 (图中的物体是什么) 目标检测 (图中有猫么) 属性分类 (图中的猫是什么颜色的) 场景分类 (图中的天气是晴天么) 计数 (图中有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VQA:数据集，算法和未来挑战 [综述]">
+<meta property="og:url" content="https://forever97.top/2020/07/02/VQA/index.html">
+<meta property="og:site_name" content="未央の童话镇">
+<meta property="og:description" content="Paper Download Address VQA(Visual Question Answering)是一个计算机视觉task，给定一个图片相关的问题和对应的图片，通过程序推断出答案 要求解决的问题是任意的，并且包含了诸多计算机视觉当中的子问题，比如  目标识别 (图中的物体是什么) 目标检测 (图中有猫么) 属性分类 (图中的猫是什么颜色的) 场景分类 (图中的天气是晴天么) 计数 (图中有">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/VQA-1.png">
+<meta property="article:published_time" content="2020-07-02T10:40:08.000Z">
+<meta property="article:modified_time" content="2022-06-26T06:44:17.745Z">
+<meta property="article:author" content="forever97">
+<meta property="article:tag" content="VQA">
+<meta property="article:tag" content="2017">
+<meta property="article:tag" content="文献综述">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/VQA-1.png"><link rel="shortcut icon" href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/favicon.png"><link rel="canonical" href="https://forever97.top/2020/07/02/VQA/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="baidu-site-verification" content="f7c8ecf684c23d02cca2e82c827ff2a2"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?194bd025765eb0d478283a5eb4217ad4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: forever97","link":"链接: ","source":"来源: 未央の童话镇","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-26 06:44:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/gitcalendar/css/gitcalendar.css"/><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css"  media="defer" onload="this.media='all'"><link rel="stylesheet" href="/magnet/css/catalogMagnet.css"/><link rel="stylesheet" href="/swiper/swiper.min.css"><link rel="stylesheet" href="/swiper/swiperstyle.css"><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/VQA-1.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">未央の童话镇</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div><div id="rightmenu" style="flex:1"><div id="search-button" style="position:absolute;right:2%"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">VQA:数据集，算法和未来挑战 [综述]</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-07-02T10:40:08.000Z" title="发表于 2020-07-02 10:40:08">2020-07-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-06-26T06:44:17.745Z" title="更新于 2022-06-26 06:44:17">2022-06-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%F0%9F%93%9AVQA%E8%97%8F%E4%B9%A6%E9%98%81/">📚VQA藏书阁</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>21分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1610.01465v4">Paper Download Address</a></p>
+<p>VQA(Visual Question Answering)是一个计算机视觉task，给定一个图片相关的问题和对应的图片，通过程序推断出答案</p>
+<p>要求解决的问题是任意的，并且包含了诸多计算机视觉当中的子问题，比如</p>
+<ol>
+<li>目标识别 (图中的物体是什么)</li>
+<li>目标检测 (图中有猫么)</li>
+<li>属性分类 (图中的猫是什么颜色的)</li>
+<li>场景分类 (图中的天气是晴天么)</li>
+<li>计数 (图中有几只猫)</li>
+</ol>
+<p>当然除了这些，还有更多复杂的问题，比如目标的空间关系问题 (在沙发和猫之间的物体是什么)，常识推理问题 (图中的女孩为什么哭)</p>
+<p>这是一篇2017年发表在Computer Vision and Image Understanding关于VQA的综述，文章内容包含以下几块</p>
+<ol>
+<li>VQA与一些视觉和语言问题的对比</li>
+<li>VQA当前可用的数据集以及优缺点</li>
+<li>讨论VQA的评价指标</li>
+<li>分析VQA已有的算法</li>
+<li>讨论VQA未来的发展</li>
+</ol>
+<h2 id="VQA与其它视觉与语言任务的对比"><a href="#VQA与其它视觉与语言任务的对比" class="headerlink" title="VQA与其它视觉与语言任务的对比"></a>VQA与其它视觉与语言任务的对比</h2><p>(这部分大致是我对这个章节的翻译，了解一下背景)</p>
+<p>VQA的最终目标是从图片中获取问题相关的信息，根据问题，任务的范围可以从微小细节的检测到整张图片场景特征的推理，其它从图片中提取信息的计算机视觉问题，和VQA相比，范围和通用性都是有限的</p>
+<p>目标识别，动作识别，场景分类都可以被归为图片分类问题，目前最好的方法无一例外都是训练CNN，将图片划归到特定的语义类别，其中表现最佳的目标识别算法已经能够和人类平分秋色。然而目标识别只要求将图片中的显性目标分类，而并不要求了解它的空间位置或是在更大场景中扮演的角色。目标检测包含语义分割，目前最佳的目标检测算法均使用Deep CNN。语义分割通过将每个像素点分类来完成task。实例分割通过同一语义类中不同实例之间的差异进一步区分。</p>
+<p>语义分割和示例分割是计算机视觉领域的重要问题，是对目标检测和识别的概括，但是它们对图像整体的理解是不够充分的，其面临的主要问题之一是标签的模糊性，语义标签可以由不同解释，取决于不同的任务。此外，仅这些方法无法理解对象在更大上下文中的作用，比如bag不会告诉我们这个像素是否由人携带，而将像素标记为person并不会告诉这个人是坐着，跑着或是在滑板。而VQA则要求系统回答关于图像的任意问题，这需要对对象之间的关系和整个场景推理，而适当的标签则由问题指定。</p>
+<p>除了VQA，近期还有一些工作也结合了视觉和语言，其中有较多人研究的是图像字幕，算法的目的是为图片产生自然的描述，图像字幕是一个非常广泛的任务，包括描述复杂属性和对象的关系来从细节上描述图片。</p>
+<p>然而视频字幕存在一些问题，对字幕的评估就是一个特殊的挑战，理想的方法是让人类评审进行评估，但是这种方法缓慢而昂贵。因此，出现了多种自动评估方案。最为广泛使用的评价系统有BLEU，ROUGE，METEOR以及CIDEr，除了CIDEr是从图片描述评分发展而来之外，其它几种都是从机器翻译评价发展而来的。这些方法都存在局限性，比如最为广泛使用的方法BLEU，对于句子结构和语义变化巨大的句子具有相同的评分。在一些研究中，BLEU将生成字幕排在人类字幕之上，但是当人工判断的时候，只有少数人认为字幕与人类字幕具有相同好的效果。而虽然CIDEr和METEOR，和人类评审具有较高的一致性，但它们仍然经常将自动生成的字幕排名高于人类字幕。</p>
+<p>评估字幕具有挑战性的一个原因是给定图像可以有许多合理的字幕，一些是非常特殊的，而一些是一般的。然而，字幕系统如果仅生成描述图片的通用字幕往往可以得到很高的评分，比如”一个人在街上走”和”街上有几辆车”等可以适用于大量图片的通用字幕。事实上，建立一个简单的系统，用最近邻算法返回具有最相似视觉特征的图片的字幕，使用自动评估就能得到较高的分数。</p>
+<p>密集图像字幕 (Dense image captioning, DenseCap) 通过使用与小而突出的图像区域相关的简短视觉描述密集地注释图像，避免了一般的字幕问题，比如一个DenseCap系统可以输出”一个穿黑衬衫的人”、”大绿树”和”楼顶”，每个描述都有一个边界框，系统可以为丰富的场景生成大量的这些描述。尽管这些描述中有许多是简短的，但自动评估它们的质量仍然是困难的。DenseCap还可以忽略场景中对象之间的重要关系，只为每个区域生成独立的描述。字幕和DenseCap也是任务不可知的，系统不需要对图像进行深度理解。</p>
+<p>字幕系统是可以自动选择图像的粒度级别的，这与VQA不同，VQA的粒度级别是根据问题的性质来决定的，比如”这是什么季节”需要了解整个场景，但是”穿白裙子的女孩后面的狗是什么颜色的”需要注意场景的具体细节。此外，许多类型的问题都有明确的答案，这使得VQA比字幕更适合于自动化的评估指标。某些问题类型可能仍然存在歧义，但对于许多问题，VQA算法产生的答案可以通过与基本真实答案的一对一匹配来评估</p>
+<h2 id="VQA的数据集"><a href="#VQA的数据集" class="headerlink" title="VQA的数据集"></a>VQA的数据集</h2><h3 id="DAQUAR"><a href="#DAQUAR" class="headerlink" title="DAQUAR"></a>DAQUAR</h3><p>第一个主要的VQA数据集，最小的数据集，包含6795张训练数据和5673张测试数据，所有图像来自于数据集NYU-DepthV2 Dataset。数据集质量较差，一些图像杂乱无章，分辨率低，并且问题和回答有明显的语法错误</p>
+<h3 id="COCO-QA"><a href="#COCO-QA" class="headerlink" title="COCO-QA"></a>COCO-QA</h3><p>这个数据集是通过NLP算法对COCO数据集生成的，78736训练数据，38948测试数据，数据集中问题包括目标提问(69.84%)，颜色提问(16.59%),计数(7.47%)和位置提问(6.10%)，所有问题的答案都是单个单词。数据集最大的缺点在于所有的问答都是通过NLP算法生成的，因此句式单一且存在语法问题，此外只包含四种类型的问题</p>
+<h3 id="The-VQA-Dataset"><a href="#The-VQA-Dataset" class="headerlink" title="The VQA Dataset"></a>The VQA Dataset</h3><p>该数据集的图片包括COCO数据集和抽象卡通图片，且该数据集有两个子集，COCO-VQA和SYNTH-VQA</p>
+<p>COCO-VQA对每张图片有三个问题和对于每个问题的十个回答，问题是人工提出的，回答由10个不同的人完成，数据集包含248349训练数据，121512验证数据和244302测试数据</p>
+<p>SYNTH-VQA包含50000张合成场景，涉及100种目标，30种不同的动物模型和20种人类卡通模型，同样这个数据集对每张图片有三个问题和对于每个问题的十个回答。合成场景的目的是为了消除biases，比如原先在真实场景中，街道上一般都是狗，而不会是斑马</p>
+<p>因为多样性和大小，COCO-VQA被广泛使用，但是这个数据集中也有很多问题，比如有些问题不存在简单客观的答案，而有些问题可以不需要看图片就能够回答，比如”图中树的颜色”，答案基本是”绿色”，还有yes/no的问题有六成是yes，这些都是这个数据集的biases</p>
+<h3 id="FM-IQA"><a href="#FM-IQA" class="headerlink" title="FM-IQA"></a>FM-IQA</h3><p>这个数据集的图片也来自COCO，它的提问和回答起初是中文，然后被翻译成英文，回答可以是一整个句子。数据集的提供者建议采用人工判定，即判断回答是来自机器还是人类</p>
+<h3 id="Visual-Genome"><a href="#Visual-Genome" class="headerlink" title="Visual Genome"></a>Visual Genome</h3><p>数据集的图片来自COCO和YFCC100M，包含108249张图片和170万QA pair，目前最大的数据集(2016.10)。数据集的提问包含What, Where, How, When, Who, Why。数据集要求提问者尽量从图片整体提问，比如”图片中有几只斑马”以及”图片当中是什么天气”，这能够很好的消除提问种类的biases。同时这个数据集当中，没有yes/no类型的问题</p>
+<h3 id="Visual7W"><a href="#Visual7W" class="headerlink" title="Visual7W"></a>Visual7W</h3><p>Visual7W是Visual Genome数据集的子集，包含47300张图片，问题种类包含What, Where, How, When, Who, Why, Which。这个数据集通过多选来评估，每个问题包含四个选项</p>
+<h3 id="SHAPES"><a href="#SHAPES" class="headerlink" title="SHAPES"></a>SHAPES</h3><p>SHAPES是一个特殊的数据集，包含各种排列，形状和颜色，问题包含属性，位置和形状，数据集包含244个独特的问题，答案均为yes/no，SHAPES只是作为一个附加评估，而不能取代真实图片数据集，若一个算法在其它训练集上都表现良好而在SHAPES上表现不好，说明其分析图片的方式是有限的</p>
+<h2 id="VQA的评价指标"><a href="#VQA的评价指标" class="headerlink" title="VQA的评价指标"></a>VQA的评价指标</h2><h3 id="Simple-Accuracy"><a href="#Simple-Accuracy" class="headerlink" title="Simple Accuracy"></a>Simple Accuracy</h3><p>在多选问题中被经常被用于评估，优点是能够简单地评价和说明，并且在数量少且答案唯一的数据集上表现良好。缺点是无法区别惩罚，在开放性的QA当中无法指导训练，比如答案是dogs，但是dog很明显是比zebra要更优的，尤其是以句子为答案的问题，更难以评估</p>
+<h3 id="Modied-WUPS"><a href="#Modied-WUPS" class="headerlink" title="Modied WUPS"></a>Modied WUPS</h3><p>WUPS是通过语义上的差别来衡量答案的好坏，通过语法树来实现。优先是对简单的变化和小错误有更大的包容度，不要求完全匹配，并且可以通过脚本简单评估。缺点是对于结构相近但是意思完全不同的单词具有高评分，比如”白色”和”黑色”。并且不能用于句子或者语法答案</p>
+<h3 id="Consensus-Metric"><a href="#Consensus-Metric" class="headerlink" title="Consensus Metric"></a>Consensus Metric</h3><p>同一问题的相同答案将会获得高分，如果有一致性数据可以简单地评估，但是允许问题存在两个答案，同时真实数据很难收集</p>
+<h3 id="Manual-Evaluation"><a href="#Manual-Evaluation" class="headerlink" title="Manual Evaluation"></a>Manual Evaluation</h3><p>优点是短语和句子同样可以评估，但是人工评价费时费力，且存在主观判断</p>
+<h2 id="VQA算法"><a href="#VQA算法" class="headerlink" title="VQA算法"></a>VQA算法</h2><p>VQA的算法一般分为三个步骤</p>
+<ol>
+<li>图像特征提取</li>
+<li>问题特征提取</li>
+<li>结合两者特征来产生答案</li>
+</ol>
+<p>图像特征提取部分常用的有VGGNet，ResNet，GoogLeNet，问题特征提取部分常用的有BOW，LSTM，GRU以及skip thought vectors，而最后结合两者特征通常被视为分类问题来处理，常见处理方法分为以下几种</p>
+<ol>
+<li>用简单的方法将特征结合起来，比如特征矩阵连接，矩阵元素点乘或相加，然后扔进分类器或者神经网络</li>
+<li>用双线性池或者相关方案将特征结合然后扔进神经网络</li>
+<li>使用分类器对问题特征分类，以计算空间注意力图，或是采用注意力机制获得图像的自适应局部特征图</li>
+<li>采用贝叶斯模型来计算question-image-answer分布的潜在关系</li>
+<li>用问题将VQA任务划分为多个子任务</li>
+</ol>
+<h3 id="Baseline-Models"><a href="#Baseline-Models" class="headerlink" title="Baseline Models"></a>Baseline Models</h3><p>基线模型对应处理方法1，简单方法结合特征，矩阵连接，矩阵元素点乘或相加等</p>
+<p>[1]中用BOW表示问题，GoogLeNet提取图片特征，将特征矩阵连接之后放入逻辑分类器</p>
+<p>(BOW(Bag of words)是词袋分析法，对文本，忽略其词序和语法，表达为词数量向量)</p>
+<p>[1] B. Zhou, Y. Tian, S. Sukhbaatar, A. Szlam, and R. Fergus, “Simple baseline for visual question answering,” arXiv preprint arXiv:1512.02167, 2015.</p>
+<p>[2]中用skip-thought提取问题特征，ResNet-152提取图片特征，用包含两个hidden layer的MLP模型做特征结合，结果是MLP模型过拟合</p>
+<p>(skip-thought：用一个编码器对当前句进行建模，用两个独立的自回归解码器分别建模前一个句子和后一个句子)</p>
+<p>[2] K. Kae and C. Kanan, \Answer-type prediction for visual question answering,” in The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016</p>
+<p>同时，有很多研究采用LSTM来处理language</p>
+<p>[3]用LSTM处理one-hot encoding sentence来表示问题特征，GoogLeNet来表示图片特征，然后对经过CNN的图片特征进行降维以匹配问题特征，取两者的 Hadamard product (其实就是矩阵点积)，用两层的MLP处理</p>
+<p>(one-hot encoding：独热编码，又称为一位有效编码，使用N位状态寄存器来对N个状态进行编码，每个状态都有它独立的寄存器位，并且在任意时候，其中只有一位有效。对于每一个特征，如果它有m个可能值，那么经过独热编码后，就变成了m个二元特征。并且，这些特征互斥，每次只有一个激活。因此，数据会变成稀疏的。解决了分类器不好处理属性编码的问题，起到扩充了特征的作用)</p>
+<p>[3] S. Antol, A. Agrawal, J. Lu, M. Mitchell, D. Batra, C. L. Zitnick, and D. Parikh, \VQA: Visual question answering,” in The IEEE International Conference on Computer Vision (ICCV), 2015</p>
+<p>在[4]中，每个单词被嵌入CNN特征后输入到LSTM，直到问题结束，之后的CNN特征用于产生答案</p>
+<p>[4] M. Malinowski, M. Rohrbach, and M. Fritz, \Ask your neurons: A neural-based approach to answering questions about images,” in The IEEE International Conference on Computer Vision (ICCV), 2015.</p>
+<p>[5]中的工作则是将CNN特征作为第一个词和最后一个词输入到LSTM中，随后用softmax classier预测答案</p>
+<p>[5] M. Ren, R. Kiros, and R. Zemel, \Exploring models and data for image question answering,” in Advances in Neural Information Processing Systems (NIPS), 2015</p>
+<p>[6]用了两个LSTM，和[5]相比，它只将CNN特征作为最后一个词输入到LSTM中，然后用另一个LSTM取代了分类器的工作</p>
+<p>[6] H. Gao, J. Mao, J. Zhou, Z. Huang, L. Wang, and W. Xu, \Are you talking to a machine? Dataset and methods for multilingual image question answering,” in Advances in Neural Information Processing Systems (NIPS), 2015.</p>
+<h3 id="Bayesian-and-Question-Aware-Models"><a href="#Bayesian-and-Question-Aware-Models" class="headerlink" title="Bayesian and Question-Aware Models"></a>Bayesian and Question-Aware Models</h3><p>VQA需要图像和问题之间的推断策略和关系建模，当问题和图片被特征化之后，对其共现性(co-occurrence)的建模对答案的推出大有帮助</p>
+<p>[7]第一次提出VQA的贝叶斯框架，作者用语义分割标识出目标和其位置，随后训练贝叶斯模型对目标的空间关系进行建模，以此来衡量每个答案的可能性。然而其依赖于语义分割，因此效率低下</p>
+<p>[7] M. Malinowski and M. Fritz, \A multi-world approach to question answering about realworld scenes based on uncertain input,” in Advances in Neural Information Processing Systems (NIPS), 2014.</p>
+<p>[8]中先根据问题来预测答案，随后处理图像特征和问题特征，为此，使用了大量的二次判别分析</p>
+<p>[8] K. Kae and C. Kanan, \Answer-type prediction for visual question answering,” in The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.</p>
+<h3 id="Attention-Based-Models"><a href="#Attention-Based-Models" class="headerlink" title="Attention Based Models"></a>Attention Based Models</h3><p>只使用全局特征会致使目标相关区域模糊化，注意力机制则尝试去解决这个问题，这些模型学习去注意与输入空间最相关的区域。注意力机制的核心思想就是特定的视觉区域或者特定的单词比剩余的包含更多的有效信息。</p>
+<p>注意力机制的引入通常有两种方式，一种方式是将图像均匀地划分为网格，每个网格代表图像的局部特征，此操作一般设置在最后一层卷积层之前，然后池化层将特征展开。随后由问题来确定每个网格之间的相关性</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/VQA-1.png"></p>
+<p>另一种方式是为图片生成bounding boxes，用CNN对这些boxes的内容编码，然后根据问题来决定这些boxes之间的关系</p>
+<p>Focus Regions for VQA[9]用Edge Boxes生成bounding box region proposals，用CNN提取boxes中的特征，其VQA系统的输入包括CNN特征，问题特征和答案多选，系统为每个答案产生一个分数，将最高分作为最终的答案。分数通过各个区域加权平均计算，加权平均的权重通过全连接层学习CNN特征和问题特征的点积来得到</p>
+<p>[9] K. J. Shih, S. Singh, and D. Hoiem, \Where to look: Focus regions for visual question answering,” in The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.</p>
+<p>Focused Dynamic Attention (FDA)[10]中，作者只使用和问题中目标相关的proposals，他们的VQA系统的输入为bounding boxes和其对应的目标标签，训练时，bounding boxes和目标标签通过COCO annotations得到，测试时，标签通过ResNet对bounding boxes分类得到。然后用word2vec来计算问题关键词和bounding boxes的一致性得分。得分高于0.5的bounding box被输入到LSTM中，同时采用另一个LSTM来表示问题，将两个LSTM的输出同时输入到全连接层中，最后用softmax classier来预测</p>
+<p>[10] I. Ilievski, S. Yan, and J. Feng, \A focused dynamic attention model for visual question<br>answering,” arXiv preprint arXiv:1604.01485, 2016.</p>
+<p>Stacked Attention Network (SAN)[11]利用问题特征，CNN特征以及softmax激活函数来计算图像上的注意力分布，然后将其应用到CNN特征图中，使用加权和将空间特征位置集合起来，来生成强调特定空间区域的全局图像表示。然后这个特征向量和问题特征联合，通过softmax来产生答案。这个方法可以产生多个注意力层，使得系统可以处理多个目标之间的复杂关系</p>
+<p>[11] Z. Yang, X. He, J. Gao, L. Deng, and A. J. Smola, \Stacked attention networks for image question answering,” in The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.</p>
+<p>Spatial Memory Network[12]中，通过评估图像块与问题中单个单词的相关性来产生空间注意力，这种word-guided注意力被用于预测注意分布，然后计算嵌入图像区域的视觉特征的加权和。文章研究了两种模型，在单跳模型中，整个问题的特征与加权视觉特征相结合来预测答案。在双跳模型中，视觉特征和问题特征的结合被循环回注意机制中，以重新确定注意分布</p>
+<p>[12] H. Xu and K. Saenko, \Ask, attend and answer: Exploring question-guided spatial attention for visual question answering,” in European Conference on Computer Vision (ECCV), 2016.</p>
+<p>modied Dynamic Memory Network (DMN)[13]中，采用了整合注意力，包含输入模块，情节记忆模块和答案模块，同样是采用CNN特征作为word输入到RNN当中的方法</p>
+<p>[13] A. Kumar, O. Irsoy, J. Su, J. Bradbury, R. English, B. Pierce, P. Ondruska, I. Gulrajani, and R. Socher, \Ask me anything: Dynamic memory networks for natural language processing,” in International Conference on Machine Learning (ICML), 2016.</p>
+<p>在Hierarchical Co-Attention model[14]中，主要贡献是将注意力机制同时运用在问题和图像上，图像的处理和SMN类似，问题的处理首先用了分级编码 (hierarchical encoding)：在word level使用one-hot encoding，在phrase level使用bi- or tri-gram window size，在question level使用LSTM，通过分级，可以使用两种不同的注意力机制</p>
+<p>[14] J. Lu, J. Yang, D. Batra, and D. Parikh, \Hierarchical question-image co-attention for visual question answering,” in Advances in Neural Information Processing Systems (NIPS), 2016.</p>
+<h3 id="Bilinear-Pooling-Methods"><a href="#Bilinear-Pooling-Methods" class="headerlink" title="Bilinear Pooling Methods"></a>Bilinear Pooling Methods</h3><p>VQA依赖于对图像和问题的联合分析，早期模型通常用简单方法将他们的特征结合起来，比如矩阵连接，矩阵元素积等，但是我们期待更复杂的方法去处理它们，比如矢量积。因此有了双线性池化方法。</p>
+<p>[15]提出了Multimodal Compact Bilinear pooling(MCBP)，其本质是在低维度条件下进行矢量积的近似。并将其应用在VQA，一共用到了两次MCBP模块，第一个MCBP融合了文本和图像的特征进而用来提取图像的attention，第二个MCBP将图像的attention特征与文本特征再一次融合，最终结果送入softmax分类器得到答案</p>
+<p>[15] A. Fukui, D. H. Park, D. Yang, A. Rohrbach, T. Darrell, and M. Rohrbach, \Multimodal compact bilinear pooling for visual question answering and visual grounding,” in Conference on Empirical Methods on Natural Language Processing (EMNLP), 2016</p>
+<p>[16]中进一步优化近似矢量积的开销，用Hadamard乘积和线性映射来实现近似双线性池化</p>
+<p>[16] J.-H. Kim, K.-W. On, J. Kim, J.-W. Ha, and B.-T. Zhang, \Hadamard product for low-rank bilinear pooling,” arXiv preprint arXiv:1610.04325, 2016.</p>
+<h3 id="Compositional-VQA-Models"><a href="#Compositional-VQA-Models" class="headerlink" title="Compositional VQA Models"></a>Compositional VQA Models</h3><p>在VQA中，问题通常是分为多个步骤的，比如问题”马的左边是什么”首先要找到马，然后对它左边的物体命名。基于这种想法，目前有两种组合框架通过sub-step的方式来解决VQA问题，Neural Module Network (NMN)和Recurrent Answering Units (RAU)</p>
+<p>NMN通过问题解析器将问题划分为sub-task，然后用sub-networks来分别解决，常用模块包含find，describe，transform，比如’What color is the tie’采用先find[tie]，然后describe[color]的方案完成</p>
+<p>而RAU不需要依赖于语言解析器，模型采用多个自循环的回答单元来解决VQA的sub-task，回答答案周期性排列，以注意力机制驱动</p>
+<h3 id="其它有价值的模型"><a href="#其它有价值的模型" class="headerlink" title="其它有价值的模型"></a>其它有价值的模型</h3><p>引入知识库，先验知识可以帮助系统在特定问题上更好地回答；[17]在CNN的全连接层之前引入了Dynamic Parameter Prediction layer，这一层的参数通过RNN处理问题得到，这使得视觉特征在最终的分类步骤之前就能够和问题建立关系，这种做法可以看做是一种隐注意力机制；[18]采用Multimodal Residual Networks (MRN)来处理VQA，MRN改自ResNet，同时对视觉和问题特征进行残差映射，视觉和问题拥有各自的残差块，而在每个残差块之后，视觉信息被掺入了问题信息，作者尝试了多种残差块的处理方式</p>
+<p>[17] H. Noh, P. H. Seo, and B. Han, \Image question answering using convolutional neural network with dynamic parameter prediction,” in The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.</p>
+<p>[18] J.-H. Kim, S.-W. Lee, D.-H. Kwak, M.-O. Heo, J. Kim, J.-W. Ha, and B.-T. Zhang, Multimodal residual learning for visual qa,” in Advances in Neural Information Pro-cessing Systems (NIPS), 2016.</p>
+<h3 id="何种方法模型表现更佳"><a href="#何种方法模型表现更佳" class="headerlink" title="何种方法模型表现更佳"></a>何种方法模型表现更佳</h3><p>ResNet的提取特征能力更佳，注意力机制有相比较好的效果，贝叶斯模型和组合模型对于正确率提升没有明显的帮助</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/VQA-2.png"></p>
+<h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><h3 id="VQA中的视觉和问题"><a href="#VQA中的视觉和问题" class="headerlink" title="VQA中的视觉和问题"></a>VQA中的视觉和问题</h3><p>相比于图片，当下VQA系统更依赖于问题，数据集中的bias对VQA的影响非常大。通过实验可以发现image-blind模型在正确率上甚至可以超过早期结合了问题和图片的模型。同时问题和答案之间也存在bias，比如相同意思的问题，VQA对不同的句式会产生不同的答案</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/VQA-3.png"></p>
+<p>之后要解决的问题就是减少数据集中答案和问题之间的bias，同时要求算法可以更充分地使用图片特征，而不是极大地依赖于问题特征</p>
+<h3 id="注意力机制在VQA中有多有用"><a href="#注意力机制在VQA中有多有用" class="headerlink" title="注意力机制在VQA中有多有用"></a>注意力机制在VQA中有多有用</h3><p>很难说注意力在VQA中起到了多大的作用，有简化研究表明去除注意力机制会使模型的正确率下降，在COCO-VQA表现最好的模型也使用了注意力机制，然而有的未使用注意力机制的简单模型比采用了复杂注意力机制的模型表现更佳</p>
+<p>注意力机制受到bias的影响，比如查询图片中是否存在窗帘(drapes)，注意力可能会从图片底部开始寻找，最后锁定在床(bed)，因为drapes在问题中通常和bedroom相关</p>
+<h3 id="bias的损害"><a href="#bias的损害" class="headerlink" title="bias的损害"></a>bias的损害</h3><p>数据集的bias影响了对VQA算法的评估，场景以及目标属性的问题具有很强的bias，而这类问题在COCO-VQA正确率的提升对整体正确率的提升有较大影响，而复杂的’Why’ and ‘Where’问题的正确率提升对整体正确率提升却影响甚微，这个情况可以通过对每种类型的问题分别评估来解决</p>
+<h3 id="二值问题是否充分"><a href="#二值问题是否充分" class="headerlink" title="二值问题是否充分"></a>二值问题是否充分</h3><p>目前主要的争论是二值问题是否会导致问题复杂性的缺失</p>
+<p>二值问题的优点是非常容易用于评估，如果bias能够得到控制，那么这类问题用于测试就完全没有问题</p>
+<h3 id="开放式-vs-多选"><a href="#开放式-vs-多选" class="headerlink" title="开放式 vs 多选"></a>开放式 vs 多选</h3><p>因为开放式多词回答是难以评估的，因此多选答案这种方式在多个数据集中被使用</p>
+<p>然而多选题这种方式本质上是对任务的简化，它使得任务变成判断哪个答案是对的，而不是真正地去回答这个问题。比如将答案也作为特征进行训练，就能达到SOTA，但其实，这种方法只是学习了答案中的bias，作者提议所有的VQA系统都必须在不给定答案作为input的时候能够运作</p>
+<h2 id="未来VQA数据集的建议"><a href="#未来VQA数据集的建议" class="headerlink" title="未来VQA数据集的建议"></a>未来VQA数据集的建议</h2><ol>
+<li>Future datasets need to be larger. (更大)</li>
+<li>Future datasets need to be less biased. (更少bias)</li>
+<li>Future datasets need more nuanced analysis for benchmarking. (问题种类更多更全面)</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">forever97</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://forever97.top/2020/07/02/VQA/">https://forever97.top/2020/07/02/VQA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://forever97.top" target="_blank">未央の童话镇</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/VQA/">VQA</a><a class="post-meta__tags" href="/tags/2017/">2017</a><a class="post-meta__tags" href="/tags/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/">文献综述</a></div><div class="post_share"><div class="social-share" data-image="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/VQA-1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/07/02/CSSVQA/"><img class="prev-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CSSVQA-2.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CSS-VQA [反事实]</div></div></a></div><div class="next-post pull-right"><a href="/2020/06/01/cinematography/"><img class="next-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/cinematography-2.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">基于样例的相机行为控制器</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/08/05/SAAA/" title="SAAA [层叠注意力机制]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SAAA-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-05</div><div class="title">SAAA [层叠注意力机制]</div></div></a></div><div><a href="/2020/08/06/BAN/" title="BAN [双线性注意力机制]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/BAN-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-06</div><div class="title">BAN [双线性注意力机制]</div></div></a></div><div><a href="/2020/07/15/BUTD/" title="BUTD注意力机制"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/BUTD-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-15</div><div class="title">BUTD注意力机制</div></div></a></div><div><a href="/2020/07/30/CCVQA/" title="CC-VQA [循环一致性]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CCVQA-2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-30</div><div class="title">CC-VQA [循环一致性]</div></div></a></div><div><a href="/2020/07/02/CSSVQA/" title="CSS-VQA [反事实]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CSSVQA-2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-02</div><div class="title">CSS-VQA [反事实]</div></div></a></div><div><a href="/2020/08/27/CTIVQA/" title="CTI-VQA [知识蒸馏]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CTIVQA-16.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-27</div><div class="title">CTI-VQA [知识蒸馏]</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Twikoo</span><span class="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">forever97</div><div class="author-info__description">在人海里梦游</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forever97"><i class="fab fa-github"></i><span>来给我加星星</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forever97" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://gitee.com/forever97/" target="_blank" title="Gitee"><i class="fab fa-google"></i></a><a class="social-icon" href="https://www.cnblogs.com/forever97" target="_blank" title="博客园"><i class="fas fa-blog"></i></a><a class="social-icon" href="http://wpa.qq.com/msgrd?v=3&amp;uin=857426255&amp;site=qq&amp;menu=yes" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:857426255@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content"><h2 style="color:orange; margin:2px;">🍊欢迎光临本站</h2> 如果卡顿请访问 <a target="_blank" rel="noopener" href="https://forever97.gitee.io" style="cursor:pointer; color:#fff; background-color:orange; padding:2px 5px; border-radius:5px;">Gitee镜像站</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#VQA%E4%B8%8E%E5%85%B6%E5%AE%83%E8%A7%86%E8%A7%89%E4%B8%8E%E8%AF%AD%E8%A8%80%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">1.</span> <span class="toc-text">VQA与其它视觉与语言任务的对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VQA%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">2.</span> <span class="toc-text">VQA的数据集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DAQUAR"><span class="toc-number">2.1.</span> <span class="toc-text">DAQUAR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#COCO-QA"><span class="toc-number">2.2.</span> <span class="toc-text">COCO-QA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-VQA-Dataset"><span class="toc-number">2.3.</span> <span class="toc-text">The VQA Dataset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FM-IQA"><span class="toc-number">2.4.</span> <span class="toc-text">FM-IQA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Visual-Genome"><span class="toc-number">2.5.</span> <span class="toc-text">Visual Genome</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Visual7W"><span class="toc-number">2.6.</span> <span class="toc-text">Visual7W</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SHAPES"><span class="toc-number">2.7.</span> <span class="toc-text">SHAPES</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VQA%E7%9A%84%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87"><span class="toc-number">3.</span> <span class="toc-text">VQA的评价指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Simple-Accuracy"><span class="toc-number">3.1.</span> <span class="toc-text">Simple Accuracy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Modied-WUPS"><span class="toc-number">3.2.</span> <span class="toc-text">Modied WUPS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Consensus-Metric"><span class="toc-number">3.3.</span> <span class="toc-text">Consensus Metric</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Manual-Evaluation"><span class="toc-number">3.4.</span> <span class="toc-text">Manual Evaluation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VQA%E7%AE%97%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">VQA算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Baseline-Models"><span class="toc-number">4.1.</span> <span class="toc-text">Baseline Models</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bayesian-and-Question-Aware-Models"><span class="toc-number">4.2.</span> <span class="toc-text">Bayesian and Question-Aware Models</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Attention-Based-Models"><span class="toc-number">4.3.</span> <span class="toc-text">Attention Based Models</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bilinear-Pooling-Methods"><span class="toc-number">4.4.</span> <span class="toc-text">Bilinear Pooling Methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Compositional-VQA-Models"><span class="toc-number">4.5.</span> <span class="toc-text">Compositional VQA Models</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%E6%9C%89%E4%BB%B7%E5%80%BC%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.6.</span> <span class="toc-text">其它有价值的模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%95%E7%A7%8D%E6%96%B9%E6%B3%95%E6%A8%A1%E5%9E%8B%E8%A1%A8%E7%8E%B0%E6%9B%B4%E4%BD%B3"><span class="toc-number">4.7.</span> <span class="toc-text">何种方法模型表现更佳</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A8%E8%AE%BA"><span class="toc-number">5.</span> <span class="toc-text">讨论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VQA%E4%B8%AD%E7%9A%84%E8%A7%86%E8%A7%89%E5%92%8C%E9%97%AE%E9%A2%98"><span class="toc-number">5.1.</span> <span class="toc-text">VQA中的视觉和问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E5%9C%A8VQA%E4%B8%AD%E6%9C%89%E5%A4%9A%E6%9C%89%E7%94%A8"><span class="toc-number">5.2.</span> <span class="toc-text">注意力机制在VQA中有多有用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bias%E7%9A%84%E6%8D%9F%E5%AE%B3"><span class="toc-number">5.3.</span> <span class="toc-text">bias的损害</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%80%BC%E9%97%AE%E9%A2%98%E6%98%AF%E5%90%A6%E5%85%85%E5%88%86"><span class="toc-number">5.4.</span> <span class="toc-text">二值问题是否充分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E5%BC%8F-vs-%E5%A4%9A%E9%80%89"><span class="toc-number">5.5.</span> <span class="toc-text">开放式 vs 多选</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5VQA%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%BB%BA%E8%AE%AE"><span class="toc-number">6.</span> <span class="toc-text">未来VQA数据集的建议</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React Hooks"/></a><div class="content"><a class="title" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks">React基础速通计划：React Hooks</a><time datetime="2022-06-26T14:26:47.000Z" title="发表于 2022-06-26 14:26:47">2022-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React组件"/></a><div class="content"><a class="title" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件">React基础速通计划：React组件</a><time datetime="2022-06-19T11:09:45.000Z" title="发表于 2022-06-19 11:09:45">2022-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React基础与JSX"/></a><div class="content"><a class="title" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX">React基础速通计划：React基础与JSX</a><time datetime="2022-06-16T15:58:27.000Z" title="发表于 2022-06-16 15:58:27">2022-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/07/eventloop/" title="JS事件循环"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/eventloop.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS事件循环"/></a><div class="content"><a class="title" href="/2021/09/07/eventloop/" title="JS事件循环">JS事件循环</a><time datetime="2021-09-07T14:32:33.000Z" title="发表于 2021-09-07 14:32:33">2021-09-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/31/promise/" title="Promise详解"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/promise.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Promise详解"/></a><div class="content"><a class="title" href="/2021/08/31/promise/" title="Promise详解">Promise详解</a><time datetime="2021-08-31T10:04:59.000Z" title="发表于 2021-08-31 10:04:59">2021-08-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/VQA-1.png)"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2022 By forever97</div><div class="footer_custom_text"><p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://demo.jerryc.me/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://metroui.org.ua/index.html "><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站托管于Vercel">&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'blogtalk-6g6nlayif96df94c',
+      region: ''
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'blogtalk-6g6nlayif96df94c',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'znUsAPKaAhvsce1vGdQabwNA-MdYXbMMI',
+      appKey: 'IXAxuH2tjf4O7iYSNPOnzMFe',
+      placeholder: '记得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'robohash',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Twikoo' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/gitcalendar/js/gitcalendar.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@latest/source/js/issues.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/magnet/js/catalogMagnet.js"></script><script src="/swiper/swiper.min.js"></script><script src="/swiper/swiperindex.js"></script><script src="/js/moments.js"></script><script src="/js/smooth-scrolling.js"></script><script src="/js/custom.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div><!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>未央の时光机</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='/'|| '/' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/33.2017.newyear.model.json"},"display":{"position":"right","width":200,"height":300},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>

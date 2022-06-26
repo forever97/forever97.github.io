@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>mmdetection训练自己的数据集 | 未央の童话镇</title><meta name="keywords" content="OD,mmdetection"><meta name="author" content="forever97"><meta name="copyright" content="forever97"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="本文介绍了coco数据集格式，via标注工具，并记录了mmdetection训练自己数据集的过程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mmdetection训练自己的数据集">
+<meta property="og:url" content="https://forever97.top/2021/06/22/mmdetection/index.html">
+<meta property="og:site_name" content="未央の童话镇">
+<meta property="og:description" content="本文介绍了coco数据集格式，via标注工具，并记录了mmdetection训练自己数据集的过程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-1.png">
+<meta property="article:published_time" content="2021-06-22T09:30:28.000Z">
+<meta property="article:modified_time" content="2022-06-26T06:44:17.749Z">
+<meta property="article:author" content="forever97">
+<meta property="article:tag" content="OD">
+<meta property="article:tag" content="mmdetection">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-1.png"><link rel="shortcut icon" href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/favicon.png"><link rel="canonical" href="https://forever97.top/2021/06/22/mmdetection/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="baidu-site-verification" content="f7c8ecf684c23d02cca2e82c827ff2a2"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?194bd025765eb0d478283a5eb4217ad4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: forever97","link":"链接: ","source":"来源: 未央の童话镇","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-26 06:44:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/gitcalendar/css/gitcalendar.css"/><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css"  media="defer" onload="this.media='all'"><link rel="stylesheet" href="/magnet/css/catalogMagnet.css"/><link rel="stylesheet" href="/swiper/swiper.min.css"><link rel="stylesheet" href="/swiper/swiperstyle.css"><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-1.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">未央の童话镇</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div><div id="rightmenu" style="flex:1"><div id="search-button" style="position:absolute;right:2%"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">mmdetection训练自己的数据集</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-06-22T09:30:28.000Z" title="发表于 2021-06-22 09:30:28">2021-06-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-06-26T06:44:17.749Z" title="更新于 2022-06-26 06:44:17">2022-06-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E2%AD%90OD%E6%91%98%E6%98%9F%E6%A5%BC/">⭐OD摘星楼</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="数据的标注"><a href="#数据的标注" class="headerlink" title="数据的标注"></a>数据的标注</h2><p>在介绍mmdetection之前，先来讲讲如何制作一个coco格式的数据集</p>
+<h3 id="via标注工具"><a href="#via标注工具" class="headerlink" title="via标注工具"></a>via标注工具</h3><p>标注数据集用的是via标注工具</p>
+<p>VGG Image Annotator (VIA)是一款开源的图像标注工具, 由Visual Geometry Group开发</p>
+<p>这里我上传了一份到gitpage方便在线使用</p>
+<a class="btn-beautify button--animated outline orange larger" target="_blank" rel="noopener" href="https://forever97.github.io/via/" 
+  title="via标注工具"><i class="far fa-hand-point-right fa-fw"></i><span>via标注工具</span></a>
+
+<p>打开via标注工具，首先导入图片，可以单张导入也可以批量导入</p>
+<div class="img-wrap"><div class="img-bg"><img class="img" src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-2.png" style="width:400px;"/></div></div>
+
+<p>在左侧选择标注框来进行标注，因为我做的是目标检测，所以选择的是bbox</p>
+<div class="img-wrap"><div class="img-bg"><img class="img" src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-3.png" style="width:400px;"/></div></div>
+
+<p>在标注的过程中，如果我们觉得数字labels影响精细标注了，则可以在view这里暂时隐藏掉label</p>
+<div class="img-wrap"><div class="img-bg"><img class="img" src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-4.png" style="width:400px;"/></div></div>
+
+<p>用<kbd>ctrl</kbd>+鼠标滚轮可以放大缩小图片，可以更细致地标注内容</p>
+<p>接下来我们给标注的内容添加类别，因为我制作的数据集只有一个类也就是tree，所以后期直接用python处理统一添加即可，如果有好几个类，则建议直接在via标注工具中添加类别</p>
+<p>添加方式如下图 (Snipaste真好用)</p>
+<div class="img-wrap"><div class="img-bg"><img class="img" src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-5.png" style="width:400px;"/></div></div>
+
+<p>最后讲一下保存和载入，因为我们是打了类别标注的，所以要整个工程一起存储方便下次导入继续标注，region/file attributes的导入与导出是把创建的类别导入进来，免得下次标注要重新创建，不过类别少的导师无所谓</p>
+<div class="img-wrap"><div class="img-bg"><img class="img" src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-6.png" style="width:400px;"/></div></div>
+
+<p>因为可能是多人共同完成的标注，所以标注文件有时候会需要合并，则需要每个工程导出为一个json文件，然后将导出的内容一起导入，再统一导出即可 (工程文件不能同时导入多个)</p>
+<div class="img-wrap"><div class="img-bg"><img class="img" src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-7.png" style="width:400px;"/></div></div>
+
+<p>这样子标注就完成了 (最后导出为coco格式)</p>
+<h3 id="COCO数据集格式介绍"><a href="#COCO数据集格式介绍" class="headerlink" title="COCO数据集格式介绍"></a>COCO数据集格式介绍</h3><p>coco数据集本身是一个字典，里面包含五块内容，info，licenses，images，annotations以及categories</p>
+<p>我们在训练时需要的部分是图片images，标注annotations以及类别categories</p>
+<p>annotations的格式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">annotation&#123;</span><br><span class="line">    &quot;id&quot;: int,    </span><br><span class="line">    &quot;image_id&quot;: int,</span><br><span class="line">    &quot;category_id&quot;: int,</span><br><span class="line">    &quot;segmentation&quot;: RLE or [polygon],</span><br><span class="line">    &quot;area&quot;: float,</span><br><span class="line">    &quot;bbox&quot;: [x,y,width,height],</span><br><span class="line">    &quot;iscrowd&quot;: 0 or 1,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>id是标注的编号，要求同一份数据集里面不能重复，所以在做数据集合并的时候需要注意</p>
+<p>image_id是图片在数据集中的编号，这里的image_id要求使用int，但是不知道为什么via标注导出的是个字符串，所以一会儿得要处理</p>
+<p>catagory_id对应的是类别的id</p>
+<p>image的格式没有特别需要注意的地方，同样也是id不能重复</p>
+<p>catagory因为我只有一个类别所以处理的时候最后直接加上</p>
+<h3 id="数据集处理"><a href="#数据集处理" class="headerlink" title="数据集处理"></a>数据集处理</h3><p>首先是标注文件的合并，因为有一堆信息 (比如image_id得是int) 要处理，所以我合并文件直接用python处理的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">json_list = os.listdir(<span class="string">&quot;annotations&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 记录json文件</span></span><br><span class="line">annotations_list = []</span><br><span class="line"></span><br><span class="line"><span class="built_in">dict</span> = &#123;&#125;</span><br><span class="line">image = []</span><br><span class="line">annotations = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将所有的json文件读入</span></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> json_list:</span><br><span class="line">    <span class="keyword">if</span> (file.endswith(<span class="string">&quot;.json&quot;</span>)):</span><br><span class="line">        annotations_list.append(file)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编号统计，防止图片编号重复</span></span><br><span class="line">total_img = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> anno_name <span class="keyword">in</span> annotations_list:</span><br><span class="line">    img_cnt = <span class="number">0</span></span><br><span class="line">    anno = json.loads(<span class="built_in">open</span>(<span class="string">&quot;annotations/&quot;</span>+anno_name,encoding=<span class="string">&#x27;utf-8&#x27;</span>).read())</span><br><span class="line">    <span class="keyword">for</span> img <span class="keyword">in</span> anno[<span class="string">&quot;images&quot;</span>]:</span><br><span class="line">        img[<span class="string">&quot;id&quot;</span>] += total_img</span><br><span class="line">        <span class="comment"># 处理完的img存入image列表</span></span><br><span class="line">        image.append(img)</span><br><span class="line">        img_cnt += <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> a <span class="keyword">in</span> anno[<span class="string">&#x27;annotations&#x27;</span>]:</span><br><span class="line">        <span class="comment"># 计算对应的图片编号</span></span><br><span class="line">        a[<span class="string">&#x27;image_id&#x27;</span>] = <span class="built_in">int</span>(a[<span class="string">&#x27;image_id&#x27;</span>])+total_img</span><br><span class="line">        a[<span class="string">&#x27;category_id&#x27;</span>] = <span class="number">1</span></span><br><span class="line">        <span class="comment"># 处理完的annotation存入annotations列表</span></span><br><span class="line">        annotations.append(a)</span><br><span class="line">    total_img += img_cnt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将字典对应的部分放入</span></span><br><span class="line"><span class="built_in">dict</span>[<span class="string">&#x27;images&#x27;</span>]=image</span><br><span class="line"><span class="built_in">dict</span>[<span class="string">&#x27;annotations&#x27;</span>]=annotations</span><br><span class="line"><span class="comment"># 类别直接写</span></span><br><span class="line"><span class="built_in">dict</span>[<span class="string">&#x27;categories&#x27;</span>]=[&#123;</span><br><span class="line">    <span class="string">&quot;id&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;tree&quot;</span>,</span><br><span class="line">    <span class="string">&quot;supercategory&quot;</span>: <span class="string">&quot;category&quot;</span></span><br><span class="line">  &#125;]</span><br><span class="line">json.dump(<span class="built_in">dict</span>, <span class="built_in">open</span>(<span class="string">&#x27;total.json&#x27;</span>, <span class="string">&#x27;w&#x27;</span>), indent=<span class="number">4</span>, ensure_ascii=<span class="literal">True</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后划分训练集和验证集</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"></span><br><span class="line">anno = json.loads(<span class="built_in">open</span>(<span class="string">&quot;total.json&quot;</span>).read())</span><br><span class="line"></span><br><span class="line"><span class="comment"># print(anno.keys())</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练集测试集比例为3:1</span></span><br><span class="line">train_percent=<span class="number">0.75</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 产生一个随机的排列</span></span><br><span class="line"><span class="built_in">len</span> = <span class="built_in">len</span>(anno[<span class="string">&#x27;images&#x27;</span>])</span><br><span class="line"><span class="built_in">list</span> = <span class="built_in">range</span>(<span class="built_in">len</span>)</span><br><span class="line"></span><br><span class="line">img_name = []</span><br><span class="line"></span><br><span class="line">train_img = []</span><br><span class="line">val_img = []</span><br><span class="line"></span><br><span class="line">train_anno = []</span><br><span class="line">val_anno = []</span><br><span class="line"></span><br><span class="line">train_file = &#123;&#125;</span><br><span class="line">val_file = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 图片名字列表</span></span><br><span class="line"><span class="keyword">for</span> img <span class="keyword">in</span> anno[<span class="string">&#x27;images&#x27;</span>]:</span><br><span class="line">    img_name.append(img[<span class="string">&quot;file_name&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算训练集大小</span></span><br><span class="line">tr = <span class="built_in">int</span>(<span class="built_in">len</span> * train_percent)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从排列中随机</span></span><br><span class="line">train = random.sample(<span class="built_in">list</span>, tr)</span><br><span class="line"></span><br><span class="line">dic = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化字典，给分配到训练集中的图片名打上标记</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">len</span>):</span><br><span class="line">    dic[img_name[i]] = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> train:</span><br><span class="line">    dic[img_name[i]] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 给图片id打上标记</span></span><br><span class="line">id_dic = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">len</span>):</span><br><span class="line">    id_dic[i] = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据标记分配图片</span></span><br><span class="line"><span class="keyword">for</span> img <span class="keyword">in</span> anno[<span class="string">&quot;images&quot;</span>]:</span><br><span class="line">    <span class="keyword">if</span>(dic[img[<span class="string">&quot;file_name&quot;</span>]] == <span class="number">1</span>):</span><br><span class="line">        train_img.append(img)</span><br><span class="line">        id_dic[img[<span class="string">&quot;id&quot;</span>]] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        val_img.append(img)</span><br><span class="line"></span><br><span class="line">train_anno_id = <span class="number">0</span></span><br><span class="line">val_anno_id = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据标记分配标注</span></span><br><span class="line"><span class="keyword">for</span> anno_item <span class="keyword">in</span> anno[<span class="string">&quot;annotations&quot;</span>]:</span><br><span class="line">    <span class="keyword">if</span>(id_dic[anno_item[<span class="string">&quot;image_id&quot;</span>]]==<span class="number">1</span>):</span><br><span class="line">        anno_item[<span class="string">&quot;id&quot;</span>] = train_anno_id</span><br><span class="line">        train_anno.append(anno_item)</span><br><span class="line">        train_anno_id += <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        anno_item[<span class="string">&quot;id&quot;</span>] = val_anno_id</span><br><span class="line">        val_anno.append(anno_item)</span><br><span class="line">        val_anno_id += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分别保存训练集和验证集</span></span><br><span class="line">train_file[<span class="string">&#x27;images&#x27;</span>] = train_img</span><br><span class="line">train_file[<span class="string">&#x27;annotations&#x27;</span>] = train_anno</span><br><span class="line">train_file[<span class="string">&#x27;categories&#x27;</span>]=[&#123;</span><br><span class="line">    <span class="string">&quot;id&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;tree&quot;</span>,</span><br><span class="line">    <span class="string">&quot;supercategory&quot;</span>: <span class="string">&quot;category&quot;</span></span><br><span class="line">  &#125;]</span><br><span class="line">json.dump(train_file, <span class="built_in">open</span>(<span class="string">&#x27;train.json&#x27;</span>, <span class="string">&#x27;w&#x27;</span>), indent=<span class="number">4</span>, ensure_ascii=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将对应的图片pick出来</span></span><br><span class="line"><span class="keyword">for</span> img <span class="keyword">in</span> train_file[<span class="string">&quot;images&quot;</span>]:</span><br><span class="line">    shutil.copy(<span class="string">&quot;img/&quot;</span>+img[<span class="string">&quot;file_name&quot;</span>],<span class="string">&quot;train_img/&quot;</span>)</span><br><span class="line"></span><br><span class="line">val_file[<span class="string">&#x27;images&#x27;</span>] = val_img</span><br><span class="line">val_file[<span class="string">&#x27;annotations&#x27;</span>] = val_anno</span><br><span class="line">val_file[<span class="string">&#x27;categories&#x27;</span>]=[&#123;</span><br><span class="line">    <span class="string">&quot;id&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;tree&quot;</span>,</span><br><span class="line">    <span class="string">&quot;supercategory&quot;</span>: <span class="string">&quot;category&quot;</span></span><br><span class="line">  &#125;]</span><br><span class="line">json.dump(val_file, <span class="built_in">open</span>(<span class="string">&#x27;val.json&#x27;</span>, <span class="string">&#x27;w&#x27;</span>), indent=<span class="number">4</span>, ensure_ascii=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> img <span class="keyword">in</span> val_file[<span class="string">&quot;images&quot;</span>]:</span><br><span class="line">    shutil.copy(<span class="string">&quot;img/&quot;</span>+img[<span class="string">&quot;file_name&quot;</span>],<span class="string">&quot;val_img/&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>至此，算是彻底完成了一个自定义的coco格式的数据集</p>
+<h2 id="mmdetection的使用"><a href="#mmdetection的使用" class="headerlink" title="mmdetection的使用"></a>mmdetection的使用</h2><p>先在git上clone一个mmdetection到服务器上，或者直接下载上传到服务器</p>
+<a class="ghcard" rel="external nofollow noopener noreferrer noopener" target="_blank" href="https://github.com/open-mmlab/mmdetection"><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://github-readme-stats.vercel.app/api/pin/?username=open-mmlab&repo=mmdetection&theme=solarized-light&show_owner=true"/></a>
+
+<p>然后到这个mmdetection文件夹下</p>
+<p>我的安装列表如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pip install torch&#x3D;&#x3D;1.6.0</span><br><span class="line"></span><br><span class="line">pip install torchvision&#x3D;&#x3D;0.7.0</span><br><span class="line"></span><br><span class="line">pip install -r requirements&#x2F;build.txt</span><br><span class="line"></span><br><span class="line">pip install -v -e .</span><br><span class="line"></span><br><span class="line">pip install ninja </span><br><span class="line"></span><br><span class="line">pip install mmcv-full -f https:&#x2F;&#x2F;download.openmmlab.com&#x2F;mmcv&#x2F;dist&#x2F;cu101&#x2F;torch1.6.0&#x2F;index.html</span><br></pre></td></tr></table></figure>
+
+<p>注意要装mmcv-full，而不是mmcv，同时如果mmcv-full安装不了就看看有没有ninja，没有的话安装一个 </p>
+<p>这些步骤都执行完之后按照官网的代码测试一下</p>
+<p>然后在文件夹下创建一个data文件夹</p>
+<p>内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data</span><br><span class="line">|---coco</span><br><span class="line">    |---annotations</span><br><span class="line">        |---instances_train2017.json</span><br><span class="line">        |---instances_val2017.json</span><br><span class="line">    |---val2017</span><br><span class="line">    |---train2017</span><br></pre></td></tr></table></figure>
+
+<p>其中val2017和train2017是验证集和测试集的图片文件夹，instances_train2017.json和instances_val2017.json是训练集和验证集的标注文件 (当然这里可以用自己的名字然后去代码里面改，但是要改的东西更多)</p>
+<p>接着我们来整一个模型配置文件</p>
+<p>首先看一下<code>configs/_base_/models/</code>目录，这里面是各个模型对应的参数，我们先尝试改一个fasterRCNN，我们打开<code>faster_rcnn_r50_fpn.py</code></p>
+<p>搜索num_classes，将类的数量改为自己数据集类的数量，不需要因为背景+1，因为mmdetection会自动处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># num_classes=80,</span></span><br><span class="line">num_classes=<span class="number">1</span>,</span><br></pre></td></tr></table></figure>
+
+<p>然后修改coco数据集对应的类，在<code>mmdet/core/evaluation/class_names.py</code>中，找到coco数据集，进行修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">coco_classes</span>():</span></span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        &#x27;person&#x27;, &#x27;bicycle&#x27;, &#x27;car&#x27;, &#x27;motorcycle&#x27;, &#x27;airplane&#x27;, &#x27;bus&#x27;, &#x27;train&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;truck&#x27;, &#x27;boat&#x27;, &#x27;traffic_light&#x27;, &#x27;fire_hydrant&#x27;, &#x27;stop_sign&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;parking_meter&#x27;, &#x27;bench&#x27;, &#x27;bird&#x27;, &#x27;cat&#x27;, &#x27;dog&#x27;, &#x27;horse&#x27;, &#x27;sheep&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;cow&#x27;, &#x27;elephant&#x27;, &#x27;bear&#x27;, &#x27;zebra&#x27;, &#x27;giraffe&#x27;, &#x27;backpack&#x27;, &#x27;umbrella&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;handbag&#x27;, &#x27;tie&#x27;, &#x27;suitcase&#x27;, &#x27;frisbee&#x27;, &#x27;skis&#x27;, &#x27;snowboard&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;sports_ball&#x27;, &#x27;kite&#x27;, &#x27;baseball_bat&#x27;, &#x27;baseball_glove&#x27;, &#x27;skateboard&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;surfboard&#x27;, &#x27;tennis_racket&#x27;, &#x27;bottle&#x27;, &#x27;wine_glass&#x27;, &#x27;cup&#x27;, &#x27;fork&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;knife&#x27;, &#x27;spoon&#x27;, &#x27;bowl&#x27;, &#x27;banana&#x27;, &#x27;apple&#x27;, &#x27;sandwich&#x27;, &#x27;orange&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;broccoli&#x27;, &#x27;carrot&#x27;, &#x27;hot_dog&#x27;, &#x27;pizza&#x27;, &#x27;donut&#x27;, &#x27;cake&#x27;, &#x27;chair&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;couch&#x27;, &#x27;potted_plant&#x27;, &#x27;bed&#x27;, &#x27;dining_table&#x27;, &#x27;toilet&#x27;, &#x27;tv&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;laptop&#x27;, &#x27;mouse&#x27;, &#x27;remote&#x27;, &#x27;keyboard&#x27;, &#x27;cell_phone&#x27;, &#x27;microwave&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;oven&#x27;, &#x27;toaster&#x27;, &#x27;sink&#x27;, &#x27;refrigerator&#x27;, &#x27;book&#x27;, &#x27;clock&#x27;, &#x27;vase&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;scissors&#x27;, &#x27;teddy_bear&#x27;, &#x27;hair_drier&#x27;, &#x27;toothbrush&#x27;</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">        <span class="string">&#x27;tree&#x27;</span>,</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+
+<p>在<code>mmdet/datasets/coco.py</code>中也要做对应的修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">CLASSES = (&#x27;person&#x27;, &#x27;bicycle&#x27;, &#x27;car&#x27;, &#x27;motorcycle&#x27;, &#x27;airplane&#x27;, &#x27;bus&#x27;,</span></span><br><span class="line"><span class="string">          &#x27;train&#x27;, &#x27;truck&#x27;, &#x27;boat&#x27;, &#x27;traffic light&#x27;, &#x27;fire hydrant&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;stop sign&#x27;, &#x27;parking meter&#x27;, &#x27;bench&#x27;, &#x27;bird&#x27;, &#x27;cat&#x27;, &#x27;dog&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;horse&#x27;, &#x27;sheep&#x27;, &#x27;cow&#x27;, &#x27;elephant&#x27;, &#x27;bear&#x27;, &#x27;zebra&#x27;, &#x27;giraffe&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;backpack&#x27;, &#x27;umbrella&#x27;, &#x27;handbag&#x27;, &#x27;tie&#x27;, &#x27;suitcase&#x27;, &#x27;frisbee&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;skis&#x27;, &#x27;snowboard&#x27;, &#x27;sports ball&#x27;, &#x27;kite&#x27;, &#x27;baseball bat&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;baseball glove&#x27;, &#x27;skateboard&#x27;, &#x27;surfboard&#x27;, &#x27;tennis racket&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;bottle&#x27;, &#x27;wine glass&#x27;, &#x27;cup&#x27;, &#x27;fork&#x27;, &#x27;knife&#x27;, &#x27;spoon&#x27;, &#x27;bowl&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;banana&#x27;, &#x27;apple&#x27;, &#x27;sandwich&#x27;, &#x27;orange&#x27;, &#x27;broccoli&#x27;, &#x27;carrot&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;hot dog&#x27;, &#x27;pizza&#x27;, &#x27;donut&#x27;, &#x27;cake&#x27;, &#x27;chair&#x27;, &#x27;couch&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;potted plant&#x27;, &#x27;bed&#x27;, &#x27;dining table&#x27;, &#x27;toilet&#x27;, &#x27;tv&#x27;, &#x27;laptop&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;mouse&#x27;, &#x27;remote&#x27;, &#x27;keyboard&#x27;, &#x27;cell phone&#x27;, &#x27;microwave&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;oven&#x27;, &#x27;toaster&#x27;, &#x27;sink&#x27;, &#x27;refrigerator&#x27;, &#x27;book&#x27;, &#x27;clock&#x27;,</span></span><br><span class="line"><span class="string">            &#x27;vase&#x27;, &#x27;scissors&#x27;, &#x27;teddy bear&#x27;, &#x27;hair drier&#x27;, &#x27;toothbrush&#x27;)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">CLASSES = (<span class="string">&#x27;tree&#x27;</span>,)</span><br></pre></td></tr></table></figure>
+
+<p>完成，然后我们用<code>tool/train.py</code>来生成对应的配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python tools&#x2F;train.py configs&#x2F;faster_rcnn&#x2F;faster_rcnn_r50_fpn_1x_coco.py --work-dir record</span><br></pre></td></tr></table></figure>
+
+<p><code>--work-dir</code>的意思是指定工作目录，一会儿会在这里生成配置文件，生成配置文件之后，我们可以中断掉，然后在工作目录中找到这个配置文件，做修改之后 (各种微调，比如学习率，训练次数，继续上次的训练文件等) 再运行这个配置文件即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python tools&#x2F;train.py record&#x2F;faster_rcnn_r50_fpn_1x_coco.py</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">forever97</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://forever97.top/2021/06/22/mmdetection/">https://forever97.top/2021/06/22/mmdetection/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://forever97.top" target="_blank">未央の童话镇</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/OD/">OD</a><a class="post-meta__tags" href="/tags/mmdetection/">mmdetection</a></div><div class="post_share"><div class="social-share" data-image="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/08/FASSD/"><img class="prev-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/FASSD-6.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">FA-SSD：使用上下文和注意力机制的小目标检测</div></div></a></div><div class="next-post pull-right"><a href="/2021/05/21/vue14/"><img class="next-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/vue3.0.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">VUE3.0：组合式api的引入</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/07/08/FASSD/" title="FA-SSD：使用上下文和注意力机制的小目标检测"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/FASSD-6.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-08</div><div class="title">FA-SSD：使用上下文和注意力机制的小目标检测</div></div></a></div><div><a href="/2020/12/22/RCNN/" title="R-CNN：Region Proposal + CNN特征"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/RCNN-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-22</div><div class="title">R-CNN：Region Proposal + CNN特征</div></div></a></div><div><a href="/2021/01/06/YOLOv1/" title="YOLO：实时目标检测"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/YOLOv1-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-06</div><div class="title">YOLO：实时目标检测</div></div></a></div><div><a href="/2021/01/08/YOLOv2/" title="YOLOv2：全面升级的YOLO"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/YOLOv2-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-08</div><div class="title">YOLOv2：全面升级的YOLO</div></div></a></div><div><a href="/2021/03/18/YOLT/" title="YOLT：遥感图像多尺度检测"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/YOLT-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-18</div><div class="title">YOLT：遥感图像多尺度检测</div></div></a></div><div><a href="/2021/01/06/cascadeRCNN/" title="Cascade R-CNN：级联RCNN以提升检测质量"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/cascadeRCNN-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-06</div><div class="title">Cascade R-CNN：级联RCNN以提升检测质量</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Twikoo</span><span class="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">forever97</div><div class="author-info__description">在人海里梦游</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forever97"><i class="fab fa-github"></i><span>来给我加星星</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forever97" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://gitee.com/forever97/" target="_blank" title="Gitee"><i class="fab fa-google"></i></a><a class="social-icon" href="https://www.cnblogs.com/forever97" target="_blank" title="博客园"><i class="fas fa-blog"></i></a><a class="social-icon" href="http://wpa.qq.com/msgrd?v=3&amp;uin=857426255&amp;site=qq&amp;menu=yes" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:857426255@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content"><h2 style="color:orange; margin:2px;">🍊欢迎光临本站</h2> 如果卡顿请访问 <a target="_blank" rel="noopener" href="https://forever97.gitee.io" style="cursor:pointer; color:#fff; background-color:orange; padding:2px 5px; border-radius:5px;">Gitee镜像站</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E6%A0%87%E6%B3%A8"><span class="toc-number">1.</span> <span class="toc-text">数据的标注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#via%E6%A0%87%E6%B3%A8%E5%B7%A5%E5%85%B7"><span class="toc-number">1.1.</span> <span class="toc-text">via标注工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#COCO%E6%95%B0%E6%8D%AE%E9%9B%86%E6%A0%BC%E5%BC%8F%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.</span> <span class="toc-text">COCO数据集格式介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E5%A4%84%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">数据集处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mmdetection%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">mmdetection的使用</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React Hooks"/></a><div class="content"><a class="title" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks">React基础速通计划：React Hooks</a><time datetime="2022-06-26T14:26:47.000Z" title="发表于 2022-06-26 14:26:47">2022-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React组件"/></a><div class="content"><a class="title" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件">React基础速通计划：React组件</a><time datetime="2022-06-19T11:09:45.000Z" title="发表于 2022-06-19 11:09:45">2022-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React基础与JSX"/></a><div class="content"><a class="title" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX">React基础速通计划：React基础与JSX</a><time datetime="2022-06-16T15:58:27.000Z" title="发表于 2022-06-16 15:58:27">2022-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/07/eventloop/" title="JS事件循环"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/eventloop.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS事件循环"/></a><div class="content"><a class="title" href="/2021/09/07/eventloop/" title="JS事件循环">JS事件循环</a><time datetime="2021-09-07T14:32:33.000Z" title="发表于 2021-09-07 14:32:33">2021-09-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/31/promise/" title="Promise详解"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/promise.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Promise详解"/></a><div class="content"><a class="title" href="/2021/08/31/promise/" title="Promise详解">Promise详解</a><time datetime="2021-08-31T10:04:59.000Z" title="发表于 2021-08-31 10:04:59">2021-08-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/mmdetection-1.png)"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2022 By forever97</div><div class="footer_custom_text"><p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://demo.jerryc.me/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://metroui.org.ua/index.html "><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站托管于Vercel">&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'blogtalk-6g6nlayif96df94c',
+      region: ''
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'blogtalk-6g6nlayif96df94c',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'znUsAPKaAhvsce1vGdQabwNA-MdYXbMMI',
+      appKey: 'IXAxuH2tjf4O7iYSNPOnzMFe',
+      placeholder: '记得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'robohash',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Twikoo' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/gitcalendar/js/gitcalendar.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@latest/source/js/issues.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/magnet/js/catalogMagnet.js"></script><script src="/swiper/swiper.min.js"></script><script src="/swiper/swiperindex.js"></script><script src="/js/moments.js"></script><script src="/js/smooth-scrolling.js"></script><script src="/js/custom.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div><!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>未央の时光机</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='/'|| '/' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/33.2017.newyear.model.json"},"display":{"position":"right","width":200,"height":300},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>

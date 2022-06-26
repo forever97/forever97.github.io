@@ -1,0 +1,412 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SMAP：安全多方联合降维可视化方案 | 未央の童话镇</title><meta name="keywords" content="2020,VIS,数据降维"><meta name="author" content="forever97"><meta name="copyright" content="forever97"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="IEEE引用格式：J. Xia et al., “SMAP: A Joint Dimensionality Reduction Scheme for Secure Multi-Party Visualization,” 2020, [Online]. Available: http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2007.15591.  文章简介在多方数据被融合到一个站点来建立点集关系时，传统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SMAP：安全多方联合降维可视化方案">
+<meta property="og:url" content="https://forever97.top/2020/10/20/SMAP/index.html">
+<meta property="og:site_name" content="未央の童话镇">
+<meta property="og:description" content="IEEE引用格式：J. Xia et al., “SMAP: A Joint Dimensionality Reduction Scheme for Secure Multi-Party Visualization,” 2020, [Online]. Available: http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2007.15591.  文章简介在多方数据被融合到一个站点来建立点集关系时，传统">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-8.png">
+<meta property="article:published_time" content="2020-10-20T14:54:32.000Z">
+<meta property="article:modified_time" content="2022-06-26T06:44:17.745Z">
+<meta property="article:author" content="forever97">
+<meta property="article:tag" content="2020">
+<meta property="article:tag" content="VIS">
+<meta property="article:tag" content="数据降维">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-8.png"><link rel="shortcut icon" href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/favicon.png"><link rel="canonical" href="https://forever97.top/2020/10/20/SMAP/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="baidu-site-verification" content="f7c8ecf684c23d02cca2e82c827ff2a2"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?194bd025765eb0d478283a5eb4217ad4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: forever97","link":"链接: ","source":"来源: 未央の童话镇","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-26 06:44:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/gitcalendar/css/gitcalendar.css"/><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css"  media="defer" onload="this.media='all'"><link rel="stylesheet" href="/magnet/css/catalogMagnet.css"/><link rel="stylesheet" href="/swiper/swiper.min.css"><link rel="stylesheet" href="/swiper/swiperstyle.css"><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-8.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">未央の童话镇</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-bookmark"></i><span> 博客</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></li><li><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comment"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/moments/"><i class="fa-fw fas fa-user-circle"></i><span> 朋友圈</span></a></li><li><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></li><li><a class="site-page" href="/website/"><i class="fa-fw fas fa-th-large"></i><span> 百宝箱</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-60px;"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 镜像</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-100px;"><li><a class="site-page" href="https://forever97.top/"><i class="fa-fw fab fa-vimeo"></i><span> Vercel</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.gitee.io/"><i class="fa-fw fab fa-google"></i><span> Gitee</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.github.io/"><i class="fa-fw fab fa-github"></i><span> Github</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://forever97.netlify.app/"><i class="fa-fw fab fa-tripadvisor"></i><span> Netlify</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-info-circle"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child" style="left:-20px;"><li><a class="site-page" href="/site/"><i class="fa-fw fas fa-sitemap"></i><span> 本站</span></a></li><li><a class="site-page" href="/me/"><i class="fa-fw fas fa-id-badge"></i><span> 本人</span></a></li></ul></div></div></div><div id="rightmenu" style="flex:1"><div id="search-button" style="position:absolute;right:2%"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SMAP：安全多方联合降维可视化方案</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-20T14:54:32.000Z" title="发表于 2020-10-20 14:54:32">2020-10-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-06-26T06:44:17.745Z" title="更新于 2022-06-26 06:44:17">2022-06-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%F0%9F%92%84VIS%E8%83%AD%E8%84%82%E9%93%BA/">💄VIS胭脂铺</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>IEEE引用格式：J. Xia et al., “SMAP: A Joint Dimensionality Reduction Scheme for Secure Multi-Party Visualization,” 2020, [Online]. Available: <a target="_blank" rel="noopener" href="http://arxiv.org/abs/2007.15591">http://arxiv.org/abs/2007.15591</a>.</p>
+</blockquote>
+<h2 id="文章简介"><a href="#文章简介" class="headerlink" title="文章简介"></a>文章简介</h2><p>在多方数据被融合到一个站点来建立点集关系时，传统的可视分析方法(如降维)可能会暴露数据隐私，可视分析中的数据隐私是一个重要的需求，比如几个医院想要执行其病人数据的联合分析，同时保持他们的数据隐私</p>
+<p>应用可视化技术帮助人们理解多方高维数据的时候，通常会采用降维技术，比如主成分分析(PCA)，多维尺度(MDS)，t-SNE，将所有的数据点投影到一个公共空间，然而降维技术首先就会破坏数据的隐私性，比如<strong>传统的降维方法是为单站点计算设计的</strong>，需要从所有站点收集原始数据来创建联合嵌入，如果在多方数据之前简单地匿名化数据又会减少数据的效用，导致不准确的布局，而且匿名的数据也有被保护的必要。其次当其他人采用可视化设计来检查隐私敏感数据时，数据隐私也会受到威胁</p>
+<p>基于此，文章提出了一种安全的多方可视化联合降维方法，允许在可视化生成和可视化消费两个阶段保护隐私数据，首先开发了一个安全的t-SNE嵌入多方计算方案，对t-SNE的重设计中核心的挑战就是原始数据和数据点中间的距离矩阵都可能威胁到数据的隐私，这些都不应该暴露给参与者，其次建立了一个在线可视化系统SMAP，支持隐私感知的嵌入结果探索</p>
+<p>总的来说，文章的贡献分为两个部分：</p>
+<ol>
+<li>一种安全的联合t-SNE多方降维方案</li>
+<li>一个在线可视化系统，以支持隐私保护的探索和在线任务组织</li>
+</ol>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><h3 id="安全感知的分布式机器学习和数据挖掘"><a href="#安全感知的分布式机器学习和数据挖掘" class="headerlink" title="安全感知的分布式机器学习和数据挖掘"></a>安全感知的分布式机器学习和数据挖掘</h3><p>在机器学习和数据挖掘领域，解决原始数据分布在多个参与者中的安全问题的一个常见方法是差异隐私理论，采用随机机制更改原始的输入数据并且保持数据的实用性，常用的随机扰动有高斯噪声和拉普拉斯噪声，显然噪声越多越能保护隐私但同时解释结果的偏差也越大，在以往的研究中，并没有能做到降维的同时保持距离矩阵不暴露</p>
+<h3 id="可视化中的隐私保护"><a href="#可视化中的隐私保护" class="headerlink" title="可视化中的隐私保护"></a>可视化中的隐私保护</h3><p>与数据挖掘对应方法类似，可视化领域的隐私保护针对两种主要风险类型：身份披露(个人身份被链接到特定数据)和属性披露(敏感的属性)，一个常见的解决策略是在敏感信息的显示中应用视觉不确定性(比如模糊效果或者聚合集群)</p>
+<p>本文的方法旨在将数据嵌入低维空间，在低维空间中身份和属性的暴露可以自然地被消除，而集群或异常可以被保留，若点级别关系是高度敏感的，则可以使用聚合可视化来隐藏点级别信息</p>
+<h3 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h3><p>降维指将高维数据投影到低维空间，同时保留特定的属性，比如主成分分析(PCA)保留了数据点之间的方差，线性判别分析(LDA)试图保持簇之间的可分离性，t距离随机邻点嵌入(t-SNE)和多维标度(MDS)则保护基于距离矩阵的数据点之间的相似性</p>
+<p>降维意味着数据的压缩，因此在很多应用中被用于保护数据的隐私，这些研究和本文的区别是，他们是利用降维来解决隐私问题，降维在单地点进行，但是本文的目标是在多方降维的过程中防止其他参与者的数据暴露</p>
+<h2 id="场景，需求与方法概述"><a href="#场景，需求与方法概述" class="headerlink" title="场景，需求与方法概述"></a>场景，需求与方法概述</h2><h3 id="示例场景"><a href="#示例场景" class="headerlink" title="示例场景"></a>示例场景</h3><p><strong>多方数据分析</strong></p>
+<p>在该场景中，参与者希望在全局数据的上下文中分析本地数据，同时对彼此保持数据的私密性，比如多个社区医院的分析人员希望探索社区之间的差异，识别异常患者，然而因为隐私保护原因他们不能融合他们的数据。通过安全的联合嵌入，可以将局部数据点投影到共享空间中，在共享空间中可以可视化分析所有数据点之间的相似性</p>
+<p><strong>数据采购</strong></p>
+<p>在数据驱动的应用程序中，用户往往需要购买丰富的数据，通过数据市场训练自己的机器学习模型，出于成本考虑，必须仔细选择合适的数据集，比如覆盖失败样本或者支持少数的数据集，然而这些信息在购买数据集之前是未知的，安全多方可视化为用户提供了一种工具，可以在不影响数据隐私的情况下，将本地数据与销售数据进行比较。这种信息透明性有助于用户做出购买决策</p>
+<h3 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h3><p><strong>R1：在多方可视化中保留隐私</strong></p>
+<p>考虑到所有参与者对数据都很好奇，应该保证在整个过程中所有参与者都不能获得或推断出原始数据</p>
+<p><strong>R2：在可视化过程中保护隐私</strong></p>
+<p>在散点图中，每个参与者应该只允许探索全局数据点的低维表示，而不是高维表示</p>
+<p><strong>R3：支持隐私感知可视化结果的交互式探索</strong></p>
+<p>参与者只能通过局部数据和相似度来推断高维信息</p>
+<p><strong>R4：支持在多个参与者之间组织在线联合嵌入任务</strong></p>
+<p>除了联合嵌入算法外，还需要一个连接不同站点参与者的在线系统，在真实环境中设置框架</p>
+<h3 id="方法概述"><a href="#方法概述" class="headerlink" title="方法概述"></a>方法概述</h3><p>基于上述需求，本文提出了一种联合t-SNE方案，开发了一个安全多方可视化的在线可视化系统</p>
+<p>首先，提出了一种安全的多方联合t-SNE协议，旨在保护数据隐私，只有<strong>加密的和有噪音的数据</strong>被传送给两个外部合作者，其次，设计了一个在线可视化系统，该系统支持隐私保护可视化，此外，在线系统连接来自不同站点的参与者，组织在线联合嵌入任务</p>
+<h2 id="安全多方投影"><a href="#安全多方投影" class="headerlink" title="安全多方投影"></a>安全多方投影</h2><h3 id="t-SNE算法"><a href="#t-SNE算法" class="headerlink" title="t-SNE算法"></a>t-SNE算法</h3><p>在高维空间中，两个数据点$x_i$和$x_j$之间的相似性用对称概率$p_{ij}$表示，即$x_i$是$x_j$的邻居的概率，$p_{ij}$表示为</p>
+<p>$p_{ij}=\frac{(p_{j|i}+p_{i|j})}{2N}$</p>
+<p>其中N是点的数量，条件概率$p_{j|i}$的计算方法为</p>
+<p>$p_{j|i}=\frac{\exp(-||x_i-x_j||^2/2\sigma_i^2)}{\sum_{k\neq l}\exp(-||x_i-x_k||^2/2\sigma_i^2)}$</p>
+<p>在低维空间中，t-SNE采用了一个单自由度的t分布来描述分布，表示$y_i$点和$y_j$点相似性的联合概率$q_{ij}$被定义为</p>
+<p>$q_{ij}=\frac{(1+||y_i-y_j||^2)^{-1}}{\sum_{k \neq l}(1+||y_k-y_l||^2)^{-1}}$</p>
+<p>$y_i$和$y_j$是$x_i$和$x_j$的嵌入</p>
+<p>t-SNE算法通过最小化高维空间和低维空间概率分布之间的KL散度来优化嵌入。KL散度表示为</p>
+<p>$C=KL(P||Q)=\sum_i\sum_jp_{ij}log\frac{p_{ij}}{q_{ij}}$</p>
+<h3 id="联合t-SNE的安全多方协议"><a href="#联合t-SNE的安全多方协议" class="headerlink" title="联合t-SNE的安全多方协议"></a>联合t-SNE的安全多方协议</h3><p>通过对t-SNE算法的回顾，可以知道其中关键的一步是计算高维空间中的条件概率$p_{j|i}$，而其计算依赖于高维空间中成对距离的计算，这是将传统降维方法转化为安全的多参与者版本的一个障碍，因为成对距离矩阵不能暴露给任何的参与者，因此$p_{j|i}$的计算必须重新设计</p>
+<p>为了解决这个问题，文章中提出了一个安全的多方协议t-SNE，除了数据的拥有这，还引入了两个协作者S和T来提供计算服务，体系结构如图所示</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-1.png"></p>
+<p>T只加密没有私钥的数据，而S只加密有噪声的数据。S和T相互协作计算t-SNE布局，并将结果分发给参与者。在假设这两个协作者不会相互串通的情况下，数据隐私得到保护</p>
+<p>协议的过程如下图所示</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-2.png"></p>
+<p>协议中采用的符号说明见下表</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-3.png"></p>
+<p><strong>Step1：密钥的生成与传播</strong></p>
+<p>S生成用于数据加密的公钥PK和用于数据解密的私钥SK，S广播PK到T和所有的P，在协议中，使用加性同态加密进行数据加密，在加性同态加密(AHE)下，保留了加法和标量乘法，有SK(PK(a) ◦ PK(b)) = a + b，SK(PK(a) ⋄ PK(b)) = a − b，以及SK(a ⋆ PK(b)) = a ∗ b，PK()和SK()指用公钥和私钥加密，◦，⋄和⋆表示加密数据的加法减法和标量乘法</p>
+<p><strong>Step2：加密数据收集</strong></p>
+<p>每个参与者P将本地数据X加密的数据PK(X)发送到T</p>
+<p><strong>Step3：加密数据加入噪声</strong></p>
+<p>给定来自所有参与方的数据X，T给加密数据的每个条目添加一个随机的噪声</p>
+<p>$PK(\bar{x_{ij}})=PK(x_{ij})◦PK(\sigma_{ij})$</p>
+<p>$\sigma_{ij}$是一个随机的噪声，然后T将噪声加密数据发送给S</p>
+<p><strong>Step4：噪声距离计算</strong></p>
+<p>首先协作者S用$SK(PK(\bar{x_{ij}}))=x_{ij}+\sigma_{ij}$来解密数据，然后噪声欧几里得距离可以通过如下公式计算</p>
+<p>$z_{ij}=\sum_{k=1}^m((x_{ik}+\sigma_{ik})-(x_{jk}+\sigma_{jk}))^2$</p>
+<p>m是数据点的维度</p>
+<p>接着S将噪声距离矩阵加密为PK(Z)并发送给T，Z是加密噪声距离矩阵</p>
+<p><strong>Step5: 加密的距离计算</strong></p>
+<p>在这个步骤中，协作者T计算加密的精确距离矩阵D</p>
+<p>对$\sigma_{ik}-\sigma_{jk}$替换为$\delta_{ijk}$，可以将上式转化为</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-4.png"></p>
+<p>将$x_i$和$x_j$之间的距离记为$d_{ij}$，可以进一步将式子转化为</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-5.png"></p>
+<p>加密的平方距离$PK(d_{ij}^2)$可以被计算为</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-6.png"></p>
+<p><strong>Step 6：在加密距离中加入噪声项</strong></p>
+<p>在此步骤中，协作者T在加密距离矩阵PK(D)中加入了噪声并将其发送给S</p>
+<p><strong>Step 7：对称概率计算</strong></p>
+<p>这一步中，S计算高维空间中的对称概率</p>
+<p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-7.png"></p>
+<p><strong>Step 8：t-SNE嵌入</strong></p>
+<p>T将矩阵恢复顺序后用KL散度优化式计算t-SNE</p>
+<h3 id="协议分析"><a href="#协议分析" class="headerlink" title="协议分析"></a>协议分析</h3><p><strong>安全性</strong></p>
+<p>在整个过程中有两个隐私敏感数据项：原始数据和距离矩阵，有了全距离矩阵，人们可以很容易地恢复原始数据，因此需要保证没有任何参与者可以得到两个数据项中的任何一个</p>
+<p>首先对于参与者P，其只有自己的局部数据和分布的嵌入结果，从t-SNE嵌入恢复精确的成对距离是非常不切实际的</p>
+<p>协作者S有公钥PK，私钥SK，以及噪声加密数据和重排列的距离矩阵，因为噪声仅T执有，所以S既不能恢复原始数据，也不能恢复距离矩阵</p>
+<p>T只有加密的数据和加密的距离矩阵，没有私钥无法恢复成对隐私敏感的数据项</p>
+<p>所以总的来说协议可以保证数据的安全性</p>
+<p><strong>准确性</strong></p>
+<p>嵌入结果与标准的t-SNE算法完全一致</p>
+<h2 id="SMAP系统"><a href="#SMAP系统" class="headerlink" title="SMAP系统"></a>SMAP系统</h2><h3 id="架构与实现"><a href="#架构与实现" class="headerlink" title="架构与实现"></a>架构与实现</h3><p>S和T属于两个不同的没有共谋的信誉实体，由服务器组织，S和T彼此连接，并发送加密或噪声数据给对方。参与者按照安全多方协议连接到两个协作者。S向它们广播公钥。它们将加密的数据发送给T，并从T接收可视化结果。在每个参与者中都安装了一个客户端交互界面，用于任务管理和可视化结果的探索。</p>
+<p>SMAP是一个基于web的系统，前端用JavaScript和D3.js实现，后端用python实现，采用基于python的库来进行部分同态加密，并开发了一个多线程实现</p>
+<h3 id="参与者用户界面"><a href="#参与者用户界面" class="headerlink" title="参与者用户界面"></a>参与者用户界面</h3><p><img src= "https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/loading.gif" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-8.png"></p>
+<p>如图所示，在任务列表面板(a)中，参与者可以浏览在线任务，加入一个准备任务，并提出一个新的任务，在列表中选择一个任务之后，任务描述面板(b)显示任务信息，，例如数据的内容和参与者，对于参与的任务，参与者可以直接切换到”我参与的任务”选项卡，其中显示了所有协作者和参与者的详细信息，包括他们的角色，IP地址，状态和贡献的数据点，此面板还支持任务操作，包括数据加密和上传</p>
+<p>全局投影试图(c)显示了来自所有参与者的数据的嵌入结果，在单个投影试图(d)中，根据全局嵌入，只显示所选参与者的数据，为了满足隐私保护的需求，本文提供了两种可视化策略，当参与者想知道点集关系的时候，结果会议散点图的形式呈现，其中颜色编码了数据所有权或者数据类，在散点图模式下，参与者可以自由活动，由于参与者只能访问原始的本地数据，只能通过选择附近的本地数据来推断他人数据的高维表示。当参与者涉及到点级隐私性的时候，聚合的可视化被提供来显示联合嵌入结果</p>
+<h2 id="案例研究"><a href="#案例研究" class="headerlink" title="案例研究"></a>案例研究</h2><p>三个案例</p>
+<ol>
+<li>模拟了一个数据市场场景，其中数据消费者(M)购买数据来改进他自己的小数据集，邀请了一个机器学习专家来作为消费者M，每个零售商提供3000个数据点，消费者只有1000个数据点(专家操作过程和建议详见论文)</li>
+<li>分散学习场景，解决non-IID issue，五个包含800个数据点的不同子集分别被分配给五个具有机器学习研究背景的硕士研究生</li>
+<li>将SMAP部署到三个社区医院，以进行安全的多方可视化分析，为了防止两个协作者之间的共谋，作者团队作为协作者T来保存加密的数据。合作伙伴由一家外部公司服务，该公司受到所有医院的信任</li>
+</ol>
+<h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><ol>
+<li><p>本文的协议可以直接支持PCA，因为它只需要计算协方差矩阵而不是距离矩阵，其敏感信息更少，而应用于UMAP和isomap可能会面临一些挑战，因为这两种方法必须计算k个最近邻之间的距离，这是距离矩阵的子集，无法在Step7进行分数约简来保护距离矩阵，需要更多研究来评估这个子集的风险</p>
+</li>
+<li><p>在不同的场景中组织安全的协同视觉分析将是一项有趣的未来工作</p>
+</li>
+<li><p>安全多方可视化方案耗时较长，关键部分是数据加密、解密和对加密数据的算术运算</p>
+</li>
+<li><p>点数增加，散点图中不可避免地会出现重叠，影响了基于散点图的嵌入结果分析，入识别离群值等，文章中的处理方法是以随机顺序呈现数据点，未来可以采取更多的解决方案，比如可以透明底呈现数据点，也可以采用离群值检测算法来检测并突出检测到的离群值</p>
+</li>
+</ol>
+<h2 id="未来工作"><a href="#未来工作" class="headerlink" title="未来工作"></a>未来工作</h2><ol>
+<li>加速安全的多方预测</li>
+<li>通过联合嵌入实现的安全协作分析</li>
+<li>其它数据类型的安全多方可视化</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">forever97</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://forever97.top/2020/10/20/SMAP/">https://forever97.top/2020/10/20/SMAP/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://forever97.top" target="_blank">未央の童话镇</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/2020/">2020</a><a class="post-meta__tags" href="/tags/VIS/">VIS</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E9%99%8D%E7%BB%B4/">数据降维</a></div><div class="post_share"><div class="social-share" data-image="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-8.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/10/21/VIS2019-1/"><img class="prev-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/VIS2019.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">VIS2019论文整理(1)</div></div></a></div><div class="next-post pull-right"><a href="/2020/10/19/Re0-1/"><img class="next-cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/R1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">从零开始的算法竞赛入门教程：基础语法与函数思想</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/07/02/CSSVQA/" title="CSS-VQA [反事实]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CSSVQA-2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-02</div><div class="title">CSS-VQA [反事实]</div></div></a></div><div><a href="/2020/08/14/CVLP/" title="CVLP [预处理]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/CVLP-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-14</div><div class="title">CVLP [预处理]</div></div></a></div><div><a href="/2020/07/03/DLR/" title="通过分解语言表征来克服VQA中的语言先验"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/DLR-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-03</div><div class="title">通过分解语言表征来克服VQA中的语言先验</div></div></a></div><div><a href="/2020/07/20/ESTVQA/" title="EST-VQA [双语文本VQA]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/ESTVQA-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-20</div><div class="title">EST-VQA [双语文本VQA]</div></div></a></div><div><a href="/2020/07/08/GQAOOD/" title="GQA-OOD [低频样本处理]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/GQAOOD-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-08</div><div class="title">GQA-OOD [低频样本处理]</div></div></a></div><div><a href="/2020/08/18/Grid/" title="Grid Feats VQA [回归网格特征]"><img class="cover" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/Grid-1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-18</div><div class="title">Grid Feats VQA [回归网格特征]</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Twikoo</span><span class="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">forever97</div><div class="author-info__description">在人海里梦游</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">149</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">122</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/forever97"><i class="fab fa-github"></i><span>来给我加星星</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/forever97" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://gitee.com/forever97/" target="_blank" title="Gitee"><i class="fab fa-google"></i></a><a class="social-icon" href="https://www.cnblogs.com/forever97" target="_blank" title="博客园"><i class="fas fa-blog"></i></a><a class="social-icon" href="http://wpa.qq.com/msgrd?v=3&amp;uin=857426255&amp;site=qq&amp;menu=yes" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:857426255@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content"><h2 style="color:orange; margin:2px;">🍊欢迎光临本站</h2> 如果卡顿请访问 <a target="_blank" rel="noopener" href="https://forever97.gitee.io" style="cursor:pointer; color:#fff; background-color:orange; padding:2px 5px; border-radius:5px;">Gitee镜像站</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">文章简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">相关工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%84%9F%E7%9F%A5%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%92%8C%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98"><span class="toc-number">2.1.</span> <span class="toc-text">安全感知的分布式机器学习和数据挖掘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E4%B8%AD%E7%9A%84%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4"><span class="toc-number">2.2.</span> <span class="toc-text">可视化中的隐私保护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%8D%E7%BB%B4"><span class="toc-number">2.3.</span> <span class="toc-text">降维</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%EF%BC%8C%E9%9C%80%E6%B1%82%E4%B8%8E%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="toc-number">3.</span> <span class="toc-text">场景，需求与方法概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E5%9C%BA%E6%99%AF"><span class="toc-number">3.1.</span> <span class="toc-text">示例场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="toc-number">3.2.</span> <span class="toc-text">需求分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="toc-number">3.3.</span> <span class="toc-text">方法概述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E5%A4%9A%E6%96%B9%E6%8A%95%E5%BD%B1"><span class="toc-number">4.</span> <span class="toc-text">安全多方投影</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#t-SNE%E7%AE%97%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">t-SNE算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%94%E5%90%88t-SNE%E7%9A%84%E5%AE%89%E5%85%A8%E5%A4%9A%E6%96%B9%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.2.</span> <span class="toc-text">联合t-SNE的安全多方协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90"><span class="toc-number">4.3.</span> <span class="toc-text">协议分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SMAP%E7%B3%BB%E7%BB%9F"><span class="toc-number">5.</span> <span class="toc-text">SMAP系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E4%B8%8E%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.1.</span> <span class="toc-text">架构与实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E4%B8%8E%E8%80%85%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2"><span class="toc-number">5.2.</span> <span class="toc-text">参与者用户界面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6"><span class="toc-number">6.</span> <span class="toc-text">案例研究</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A8%E8%AE%BA"><span class="toc-number">7.</span> <span class="toc-text">讨论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C"><span class="toc-number">8.</span> <span class="toc-text">未来工作</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React Hooks"/></a><div class="content"><a class="title" href="/2022/06/26/reactHooks/" title="React基础速通计划：React Hooks">React基础速通计划：React Hooks</a><time datetime="2022-06-26T14:26:47.000Z" title="发表于 2022-06-26 14:26:47">2022-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React组件"/></a><div class="content"><a class="title" href="/2022/06/19/reactComponent/" title="React基础速通计划：React组件">React基础速通计划：React组件</a><time datetime="2022-06-19T11:09:45.000Z" title="发表于 2022-06-19 11:09:45">2022-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/react.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React基础速通计划：React基础与JSX"/></a><div class="content"><a class="title" href="/2022/06/16/reactBasic/" title="React基础速通计划：React基础与JSX">React基础速通计划：React基础与JSX</a><time datetime="2022-06-16T15:58:27.000Z" title="发表于 2022-06-16 15:58:27">2022-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/07/eventloop/" title="JS事件循环"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/eventloop.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS事件循环"/></a><div class="content"><a class="title" href="/2021/09/07/eventloop/" title="JS事件循环">JS事件循环</a><time datetime="2021-09-07T14:32:33.000Z" title="发表于 2021-09-07 14:32:33">2021-09-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/31/promise/" title="Promise详解"><img data-lazy-src="https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/promise.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Promise详解"/></a><div class="content"><a class="title" href="/2021/08/31/promise/" title="Promise详解">Promise详解</a><time datetime="2021-08-31T10:04:59.000Z" title="发表于 2021-08-31 10:04:59">2021-08-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://forever97-picture-bed.oss-cn-hangzhou.aliyuncs.com/img/SMAP-8.png)"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2022 By forever97</div><div class="footer_custom_text"><p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://demo.jerryc.me/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://metroui.org.ua/index.html "><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站托管于Vercel">&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'blogtalk-6g6nlayif96df94c',
+      region: ''
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'blogtalk-6g6nlayif96df94c',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'znUsAPKaAhvsce1vGdQabwNA-MdYXbMMI',
+      appKey: 'IXAxuH2tjf4O7iYSNPOnzMFe',
+      placeholder: '记得留下你的昵称和邮箱....可以快速收到回复',
+      avatar: 'robohash',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Twikoo' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/gitcalendar/js/gitcalendar.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-volantis@latest/source/js/issues.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/magnet/js/catalogMagnet.js"></script><script src="/swiper/swiper.min.js"></script><script src="/swiper/swiperindex.js"></script><script src="/js/moments.js"></script><script src="/js/smooth-scrolling.js"></script><script src="/js/custom.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div><!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>未央の时光机</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='/'|| '/' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax  src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/33.2017.newyear.model.json"},"display":{"position":"right","width":200,"height":300},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>
